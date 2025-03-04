@@ -16,7 +16,7 @@ const Welcome = () => {
         alignItems: "center",
         justifyContent: "center",
         textAlign: "center",
-        gap: 3, // Adds spacing between elements
+        gap: 3, 
       }}
     >
       {/* Project Title */}

@@ -119,7 +119,7 @@ const Sidebar = ({ role }: SidebarProps) => {
             <Box textAlign="center" py={2}>
               <FaUserCircle size={50} />
               <Typography variant="h6" mt={1} fontWeight="bold">
-                {role === "admin" ? "Admin" : "User"}
+                {role === "admin" ? "Admin" : "Employee"}
               </Typography>
             </Box>
           )}

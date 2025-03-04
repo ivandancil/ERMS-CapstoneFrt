@@ -14,7 +14,7 @@ const UserLayout = () => {
     <Box flexGrow={1}>
       {!hideLayout && <Topbar />}
     
-        <Outlet /> {/* Renders the child route content */}
+        <Outlet /> 
    
     </Box>
   </Box>

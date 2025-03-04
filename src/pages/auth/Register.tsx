@@ -1,9 +1,45 @@
 import { Box, TextField, Button, Typography, useTheme } from "@mui/material";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
      const theme = useTheme();
+     const navigate = useNavigate();
      
+     const [name, setName] = useState("");
+     const [email, setEmail] = useState("");
+     const [password, setPassword] = useState("");
+     const [error, setError] = useState("");
+
+
+     async function handleRegister(event: React.FormEvent) {
+      event.preventDefault(); 
+      setError(""); 
+
+      try {
+          const response = await fetch("http://localhost:8000/api/register", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ name, email, password }),
+          });
+
+          if (!response.ok) {
+              throw new Error("Registration failed");
+          }
+
+          const data = await response.json();
+          console.log("Registration Success:", data);
+
+          localStorage.setItem("token", data.token);
+
+          navigate(data.user.role === "admin" ? "/admin" : "/user");
+      } catch (err: any) {
+          setError(err.message || "Registration failed");
+      }
+  }
+
 
 
   return (
@@ -28,7 +64,7 @@ const Register = () => {
         }}
       >
     <Typography variant="h4" textAlign="center" mb={2}>Register</Typography>
-    <form >
+    <form onSubmit={handleRegister} >
       <TextField
       variant="outlined"
         label="Full Name"
@@ -36,6 +72,8 @@ const Register = () => {
         fullWidth
         margin="normal"
         required
+        value={name}
+        onChange={(e) => setName(e.target.value)}
         sx={{
           gridColumn: "span 2",
           "& .MuiInputLabel-root": {
@@ -68,6 +106,8 @@ const Register = () => {
         fullWidth
         margin="normal"
         required
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
         sx={{
           gridColumn: "span 2",
           "& .MuiInputLabel-root": {
@@ -100,6 +140,8 @@ const Register = () => {
         fullWidth
         margin="normal"
         required
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
         sx={{
           gridColumn: "span 2",
           "& .MuiInputLabel-root": {

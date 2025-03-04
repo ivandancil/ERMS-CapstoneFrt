@@ -13,7 +13,6 @@ type FormValues = {
 const AddEmployee = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
 
-
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     console.log(data);
   };
@@ -76,27 +75,27 @@ const AddEmployee = () => {
             sx={{
               gridColumn: "span 2",
               "& .MuiInputLabel-root": {
-                color: "white !important", // Always white label
+                color: "white !important", 
               },
               "& .MuiInputLabel-root.Mui-focused": {
-                color: "white !important", // Keep white when focused
+                color: "white !important", 
               },
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: "white !important", // White border
+                  borderColor: "white !important", 
                 },
                 "&:hover fieldset": {
-                  borderColor: "white !important", // White border on hover
+                  borderColor: "white !important", 
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: "white !important", // White border when focused
+                  borderColor: "white !important", 
                 },
               },
               "& .MuiInputBase-input": {
-                color: "white", // Input text always white
+                color: "white", 
               },
               "& .MuiFormHelperText-root": {
-                color: "white", // Helper text always white
+                color: "white", 
               },
             }}
           />
@@ -112,27 +111,27 @@ const AddEmployee = () => {
             sx={{
               gridColumn: "span 2",
               "& .MuiInputLabel-root": {
-                color: "white !important", // Always white label
+                color: "white !important", 
               },
               "& .MuiInputLabel-root.Mui-focused": {
-                color: "white !important", // Keep white when focused
+                color: "white !important", 
               },
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: "white !important", // White border
+                  borderColor: "white !important", 
                 },
                 "&:hover fieldset": {
-                  borderColor: "white !important", // White border on hover
+                  borderColor: "white !important", 
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: "white !important", // White border when focused
+                  borderColor: "white !important", 
                 },
               },
               "& .MuiInputBase-input": {
-                color: "white", // Input text always white
+                color: "white", 
               },
               "& .MuiFormHelperText-root": {
-                color: "white", // Helper text always white
+                color: "white", 
               },
             }}
           />
@@ -146,27 +145,27 @@ const AddEmployee = () => {
             sx={{
               gridColumn: "span 2",
               "& .MuiInputLabel-root": {
-                color: "white !important", // Always white label
+                color: "white !important", 
               },
               "& .MuiInputLabel-root.Mui-focused": {
-                color: "white !important", // Keep white when focused
+                color: "white !important",
               },
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: "white !important", // White border
+                  borderColor: "white !important", 
                 },
                 "&:hover fieldset": {
-                  borderColor: "white !important", // White border on hover
+                  borderColor: "white !important", 
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: "white !important", // White border when focused
+                  borderColor: "white !important", 
                 },
               },
               "& .MuiInputBase-input": {
-                color: "white", // Input text always white
+                color: "white", 
               },
               "& .MuiFormHelperText-root": {
-                color: "white", // Helper text always white
+                color: "white",
               },
             }}
           />
@@ -180,27 +179,27 @@ const AddEmployee = () => {
             sx={{
               gridColumn: "span 2",
               "& .MuiInputLabel-root": {
-                color: "white !important", // Always white label
+                color: "white !important", 
               },
               "& .MuiInputLabel-root.Mui-focused": {
-                color: "white !important", // Keep white when focused
+                color: "white !important", 
               },
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: "white !important", // White border
+                  borderColor: "white !important", 
                 },
                 "&:hover fieldset": {
-                  borderColor: "white !important", // White border on hover
+                  borderColor: "white !important",
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: "white !important", // White border when focused
+                  borderColor: "white !important", 
                 },
               },
               "& .MuiInputBase-input": {
-                color: "white", // Input text always white
+                color: "white", 
               },
               "& .MuiFormHelperText-root": {
-                color: "white", // Helper text always white
+                color: "white", 
               },
             }}
           />

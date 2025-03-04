@@ -4,7 +4,7 @@ import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import { FaUserCircle, FaTachometerAlt, FaUsers, FaClipboardList, FaMoneyBill, FaChartLine, FaFileAlt, FaCog, FaSignOutAlt } from "react-icons/fa";
+import { FaUserCircle, FaTachometerAlt, FaUsers, FaClipboardList, FaChartLine, FaFileAlt, FaCog, FaSignOutAlt } from "react-icons/fa";
 import { tokens } from "../theme";
 
 interface ItemProps {
@@ -16,7 +16,7 @@ interface ItemProps {
 }
 
 interface SidebarProps {
-  role: "admin" | "user"; // Explicitly define allowed values
+  role: "admin" | "user"; 
 }
 
 const Item = ({ title, to, icon, selected, setSelected }: ItemProps) => {
@@ -39,12 +39,13 @@ const Sidebar = ({ role }: SidebarProps) => {
   const [selected, setSelected] = useState("Dashboard");
   const navigate = useNavigate();
 
-  // Logout function
+
+  // Logout function //
   async function handleLogout() {
     try {
         const response = await fetch("http://localhost:8000/api/logout", {
             method: "POST",
-            credentials: "include", // Required for session-based auth
+            credentials: "include", 
             headers: {
                 "Content-Type": "application/json",
             },
@@ -56,11 +57,14 @@ const Sidebar = ({ role }: SidebarProps) => {
 
         console.log("Logged out successfully");
 
-        navigate("/login"); // Redirect to login page
+        navigate("/login"); 
     } catch (error: any) {
         console.error("Error:", error.message);
     }
 }
+
+
+
   return (
     <Box
       sx={{
@@ -85,7 +89,7 @@ const Sidebar = ({ role }: SidebarProps) => {
     >
       <ProSidebar collapsed={isCollapsed}>
         <Menu iconShape="square">
-          {/* LOGO AND MENU ICON */}
+          
           <MenuItem
             onClick={() => setIsCollapsed(!isCollapsed)}
             icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
@@ -184,30 +188,8 @@ const Sidebar = ({ role }: SidebarProps) => {
             </>
           )}
            
-
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Pages
-            </Typography>
-          
-            {/* <Item
-              title="Login"
-              to="/login"
-              icon={<FaUserCircle />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-              <Item
-              title="Register"
-              to="/register"
-              icon={<FaUserCircle />}
-              selected={selected}
-              setSelected={setSelected}
-            /> */}
-              {/* Logout Button */}
+           <br />
+             
               <MenuItem title="Logout" icon={<FaSignOutAlt />} onClick={handleLogout} >
                             Logout
             </MenuItem>

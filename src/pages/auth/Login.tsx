@@ -1,10 +1,51 @@
 import { Box, TextField, Button, Typography, useTheme } from "@mui/material";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 
 
 const Login = () => {
     const theme = useTheme();
+    const navigate = useNavigate(); 
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+
+    //Login Function
   
+    async function handleLogin(event: React.FormEvent) {
+      event.preventDefault(); 
+      setError(""); 
+
+      try {
+          await fetch("http://localhost:8000/sanctum/csrf-cookie", {
+              credentials: "include",
+          });
+
+          const response = await fetch("http://localhost:8000/api/login", {
+              method: "POST",
+              credentials: "include",
+              headers: {
+                  "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ email, password }),
+          });
+
+          if (!response.ok) {
+              throw new Error("Invalid credentials");
+          }
+
+          const data = await response.json();
+          console.log("Login Success:", data);
+
+          console.log("Redirecting to: ", data.user.role === "admin" ? "/admin" : "/user");
+          navigate(data.user.role === "admin" ? "/admin" : "/user");
+      } catch (err: any) {
+          setError(err.message || "Login failed");
+      }
+  }
+
         
   return (
     <Box 
@@ -28,48 +69,91 @@ const Login = () => {
         }}
       >
         <Typography variant="h4" textAlign="center" mb={2}>Login</Typography>
-        <form>
+        <form onSubmit={handleLogin}>
           <TextField
-            label="Email"
-            fullWidth
-            margin="normal"
-            type="email"
-            required
-            InputLabelProps={{
-              sx: {
-                color: "white", 
-                "&.Mui-focused": { color: "white" }, 
-              },
-            }}
-            sx={{
-              bgcolor: theme.palette.primary.dark, 
-              borderRadius: 1,
-              "&:focus-within": { bgcolor: "primary" }, 
-            }}
+           variant="outlined"
+           label="Email"
+           type="email"
+           fullWidth
+           margin="normal"
+           required
+           value={email}
+           onChange={(e) => setEmail(e.target.value)}
+           sx={{
+             gridColumn: "span 2",
+             "& .MuiInputLabel-root": {
+               color: "white !important", 
+             },
+             "& .MuiInputLabel-root.Mui-focused": {
+               color: "white !important", // Keep white when focused
+             },
+             "& .MuiOutlinedInput-root": {
+               "&:hover fieldset": {
+                 borderColor: "white !important", // White border on hover
+               },
+               "&.Mui-focused fieldset": {
+                 borderColor: "white !important", // White border when focused
+               },
+             },
+             "& .MuiInputBase-input": {
+               color: "white", // Input text always white
+             },
+             "& .MuiFormHelperText-root": {
+               color: "white", // Helper text always white
+             },
+           }}
           />
           <TextField
-            label="Password"
-            fullWidth
-            margin="normal"
-            type="password"
-            required
-            InputLabelProps={{
-              sx: {
-                color: "white", 
-                "&.Mui-focused": { color: "white" }, 
-              },
-            }}
-            sx={{
-              bgcolor: theme.palette.primary.dark, 
-              borderRadius: 1,
-              "&:focus-within": { bgcolor: "primary" }, 
-              input: { color: theme.palette.primary.contrastText }, 
-            }}
+           variant="outlined"
+           label="Password"
+           type="password"
+           fullWidth
+           margin="normal"
+           required
+           value={password}
+           onChange={(e) => setPassword(e.target.value)}
+           sx={{
+             gridColumn: "span 2",
+             "& .MuiInputLabel-root": {
+               color: "white !important", // Always white label
+             },
+             "& .MuiInputLabel-root.Mui-focused": {
+               color: "white !important", // Keep white when focused
+             },
+             "& .MuiOutlinedInput-root": {
+               "&:hover fieldset": {
+                 borderColor: "white !important", // White border on hover
+               },
+               "&.Mui-focused fieldset": {
+                 borderColor: "white !important", // White border when focused
+               },
+             },
+             "& .MuiInputBase-input": {
+               color: "white", // Input text always white
+             },
+             "& .MuiFormHelperText-root": {
+               color: "white", // Helper text always white
+             },
+           }}
           />
-          <Button type="submit" variant="contained" color="secondary" fullWidth sx={{ mt: 2 }}>
+         <Button 
+            type="submit" 
+            variant="contained" 
+            color="secondary" 
+            fullWidth 
+            sx={{ mt: 2 }}
+            
+           
+          >
             Login
           </Button>
         </form>
+        <Typography textAlign="center" mt={2}>
+          Don't have an account?{" "}
+            <Link to="/register" style={{ color: theme.palette.secondary.light, textDecoration: "none" }}>
+              Register
+            </Link>
+        </Typography>
       </Box>
     </Box>
   );

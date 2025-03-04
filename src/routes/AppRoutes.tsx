@@ -22,21 +22,20 @@ const Approutes = () => {
       {/* Admin Routes */}
       <Route path="/admin" element={<AdminLayout />}>
         <Route index element={<Dashboard/>} />
-        <Route path="/admin/employee_management" element={<EmployeeManagement />} />
-        <Route path="/admin/system_management" element={<SystemManagement />} />
-
+        <Route path="employee_management" element={<EmployeeManagement />} />
+        <Route path="system_management" element={<SystemManagement />} />
         <Route path="performance" element={<Performance />} />
         <Route path="reports" element={<Reports />} />
 
-        <Route path="/admin/add_employee" element={<AddEmployee />} />
+        <Route path="add_employee" element={<AddEmployee />} />
       </Route>
 
       {/* User Routes */}
       <Route path="/user" element={<UserLayout />}>
         <Route index element={<UserDashboard />} />
-        <Route path="/user/profile_setting" element={<ProfileSetting />} />
-        <Route path="/user/attendance" element={<Attendance />} />
-        <Route path="/user/reports" element={<Reports />} />
+        <Route path="profile_setting" element={<ProfileSetting />} />
+        <Route path="attendance" element={<Attendance />} />
+        <Route path="reports" element={<Reports />} />
       </Route>
 
       {/* Auth Routes */}
@@ -45,6 +44,7 @@ const Approutes = () => {
 
       {/* Title Route */}
       <Route path="/" element={<Title />} />
+      
     </Routes>
   )
 }

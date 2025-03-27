@@ -1,42 +1,105 @@
-import { Box, Button, Typography, useTheme } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Box, Typography, useMediaQuery } from "@mui/material";
+import Navbar from "../components/Navbar";
 
-const Welcome = () => {
-  const theme = useTheme();
+const Title = () => {
+  const isSmallScreen = useMediaQuery("(max-width:960px)");
+  const NAVBAR_HEIGHT = 90;
 
   return (
     <Box
       sx={{
-        height: "100vh",
-        width: "100vw",
-        bgcolor: theme.palette.primary.main,
-        color: theme.palette.primary.contrastText,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        textAlign: "center",
-        gap: 3, 
+        width: "100%",
+        minHeight: "100vh",
+        position: "relative",
+        overflow: "hidden",
+        bgcolor: "black",
       }}
     >
-      {/* Project Title */}
-      <Typography variant="h2" fontWeight="bold">
-        DEVELOPMENT OF HUMAN RESOURCE INFORMATION SYSTEM <br/>
-         IN DEPARTMENT OF EDUCATION <br/> TACLOBAN CITY DIVISION
-      </Typography>
+      {/* Navbar */}
+      <Navbar />
 
+      {/* Full Page Watermark */}
+      <Box
+        component="img"
+        src="/image/enhance.png"
+        alt="DepEd Logo Background"
+        sx={{
+          position: "absolute",
+          top: `${NAVBAR_HEIGHT}px`,
+          left: 0,
+          width: "100%",
+          height: `calc(100vh - ${NAVBAR_HEIGHT}px)`,
+          objectFit: "fill",
+          opacity: 0.1,
+          zIndex: 0,
+          pointerEvents: "none",
+        }}
+      />
 
-      {/* Buttons for Login & Register */}
-      <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
-        <Button component={Link} to="/login" variant="contained" color="secondary">
-          Sign In
-        </Button>
-        <Button component={Link} to="/register" variant="outlined" color="secondary">
-          Get Started
-        </Button>
+      {/* Centered & Enlarged Logo */}
+      <Box
+        component="img"
+        src="/image/Logo3.png"
+        alt="DepEd Logo"
+        sx={{
+          position: "absolute",
+          top: "55%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          width: isSmallScreen ? "250px" : "480px",
+          height: "auto",
+          zIndex: 1,
+          opacity: 0.4,
+        }}
+      />
+
+      {/* Title layered over logo */}
+      <Box
+        sx={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          textAlign: "center",
+          zIndex: 2,
+          px: 2,
+          maxWidth: "90%",
+        }}
+      >
+        <Typography
+          variant="h3"
+          fontWeight="750"
+          mt={4}
+          sx={{
+            lineHeight: 1.5,
+            textTransform: "uppercase",
+            color: "#fff",
+            fontFamily: '"Poppins", "Arial", sans-serif',
+            letterSpacing: "2px",
+            textShadow:
+              "3px 2px 6px rgba(0, 0, 0, 0.8), 0px 0px 12px rgba(0, 0, 0, 0.2)",
+            wordBreak: "break-word",
+           
+            fontSize: {
+              xs: "1.4rem", // Small screens
+              sm: "1.6rem",
+              md: "2rem",   // Medium screens
+              lg: "2.5rem", // Large screens
+              
+            },
+          }}
+        >
+          <Box component="span" sx={{ whiteSpace: 'nowrap' }}>
+            HUMAN RESOURCE INFORMATION SYSTEM
+          </Box>
+          <br />
+          IN DEPARTMENT OF EDUCATION
+          <br />
+          TACLOBAN CITY DIVISION
+        </Typography>
       </Box>
     </Box>
   );
 };
 
-export default Welcome;
+export default Title;

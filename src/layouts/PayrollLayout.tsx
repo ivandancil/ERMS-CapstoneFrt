@@ -9,7 +9,7 @@ const AdminLayout = () => {
 
   return (
     <Box display="flex" height="100vh">
-      {!hideLayout && <Sidebar role="admin" />}
+      {!hideLayout && <Sidebar role="payroll" />}
 
       <Box flexGrow={1} sx={{ minHeight: "100vh", overflowY: "auto" }}>
         {!hideLayout && <Topbar />}

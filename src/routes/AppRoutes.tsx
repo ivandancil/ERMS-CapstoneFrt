@@ -1,42 +1,89 @@
-import {Route, Routes } from "react-router-dom"
-import AdminLayout from "../layouts/AdminLayout"
-import Dashboard from "../pages/admin/Dashboard"
-import EmployeeManagement from "../pages/admin/EmployeeManagement"
-import Attendance from "../pages/user/Attendance"
-import Performance from "../pages/admin/Performance"
-import Reports from "../pages/admin/Reports"
-import UserLayout from "../layouts/UserLayout"
-import UserDashboard from "../pages/user/UserDashboard"
-import Login from "../pages/auth/Login"
-import Register from "../pages/auth/Register"
-import SystemManagement from "../pages/admin/SystemManagement"
-import AddEmployee from "../pages/admin/AddEmployee"
-import Title from "../pages/Title"
-import ProfileSetting from "../pages/user/ProfileSetting"
+import { Route, Routes } from "react-router-dom";
+import AdminLayout from "../layouts/AdminLayout";
+import Dashboard from "../pages/admin/Dashboard";
+import EmployeeManagement from "../pages/admin/Employee/EmployeeManagement";
+import Attendance from "../pages/user/Attendance";
+import Reports from "../pages/admin/Reports";
+import UserLayout from "../layouts/UserLayout";
+import UserDashboard from "../pages/user/UserDashboard";
+import Login from "../pages/auth/Login";
+import Register from "../pages/auth/Register";
+import SystemManagement from "../pages/admin/SystemManagement";
+import Title from "../pages/Title";
+import EmployeeProfile from "../pages/user/EmployeeProfile";
+import LeaveRequest from "../pages/user/Leave/LeaveRequest";
+import Payroll from "../pages/user/Payroll";
+import PayrollProcess from "../pages/admin/PayrollProcess";
+import AttendanceManagement from "../pages/admin/AttendanceManagement";
+import LeaveManagement from "../pages/admin/LeaveManagement";
+import DocumentManagement from "../pages/user/DocumentManagement";
+import EmployeeTraining from "../pages/user/EmployeeTraining";
+import AttendanceLogin from "../pages/admin/AttendanceLogin";
+import AttendanceTracking from "../pages/AttendanceTracking";
+import TrainingDevelopment from "../pages/admin/Training/TrainingDevelopment";
+import AdminRoute from "../components/protectedRoutes/AdminRoute";
+import UserRoute from "../components/protectedRoutes/UserRoute";
+import PayrollLayout from "../layouts/PayrollLayout";
+import PayrollRoute from "../components/protectedRoutes/PayrollRoute";
+import PayrollDashboard from "../pages/payroll/PayrollDashboard";
+import PayrollUpload from "../pages/payroll/PayrollUpload";
 
+// Import the protected routes
 
 const Approutes = () => {
   return (
-    
     <Routes>
       {/* Admin Routes */}
-      <Route path="/admin" element={<AdminLayout />}>
-        <Route index element={<Dashboard/>} />
+      <Route
+        path="/admin"
+        element={
+          <AdminRoute>
+            <AdminLayout />
+          </AdminRoute>
+        }
+      >
+        <Route index element={<Dashboard />} />
         <Route path="employee_management" element={<EmployeeManagement />} />
         <Route path="system_management" element={<SystemManagement />} />
-        <Route path="performance" element={<Performance />} />
+        <Route path="attendance_management" element={<AttendanceManagement />} />
+        <Route path="leave_management" element={<LeaveManagement />} />
+        <Route path="payroll" element={<PayrollProcess />} />
+        <Route path="training_development" element={<TrainingDevelopment />} />
         <Route path="reports" element={<Reports />} />
-
-        <Route path="add_employee" element={<AddEmployee />} />
       </Route>
 
       {/* User Routes */}
-      <Route path="/user" element={<UserLayout />}>
+      <Route
+        path="/user"
+        element={
+          <UserRoute>
+            <UserLayout />
+          </UserRoute>
+        }
+      >
         <Route index element={<UserDashboard />} />
-        <Route path="profile_setting" element={<ProfileSetting />} />
+        <Route path="employee_profile" element={<EmployeeProfile />} />
         <Route path="attendance" element={<Attendance />} />
-        <Route path="reports" element={<Reports />} />
+        <Route path="leave_request" element={<LeaveRequest />} />
+        <Route path="document_management" element={<DocumentManagement />} />
+        <Route path="employee_training" element={<EmployeeTraining />} />
+        <Route path="payroll" element={<Payroll />} />
       </Route>
+
+       {/* Payroll Routes (Separate) */}
+       <Route
+        path="/payroll"
+        element={
+          <PayrollRoute>
+            <PayrollLayout />
+          </PayrollRoute>
+        }
+      >
+      <Route index element={<PayrollDashboard />} /> {/* Default payroll page */}
+      <Route path="/payroll/upload" element={<PayrollUpload />} />
+      
+
+        </Route>
 
       {/* Auth Routes */}
       <Route path="/login" element={<Login />} />
@@ -44,9 +91,11 @@ const Approutes = () => {
 
       {/* Title Route */}
       <Route path="/" element={<Title />} />
-      
-    </Routes>
-  )
-}
 
-export default Approutes
+      <Route path="/attendance-login" element={<AttendanceLogin />} />
+      <Route path="/attendance" element={<AttendanceTracking />} />
+    </Routes>
+  );
+};
+
+export default Approutes;

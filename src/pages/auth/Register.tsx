@@ -1,186 +1,241 @@
-import { Box, TextField, Button, Typography, useTheme } from "@mui/material";
+import { Box, TextField, Button, Typography, Snackbar, Alert, useTheme } from "@mui/material";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Navbar from "../../components/Navbar";
+import backgroundImage from "../../assets/your-background-image.jpg"; 
 
 const Register = () => {
-     const theme = useTheme();
-     const navigate = useNavigate();
-     
-     const [name, setName] = useState("");
-     const [email, setEmail] = useState("");
-     const [password, setPassword] = useState("");
-     const [error, setError] = useState("");
+  const theme = useTheme();
+  const navigate = useNavigate();
 
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
-     async function handleRegister(event: React.FormEvent) {
-      event.preventDefault(); 
-      setError(""); 
+  async function handleRegister(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setError("");
+    setLoading(true);
 
-      try {
-          const response = await fetch("http://localhost:8000/api/register", {
-              method: "POST",
-              headers: {
-                  "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ name, email, password }),
-          });
-
-          if (!response.ok) {
-              throw new Error("Registration failed");
-          }
-
-          const data = await response.json();
-          console.log("Registration Success:", data);
-
-          localStorage.setItem("token", data.token);
-
-          navigate(data.user.role === "admin" ? "/admin" : "/user");
-      } catch (err: any) {
-          setError(err.message || "Registration failed");
+    try {
+      if (!name || !email || !password) {
+        setError("All fields are required.");
+        setOpenSnackbar(true);
+        setLoading(false);
+        return;
       }
-  }
-
-
+    
+      // ✅ Clear old data
+      localStorage.clear();
+      sessionStorage.clear();
+    
+      const response = await fetch("http://localhost:8000/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password }),
+      });
+    
+      const data = await response.json();
+    
+      if (!response.ok) {
+        console.log("API Error Response:", data);
+    
+        const lowerMessage = data.message?.toLowerCase();
+    
+        if (lowerMessage?.includes("not registered")) {
+          setError("This email is not registered in the system.");
+        } else if (lowerMessage?.includes("already registered")) {
+          setError("This email is already registered. Please login.");
+        } else {
+          setError(data.message || "Registration failed. Please try again.");
+        }
+    
+        setOpenSnackbar(true);
+        return;
+      }
+    
+      console.log("Registration Success:", data);
+    
+      // ✅ Save token and role after successful registration
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("role", data.user.role);
+      localStorage.setItem("user", JSON.stringify(data.user));
+    
+      const redirectPath = data.user.role === "admin" ? "/admin" : "/user";
+      navigate(redirectPath);
+    } catch (error) {
+      console.error("Registration failed:", error);
+      setError("An unexpected error occurred.");
+      setOpenSnackbar(true);
+    } finally {
+      setLoading(false);
+    }
+  }    
 
   return (
-    <Box 
-      sx={{ 
-        height: "100vh",  
-        width: "100vw",
-        bgcolor: "white", 
+   <Box sx={{ width: "100%", minHeight: "100vh", height: "100vh", position: "relative", overflow: "hidden", bgcolor: "black" }}>
+    <Navbar />
+    
+    {/* Background Image */}
+    <Box
+      component="img"
+      src="/image/enhance.png"
+      alt="DepEd Logo Background"
+      sx={{
+        position: "absolute",
+        top: "90px", // Adjusted for navbar
+        left: 0,
+        width: "100%",
+        height: "calc(100vh - 90px)",
+        objectFit: "fill",
+        opacity: 0.3,
+        zIndex: 0,
+        pointerEvents: "none",
+      }}
+    />
+
+    {/* Form Container */}
+    <Box
+      sx={{
+        height: "calc(100vh - 64px)", // Adjust if Navbar height differs
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
       }}
     >
-      <Box 
-        sx={{ 
-          maxWidth: 400, 
-          p: 3, 
-          boxShadow: 3, 
-          borderRadius: 2, 
-          bgcolor: theme.palette.primary.main, 
-          color: theme.palette.primary.contrastText, 
-        }}
-      >
-    <Typography variant="h4" textAlign="center" mb={2}>Register</Typography>
-    <form onSubmit={handleRegister} >
-      <TextField
-      variant="outlined"
-        label="Full Name"
-        name="name"
-        fullWidth
-        margin="normal"
-        required
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        sx={{
-          gridColumn: "span 2",
-          "& .MuiInputLabel-root": {
-            color: "white !important", 
-          },
-          "& .MuiInputLabel-root.Mui-focused": {
-            color: "white !important", 
-          },
-          "& .MuiOutlinedInput-root": {
-            "&:hover fieldset": {
-              borderColor: "white !important", 
-            },
-            "&.Mui-focused fieldset": {
-              borderColor: "white !important", 
-            },
-          },
-          "& .MuiInputBase-input": {
-            color: "white",
-          },
-          "& .MuiFormHelperText-root": {
-            color: "white", 
-          },
-        }}
-      />
-      <TextField
-       variant="outlined"
-        label="Email"
-        name="email"
-        type="email"
-        fullWidth
-        margin="normal"
-        required
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        sx={{
-          gridColumn: "span 2",
-          "& .MuiInputLabel-root": {
-            color: "white !important", 
-          },
-          "& .MuiInputLabel-root.Mui-focused": {
-            color: "white !important", 
-          },
-          "& .MuiOutlinedInput-root": {
-            "&:hover fieldset": {
-              borderColor: "white !important", 
-            },
-            "&.Mui-focused fieldset": {
-              borderColor: "white !important", 
-            },
-          },
-          "& .MuiInputBase-input": {
-            color: "white", 
-          },
-          "& .MuiFormHelperText-root": {
-            color: "white", 
-          },
-        }}
-      />
-      <TextField
-        variant="outlined"
-        label="Password"
-        name="password"
-        type="password"
-        fullWidth
-        margin="normal"
-        required
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        sx={{
-          gridColumn: "span 2",
-          "& .MuiInputLabel-root": {
-            color: "white !important", 
-          },
-          "& .MuiInputLabel-root.Mui-focused": {
-            color: "white !important", 
-          },
-          "& .MuiOutlinedInput-root": {
-            "&:hover fieldset": {
-              borderColor: "white !important", 
-            },
-            "&.Mui-focused fieldset": {
-              borderColor: "white !important", 
-            },
-          },
-          "& .MuiInputBase-input": {
-            color: "white", 
-          },
-          "& .MuiFormHelperText-root": {
-            color: "white",
-          },
-        }}
-      />
-      
-      
-        <Button type="submit" variant="contained" color="secondary" fullWidth sx={{ mt: 2 }}>
-        Register
-      </Button>
-    </form>
-    <Typography textAlign="center" mt={2}>
-          Already have an account?{" "}
-            <Link to="/login" style={{ color: theme.palette.secondary.light, textDecoration: "none" }}>
-              Login
-            </Link>
-        </Typography>
-  </Box>
-  </Box>
-  )
-}
+      <Box
+       sx={{
+        maxWidth: 400,
+        width: "90%",
+        p: 4,
+        boxShadow: 5,
+        borderRadius: 3,
+        bgcolor: "rgba(255, 250, 250, 0.7)", // White with 70% opacity
+        color: theme.palette.text.primary,
+        textAlign: "center",
+        backdropFilter: "blur(3px)", // Adds a blur effect to enhance readability
+        border: "1px solid rgba(255, 255, 255, 0.3)"
 
-export default Register
+      }}
+      >
+         <Typography
+          variant="h3"
+          textAlign="center"
+          mb={2}
+          fontWeight="bold"
+          sx={{
+            textTransform: "uppercase",
+            letterSpacing: 1,
+            color: "black",
+            fontFamily: '"Roboto", "Arial", sans-serif', // Change to your desired font
+          }}
+        >
+          Register
+        </Typography>
+        <Typography 
+          variant="body1" 
+          textAlign="center" 
+          color="black"
+       
+          mb={2}
+        >
+          Fill in your details to create a new account. Make sure your email matches our employee records.
+        </Typography>
+        <form onSubmit={handleRegister}>
+          <TextField
+            variant="outlined"
+            label="Full Name"
+            fullWidth
+            margin="normal"
+            required
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            autoComplete="off"
+            sx={{
+            "& .MuiInputLabel-root": { color: "black !important" },
+              "& .MuiOutlinedInput-root": {
+                fieldset: {
+                  borderColor: "black !important", // Always black border
+                  borderWidth: 2, // Adjust border width if needed
+                },
+              },
+              "& .MuiInputBase-input": { color: "black" },
+            }}
+          />
+          <TextField
+            variant="outlined"
+            label="Email"
+            type="email"
+            fullWidth
+            margin="normal"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            autoComplete="off"
+            sx={{
+             "& .MuiInputLabel-root": { color: "black !important" },
+              "& .MuiOutlinedInput-root": {
+                fieldset: {
+                  borderColor: "black !important", // Always black border
+                  borderWidth: 2, // Adjust border width if needed
+                },
+              },
+              "& .MuiInputBase-input": { color: "black" },
+            }}
+          />
+          <TextField
+            variant="outlined"
+            label="Password"
+            type="password"
+            fullWidth
+            margin="normal"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            autoComplete="new-password"
+            sx={{
+           "& .MuiInputLabel-root": { color: "black !important" },
+              "& .MuiOutlinedInput-root": {
+                fieldset: {
+                  borderColor: "black !important", // Always black border
+                  borderWidth: 2, // Adjust border width if needed
+                },
+              },
+              "& .MuiInputBase-input": { color: "black" },
+            }}
+          />
+
+          <Button
+            type="submit"
+            variant="contained"
+            color="secondary"
+            fullWidth
+            sx={{ mt: 2 }}
+            disabled={loading}
+          >
+            {loading ? "Registering..." : "Register"}
+          </Button>
+        </form>
+        <Typography textAlign="center" mt={2} color="black">
+          Already have an account?{" "}
+          <Link to="/login" style={{ color: theme.palette.secondary.dark, textDecoration: "none" }}>
+            Login
+          </Link>
+        </Typography>
+      </Box>
+
+      {/* Snackbar */}
+      <Snackbar open={openSnackbar} autoHideDuration={4000} onClose={() => setOpenSnackbar(false)}>
+        <Alert onClose={() => setOpenSnackbar(false)} severity="error">
+          {error}
+        </Alert>
+      </Snackbar>
+    </Box>
+  </Box>
+  );
+};
+
+export default Register;

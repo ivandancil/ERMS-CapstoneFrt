@@ -9,12 +9,14 @@ const UserLayout = () => {
   const hideLayout = location.pathname === "/login" || location.pathname === "/register";
 
   return (
-    <Box display="flex">
+    <Box display="flex"  height="100vh">
     {!hideLayout && <Sidebar role="user" />}
-    <Box flexGrow={1}>
+    <Box flexGrow={1} sx={{ minHeight: "100vh", overflowY: "auto" }}>
       {!hideLayout && <Topbar />}
     
-        <Outlet /> 
+      <Box p={3}> 
+          <Outlet />
+        </Box>
    
     </Box>
   </Box>

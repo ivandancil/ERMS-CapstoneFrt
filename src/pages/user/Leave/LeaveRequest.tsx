@@ -150,7 +150,7 @@ function LeaveRequest() {
             { field: "leave_type", headerName: "Leave Type", flex: 1 },
             { field: "start_date", headerName: "Start Date", flex: 1 },
             { field: "end_date", headerName: "End Date", flex: 1 },
-            { field: "reason", headerName: "Reason", flex: 1 },
+            { field: "reason", headerName: "Reason", flex: 2 },
             { field: "status", headerName: "Status", flex: 1 },
             {
               field: "actions",
@@ -218,7 +218,7 @@ function LeaveRequest() {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenAddDialog(false)} color="secondary" autoFocus>
+          <Button onClick={() => setOpenAddDialog(false)} color="primary" variant="contained" autoFocus>
             Close
           </Button>
         </DialogActions>

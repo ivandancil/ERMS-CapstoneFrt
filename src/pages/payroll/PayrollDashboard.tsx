@@ -64,7 +64,7 @@ function PayrollDashboard() {
   <Grid item xs={12} md={3}>
     <Paper
       elevation={3}
-      sx={{ p: 3, display: "flex", alignItems: "center", backgroundColor: colors.primary[600], height: "110px" }}
+      sx={{ p: 3, display: "flex", alignItems: "center", backgroundColor: colors.primary[400], height: "110px" }}
     >
       <Box>
         <Typography variant="h6" color="white">Total Employees</Typography>
@@ -78,7 +78,7 @@ function PayrollDashboard() {
   <Grid item xs={12} md={3}>
     <Paper
       elevation={3}
-      sx={{ p: 3, display: "flex", alignItems: "center", backgroundColor: colors.primary[500], height: "110px" }}
+      sx={{ p: 3, display: "flex", alignItems: "center", backgroundColor: colors.primary[400], height: "110px" }}
     >
       <Box>
         <Typography variant="h6" color="white">Payroll Processed</Typography>
@@ -106,7 +106,7 @@ function PayrollDashboard() {
   <Grid item xs={12} md={3}>
     <Paper
       elevation={3}
-      sx={{ p: 3, display: "flex", alignItems: "center", backgroundColor: colors.primary[300], height: "110px" }}
+      sx={{ p: 3, display: "flex", alignItems: "center", backgroundColor: colors.primary[400], height: "110px" }}
     >
       <Box>
         <Typography variant="h6" color="white">Overtime Payments</Typography>

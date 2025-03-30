@@ -66,7 +66,7 @@ type Employee = {
 
 
 const mockEmployees: Employee[] = [
-  { id: 1, name: 'John Ray Escarlan', position: 'HR Officer', department: 'HR', email: 'johnray@depedsample.com' },
+  { id: 1, name: 'John Ray Escarlan', position: 'Teacher II', email: 'johnray@depedsample.com' },
  
   // Add more...
 ];
@@ -145,7 +145,6 @@ const handleCloseCalendar = () => {
     { field: 'id', headerName: 'ID', width: 50 },
     { field: 'name', headerName: 'Name', flex: 1 },
     { field: 'position', headerName: 'Position', flex: 1 },
-    { field: 'department', headerName: 'Department', flex: 1 },
     { field: 'email', headerName: 'Email', flex: 1 },
     {
       field: 'actions',
@@ -242,7 +241,7 @@ const handleCloseCalendar = () => {
           </LocalizationProvider>
 
           {/* Daily Attendance Table */}
-          <Box mt={2} height="60vh">
+          <Box mt={2} height="45vh">
             <DataGrid
               rows={filteredRecords}
               columns={columns}
@@ -262,7 +261,7 @@ const handleCloseCalendar = () => {
       )}
 
 {tabIndex === 1 && (
-    <Box mt={2} height="60vh">
+    <Box mt={2} height="55vh">
     <DataGrid
       rows={mockEmployees}
       columns={employeeColumns}

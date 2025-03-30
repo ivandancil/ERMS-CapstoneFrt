@@ -3,10 +3,12 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import backgroundImage from "../../assets/your-background-image.jpg"; 
+import { tokens } from "../../theme";
 
 const Register = () => {
   const theme = useTheme();
   const navigate = useNavigate();
+  const colors = tokens(theme.palette.mode);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -211,9 +213,8 @@ const Register = () => {
           <Button
             type="submit"
             variant="contained"
-            color="secondary"
             fullWidth
-            sx={{ mt: 2 }}
+            sx={{ mt: 2, backgroundColor: colors.blueAccent[900] }}
             disabled={loading}
           >
             {loading ? "Registering..." : "Register"}

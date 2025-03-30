@@ -30,7 +30,7 @@ function DocumentManagement() {
       id: 2,
       name: "Company Policies.docx",
       type: "Word",
-      uploadedBy: "Manager",
+      uploadedBy: "HR Admin",
       date: "2024-03-10",
       category: "Common",
     },
@@ -38,7 +38,7 @@ function DocumentManagement() {
       id: 3,
       name: "Personal Development Plan.pdf",
       type: "PDF",
-      uploadedBy: "John Doe",
+      uploadedBy: "John Ray Escarlan",
       date: "2024-03-15",
       category: "Personal",
     },
@@ -86,7 +86,7 @@ function DocumentManagement() {
       renderCell: (params) => (
         <Button
           variant="contained"
-          color="secondary"
+          color="primary"
           onClick={() => deleteDocument(params.row.id)}
         >
           Delete

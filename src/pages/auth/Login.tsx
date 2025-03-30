@@ -2,10 +2,12 @@ import { useState } from "react";
 import { Box, TextField, Button, Typography, Snackbar, Alert, useTheme } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
+import { tokens } from "../../theme";
 
 function Login() {
   const theme = useTheme();
   const navigate = useNavigate();
+   const colors = tokens(theme.palette.mode);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -154,7 +156,7 @@ function Login() {
                 "& .MuiInputBase-input": { color: "black" },
               }}
             />
-            <Button type="submit" variant="contained" color="secondary" fullWidth sx={{ mt: 2 }} disabled={loading}>
+            <Button type="submit" variant="contained" fullWidth sx={{ mt: 2, backgroundColor: colors.blueAccent[900] }} disabled={loading}>
               {loading ? "Logging in..." : "Login"}
             </Button>
           </form>

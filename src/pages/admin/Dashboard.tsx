@@ -1,46 +1,157 @@
 import { Box, Button, Grid, Paper, Typography, useTheme } from "@mui/material";
 import Header from "../../components/Header";
 import { tokens } from "../../theme";
-import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import GroupsIcon from "@mui/icons-material/Groups";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
-import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import FactCheckIcon from "@mui/icons-material/FactCheck";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import CampaignIcon from "@mui/icons-material/Campaign";
-import InsertChartIcon from "@mui/icons-material/InsertChart";
 import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
+import { useEffect, useState } from "react";
+
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  role?: string; // Optional field for roles like "admin", "user", etc.
+}
+
 
 const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  const overviewData = [
-    { title: "150", subtitle: "Total Employees", icon: <GroupsIcon sx={{ fontSize: 30, color: "#3498db" }} /> }, // Blue
-    { title: "10", subtitle: "New Employee Registrations", icon: <PersonAddAltIcon sx={{ fontSize: 30, color: "#2ecc71" }} /> }, // Green
-    { title: "5", subtitle: "Pending Leave Requests", icon: <PendingActionsIcon sx={{ fontSize: 30, color: "#f39c12" }} /> }, // Orange
+  const [user, setUser] = useState<User | null>(null);
+  const [employees, setEmployees] = useState([]); // Store employees
+  const [leaveRequests, setLeaveRequests] = useState([]); // Store leave requests
+  const [users, setUsers] = useState([]); // ✅ Store system users
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(""); // ✅ Define error state
+
+  useEffect(() => {
+    fetchUser();
+    fetchEmployees();
+    fetchLeaveRequests();
+    fetchUsers(); // ✅ Fetch all users
+  }, []);
+
+  // ✅ Fetch logged-in user details
+  const fetchUser = async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/user", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+
+      if (!response.ok) throw new Error("Failed to fetch user");
+
+      const data = await response.json();
+      setUser(data);
+      localStorage.setItem("user", JSON.stringify(data));
+    } catch (error) {
+      console.error("Error fetching user:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/users", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
   
+      if (!response.ok) throw new Error("Failed to fetch users");
+  
+      const data = await response.json();
+      console.log("Users API Response:", data); // Debugging
+  
+      // Extract users correctly
+      const usersArray = Array.isArray(data) ? data : data.data || [];
+  
+      setUsers(usersArray);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
+  
+
+  // ✅ Fetch employees
+  const fetchEmployees = async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/employees", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+  
+      if (!response.ok) throw new Error("Failed to fetch employees");
+  
+      const data = await response.json();
+      console.log("Employees API Response:", data); // 🔍 Debugging
+  
+      // Ensure we extract employees from API response correctly
+      const employeesArray = Array.isArray(data) ? data : data.data || [];
+  
+      setEmployees(employeesArray); // ✅ Store the extracted array
+    } catch (err) {
+      console.error("Error fetching employees:", (err as Error).message);
+    }
+  };
+  
+  // ✅ Fetch leave requests
+  const fetchLeaveRequests = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const response = await fetch("http://127.0.0.1:8000/api/leave-requests", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch leave requests.");
+      }
+
+      const data = await response.json();
+      const requestsArray = Array.isArray(data) ? data : data.data || [];
+
+      setLeaveRequests(requestsArray);
+    } catch (err) {
+      console.error("Error fetching leave requests:", (err as Error).message);
+      setError((err as Error).message || "Failed to load leave request data");
+    }
+  };
+
+  // ✅ Overview Data with fixed structure
+  const overviewData = [
+    {
+      title: loading ? "Loading..." : employees.length.toString(),
+      subtitle: "Total Employees",
+      icon: <GroupsIcon sx={{ fontSize: 30, color: "#3498db" }} />,
+    },
+    {
+      title: loading ? "Loading..." : users.length.toString(),
+      subtitle: "Registered System Users",
+      icon: <PersonAddAltIcon sx={{ fontSize: 30, color: "#2ecc71" }} />,
+    },
+    {
+      title: loading ? "Loading..." : leaveRequests.length.toString(),
+      subtitle: "Pending Leave Requests",
+      icon: <PendingActionsIcon sx={{ fontSize: 30, color: "#f39c12" }} />,
+    },
   ];
 
   return (
     <Box m={3}>
       {/* Header Section */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="DASHBOARD" subtitle="Welcome to ADMIN dashboard" />
-        {/* <Button
-          sx={{
-            backgroundColor: colors.blueAccent[700],
-            color: colors.grey[100],
-            fontSize: "14px",
-            fontWeight: "bold",
-            px: 3,
-            py: 1.5,
-          }}
-        >
-          <DownloadOutlinedIcon sx={{ mr: 1 }} />
-          Download Reports
-        </Button> */}
+        <Header
+          title="DASHBOARD"
+          subtitle={`Welcome, ${loading ? "Loading..." : user?.name || "Unknown User"}`}
+        />
       </Box>
 
       {/* Overview Section */}
@@ -53,7 +164,7 @@ const Dashboard = () => {
                 p: 2,
                 textAlign: "center",
                 backgroundColor: colors.primary[600],
-                height: "110px", // Smaller height
+                height: "110px",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
@@ -71,7 +182,6 @@ const Dashboard = () => {
           </Grid>
         ))}
       </Grid>
-
       {/* Widgets Section */}
       <Grid container spacing={3} mt={1}>
         {/* Attendance Overview Widget */}
@@ -128,6 +238,7 @@ const Dashboard = () => {
           </Paper>
         </Grid>
       </Grid>
+
     </Box>
   );
 };

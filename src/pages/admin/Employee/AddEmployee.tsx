@@ -1,10 +1,14 @@
-import { Box, TextField, Button, Typography, useTheme, Snackbar, Alert } from "@mui/material";
+import { Box, TextField, Button, Typography, useTheme, Snackbar, Alert, Autocomplete, MenuItem, Grid, FormControl, InputLabel, Select } from "@mui/material";
 import { useState, useCallback } from "react";
 
 interface AddEmployeeProps {
   onEmployeeAdded: () => void;
   onClose: () => void;
 }
+
+const civilStatusOptions = ["Single", "Married", "Divorced", "Widowed"];
+const jobPositions = ["Teacher", "Admin Officer", "HR Manager", "Finance Officer"];
+
 
 function AddEmployee({ onEmployeeAdded, onClose }: AddEmployeeProps) {
   const theme = useTheme();
@@ -33,6 +37,13 @@ function AddEmployee({ onEmployeeAdded, onClose }: AddEmployeeProps) {
       setLoading(false);  // Ensure loading resets
       return;
     }
+
+    if (!/^(09|\+639)\d{9}$/.test(phoneNumber)) {
+      setError("Invalid phone number format. Use 09XXXXXXXXX or +639XXXXXXXXX.");
+      setLoading(false);
+      return;
+    }
+
 
     try {
       const token = localStorage.getItem("token");
@@ -67,18 +78,78 @@ function AddEmployee({ onEmployeeAdded, onClose }: AddEmployeeProps) {
 
   return (
     <form onSubmit={handleAddEmployee}>
-      <TextField label="Employee ID" fullWidth margin="normal" value={employeeID} onChange={(e) => setEmployeeID(e.target.value)} autoComplete="off" sx={inputStyles} />
-      <TextField label="Job Position" fullWidth margin="normal" value={jobPosition} onChange={(e) => setJobPosition(e.target.value)} autoComplete="off" sx={inputStyles} />
-      <TextField label="Last Name" fullWidth margin="normal" value={lastname} onChange={(e) => setLastname(e.target.value)} autoComplete="off" sx={inputStyles} />
-      <TextField label="First Name" fullWidth margin="normal" value={firstname} onChange={(e) => setFirstname(e.target.value)} autoComplete="off" sx={inputStyles} />
-      <TextField label="Middle Name" fullWidth margin="normal" value={middlename} onChange={(e) => setMiddlename(e.target.value)} autoComplete="off" sx={inputStyles} />
-      <TextField label="Sex" fullWidth margin="normal" value={sex} onChange={(e) => setSex(e.target.value)} autoComplete="off" sx={inputStyles} />
-      <TextField label="Date of Birth" fullWidth margin="normal" type="date" value={dateOfBirth} onChange={(e) => setDateofBirth(e.target.value)} autoComplete="off" sx={inputStyles} InputLabelProps={{ shrink: true }} />
-      <TextField label="Civil Status" fullWidth margin="normal" value={civilStatus} onChange={(e) => setCivilStatus(e.target.value)} autoComplete="off" sx={inputStyles} />
-      <TextField label="Phone Number" fullWidth margin="normal" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} autoComplete="off" sx={inputStyles} />
-      <TextField label="Email" type="email" fullWidth margin="normal" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="off" sx={inputStyles} />
-      <TextField label="Address" fullWidth margin="normal" value={address} onChange={(e) => setAddress(e.target.value)} autoComplete="off" sx={inputStyles} />
-    
+      <Grid container spacing={2} marginTop={1}>
+        <Grid item xs={12} md={6}>
+          <TextField label="Employee ID" fullWidth value={employeeID} onChange={(e) => setEmployeeID(e.target.value)} autoComplete="off" sx={inputStyles} />
+        </Grid>
+        {/* <Grid item xs={12} md={6}>
+          <TextField label="Job Position" fullWidth value={jobPosition} onChange={(e) => setJobPosition(e.target.value)} autoComplete="off" sx={inputStyles} />
+        </Grid> */}
+         <Grid item xs={12} md={6} sx={inputStyles}>
+          <TextField
+              select
+              label="Job Position"
+              value={jobPosition}
+              onChange={(e) => setJobPosition(e.target.value)}
+              fullWidth
+              variant="outlined"
+            >
+              <MenuItem value="Manager">Manager</MenuItem>
+              <MenuItem value="Supervisor">Supervisor</MenuItem>
+              <MenuItem value="Staff">Staff</MenuItem>
+            </TextField>
+
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <TextField label="Last Name" fullWidth value={lastname} onChange={(e) => setLastname(e.target.value)} autoComplete="off" sx={inputStyles} />
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <TextField label="First Name" fullWidth value={firstname} onChange={(e) => setFirstname(e.target.value)} autoComplete="off" sx={inputStyles} />
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <TextField label="Middle Name" fullWidth value={middlename} onChange={(e) => setMiddlename(e.target.value)} autoComplete="off" sx={inputStyles} />
+        </Grid>
+        <Grid item xs={12} md={6} sx={inputStyles}>
+         <TextField
+              select
+              label="Sex"
+              value={sex}
+              onChange={(e) => setSex(e.target.value)}
+              fullWidth
+              variant="outlined"
+            >
+               <MenuItem value="Male">Male</MenuItem>
+               <MenuItem value="Female">Female</MenuItem>
+            </TextField>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <TextField label="Date of Birth" fullWidth type="date" value={dateOfBirth} onChange={(e) => setDateofBirth(e.target.value)} autoComplete="off" InputLabelProps={{ shrink: true }} sx={inputStyles} />
+        </Grid>
+        <Grid item xs={12} md={6} sx={inputStyles}>
+           <TextField
+              select
+              label="Civil Status"
+              value={civilStatus}
+              onChange={(e) => setCivilStatus(e.target.value)}
+              fullWidth
+              variant="outlined"
+            >
+              <MenuItem value="Single">Single</MenuItem>
+              <MenuItem value="Married">Married</MenuItem>
+              <MenuItem value="Divorced">Divorced</MenuItem>
+              <MenuItem value="Widowed">Widowed</MenuItem>
+            </TextField>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <TextField label="Phone Number" fullWidth value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} autoComplete="off" sx={inputStyles} />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <TextField label="Email" type="email" fullWidth value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="off" sx={inputStyles} />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <TextField label="Address" fullWidth value={address} onChange={(e) => setAddress(e.target.value)} autoComplete="off" sx={inputStyles} />
+        </Grid>
+      </Grid>
 
       {error && <Typography color="error" mt={1}>{error}</Typography>}
 

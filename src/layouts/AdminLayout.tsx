@@ -15,6 +15,7 @@ const AdminLayout = () => {
         {!hideLayout && <Topbar />}
         
         <Box p={3}> 
+          
           <Outlet />
         </Box>
       </Box>

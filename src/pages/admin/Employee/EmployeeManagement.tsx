@@ -193,7 +193,7 @@ function EmployeeManagement() {
                   {/* Edit Button */}
                   <Button
                     variant="contained"
-                    color="secondary"
+                    color="primary"
                     sx={{ textTransform: "none", fontSize: "12px", px: 2 }}
                     startIcon={<EditIcon />}
                     onClick={() => {
@@ -212,9 +212,9 @@ function EmployeeManagement() {
                       textTransform: "none",
                       fontSize: "12px",
                       px: 2,
-                      backgroundColor: "red",
+                      backgroundColor: "primary",
                       color: "#fff",
-                      "&:hover": { backgroundColor: "darkred" },
+                      "&:hover": { backgroundColor: "primary" },
                     }}
                     startIcon={<DeleteIcon />}
                     onClick={() => deleteEmployee(params.row.id)}
@@ -330,7 +330,7 @@ function EmployeeManagement() {
   </DialogContent>
 
   <DialogActions>
-    <Button onClick={() => setOpenViewDialog(false)} color="secondary" variant="contained">
+    <Button onClick={() => setOpenViewDialog(false)} color="primary" variant="contained">
       Close
     </Button>
   </DialogActions>
@@ -372,3 +372,4 @@ const inputStyles = {
 
 
 export default EmployeeManagement;
+

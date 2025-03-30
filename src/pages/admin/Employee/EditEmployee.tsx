@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { TextField, Button, Box, CircularProgress } from "@mui/material";
+import { useState, useEffect, ChangeEvent } from "react";
+import { TextField, Button, Box, CircularProgress, Grid, FormControl, InputLabel, Select, MenuItem, SelectChangeEvent } from "@mui/material";
 
 interface EditEmployeeProps {
   employeeId: number | null;
@@ -93,6 +93,15 @@ function EditEmployee({ employeeId, onEmployeeUpdated, onClose }: EditEmployeePr
     setEmployeeData({ ...employeeData, [e.target.name]: e.target.value });
   };
 
+  const handleSelectChange = (event: ChangeEvent<{ name?: string; value: unknown }>) => {
+    setEmployeeData((prevData) => ({
+      ...prevData,
+      [event.target.name as string]: event.target.value as string,
+    }));
+  };
+  
+  
+
   //Update Function
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -150,157 +159,170 @@ function EditEmployee({ employeeId, onEmployeeUpdated, onClose }: EditEmployeePr
         <p style={{ color: "red" }}>{error}</p>
       ) : (
         <>
-         <TextField
-            label="Employee ID"
-            name="employeeID"
-            disabled
-            value={employeeData.employeeID}
-            fullWidth
-            required
-            sx={{
-              mt: 2, 
-              ...inputStyles 
-            }}
-          />
-            <TextField
-            label="Job Position"
-            name="jobPosition"
-            value={employeeData.jobPosition}
-            onChange={handleChange}
-            fullWidth
-            required
-            autoComplete="off"
-            sx={{
-              ...inputStyles 
-            }}
-          />      
+       <Grid container spacing={2} marginTop={1}>
+      {/* Employee ID (Disabled) */}
+      <Grid item xs={12} md={6}>
+        <TextField
+          label="Employee ID"
+          name="employeeID"
+          disabled
+          value={employeeData.employeeID}
+          fullWidth
+          required
+          sx={inputStyles}
+        />
+      </Grid>
 
-          <TextField
-            label="Last Name"
-            name="lastname"
-            value={employeeData.lastname}
-            onChange={handleChange}
-            fullWidth
-            required
-            autoComplete="off"
-            sx={{
-              ...inputStyles 
-            }}
-          />
-          <TextField
-            label="First Name"
-            name="firstname"
-            value={employeeData.firstname}
-            onChange={handleChange}
-            fullWidth
-            required
-            autoComplete="off"
-            sx={{
-              ...inputStyles 
-            }}
-          />
-            <TextField
-            label="Middle Name"
-            name="middlename"
-            value={employeeData.middlename}
-            onChange={handleChange}
-            fullWidth
-            required
-            autoComplete="off"
-            sx={{
-              ...inputStyles 
-            }}
-          />
-           <TextField
-            label="Sex"
-            name="sex"
-            value={employeeData.sex}
-            onChange={handleChange}
-            fullWidth
-            required
-            autoComplete="off"
-            sx={{
-              ...inputStyles 
-            }}
-          />
-           <TextField
-            label="Date of Birth"
-            name="dateOfBirth"
-            value={employeeData.dateOfBirth}
-            onChange={handleChange}
-            fullWidth
-            required
-            autoComplete="off"
-            sx={{
-              ...inputStyles 
-            }}
-          />
-           <TextField
-            label="Civil Status"
-            name="civilStatus"
-            value={employeeData.civilStatus}
-            onChange={handleChange}
-            fullWidth
-            required
-            autoComplete="off"
-            sx={{
-              ...inputStyles 
-            }}
-          />
-          
-          {/* <TextField
-            label="Age"
-            name="age"
-            value={employeeData.age}
-            onChange={handleChange}
-            type="number"
-            fullWidth
-            required
-            autoComplete="off"
-            sx={{
-              ...inputStyles 
-            }}
-          /> */}
-          <TextField
-            label="Phone Number"
-            name="phoneNumber"
-            value={employeeData.phoneNumber}
-            onChange={handleChange}
-            fullWidth
-            required
-            autoComplete="off"
-            sx={{
-              ...inputStyles 
-            }}
-          />
-          <TextField
-            label="Email"
-            name="email"
-            disabled
-            value={employeeData.email}
-            onChange={handleChange}
-            type="email"
-            fullWidth
-            required
-            sx={{
-              ...inputStyles 
-            }}
-          />
-          <TextField
-            label="Address"
-            name="address"
-            value={employeeData.address}
-            onChange={handleChange}
-            fullWidth
-            required
-            autoComplete="off"
-            sx={{
-              ...inputStyles 
-            }}
-          />
+        {/* Job Position (Dropdown) */}
+        <Grid item xs={12} md={6} sx={inputStyles}>
+  <TextField
+    select
+    label="Job Position"
+    name="jobPosition"
+    value={employeeData.jobPosition}
+    onChange={handleSelectChange}
+    fullWidth
+    variant="outlined"
+  >
+    <MenuItem value="Manager">Manager</MenuItem>
+    <MenuItem value="Supervisor">Supervisor</MenuItem>
+    <MenuItem value="Staff">Staff</MenuItem>
+  </TextField>
+</Grid>
+
+      {/* Name Fields */}
+      <Grid item xs={12} md={4}>
+        <TextField
+          label="Last Name"
+          name="lastname"
+          value={employeeData.lastname}
+          onChange={handleChange}
+          fullWidth
+          required
+          autoComplete="off"
+          sx={inputStyles}
+        />
+      </Grid>
+      <Grid item xs={12} md={4}>
+        <TextField
+          label="First Name"
+          name="firstname"
+          value={employeeData.firstname}
+          onChange={handleChange}
+          fullWidth
+          required
+          autoComplete="off"
+          sx={inputStyles}
+        />
+      </Grid>
+      <Grid item xs={12} md={4}>
+        <TextField
+          label="Middle Name"
+          name="middlename"
+          value={employeeData.middlename}
+          onChange={handleChange}
+          fullWidth
+          autoComplete="off"
+          sx={inputStyles}
+        />
+      </Grid>
+      {/* Sex (Dropdown) */}
+      <Grid item xs={12} md={6} sx={inputStyles}>
+  <TextField
+    select
+    label="Sex"
+    name="sex" // ✅ Add name attribute
+    value={employeeData.sex}
+    onChange={handleSelectChange}
+    fullWidth
+    variant="outlined"
+  >
+    <MenuItem value="Male">Male</MenuItem>
+    <MenuItem value="Female">Female</MenuItem>
+  </TextField>
+</Grid>
+
+      
+      {/* Date of Birth */}
+      <Grid item xs={12} md={6}>
+        <TextField
+          label="Date of Birth"
+          name="dateOfBirth"
+          type="date"
+          value={employeeData.dateOfBirth}
+          onChange={handleChange}
+          fullWidth
+          required
+          autoComplete="off"
+          InputLabelProps={{ shrink: true }}
+          sx={inputStyles}
+        />
+      </Grid>
+
+      {/* Civil Status (Dropdown) */}
+      <Grid item xs={12} md={6} sx={inputStyles}>
+      <TextField
+    select
+    label="Civil Status"
+    name="civilStatus"
+    value={employeeData.civilStatus}
+    onChange={handleSelectChange}
+    fullWidth
+    variant="outlined"
+   
+  >
+    <MenuItem value="Single">Single</MenuItem>
+    <MenuItem value="Married">Married</MenuItem>
+    <MenuItem value="Divorced">Divorced</MenuItem>
+    <MenuItem value="Widowed">Widowed</MenuItem>
+  </TextField>
+      </Grid>
+
+      {/* Phone Number */}
+      <Grid item xs={12} md={6}>
+        <TextField
+          label="Phone Number"
+          name="phoneNumber"
+          value={employeeData.phoneNumber}
+          onChange={handleChange}
+          fullWidth
+          required
+          autoComplete="off"
+          sx={inputStyles}
+        />
+      </Grid>
+
+      {/* Email (Disabled) */}
+      <Grid item xs={12} md={6}>
+        <TextField
+          label="Email"
+          name="email"
+          type="email"
+          disabled
+          value={employeeData.email}
+          fullWidth
+          required
+          sx={inputStyles}
+        />
+      </Grid>
+
+      {/* Address */}
+      <Grid item xs={12} md={6}>
+        <TextField
+          label="Address"
+          name="address"
+          value={employeeData.address}
+          onChange={handleChange}
+          fullWidth
+          required
+          autoComplete="off"
+          sx={inputStyles}
+        />
+      </Grid>
+    </Grid>
 
           <Box display="flex" justifyContent="space-between" mt={2}>
-            <Button variant="contained" color="secondary" onClick={onClose}>
+            <Button variant="contained" color="primary" onClick={onClose}>
               Cancel
             </Button>
             <Button type="submit" variant="contained" color="primary" disabled={loading}>

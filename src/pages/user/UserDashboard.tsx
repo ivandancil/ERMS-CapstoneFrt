@@ -6,6 +6,7 @@ import PaidIcon from "@mui/icons-material/Paid";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import { tokens } from "../../theme";
 import { useEffect, useState } from "react";
+import { blue } from "@mui/material/colors";
 
 // Define Employee Type
 interface Employee {
@@ -15,13 +16,20 @@ interface Employee {
   firstname: string;
 }
 
+interface User {
+  name: string;
+  email?: string; // Add other fields if needed
+}
+
 function UserDashboard() {
    const theme = useTheme();
     const colors = tokens(theme.palette.mode);
+    
 
       const [employee, setEmployee] = useState<Employee | null>(null);
       const [loading, setLoading] = useState(true);
       const [error, setError] = useState<string | null>(null);
+        const [user, setUser] = useState<User | null>(null);
 
     
       useEffect(() => {
@@ -57,23 +65,27 @@ function UserDashboard() {
     <Box m="20px">
       {/* Dashboard Header */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="DASHBOARD" subtitle="Welcome to Your dashboard" />
+      <Header title="DASHBOARD" subtitle={`Welcome, ${employee?.firstname || ""} ${employee?.lastname || ""}`} />
+
       </Box>
 
       {/* Overview Panel */}
       <Grid container spacing={3} mt={.5}>
-        <Grid item xs={12} md={3}>
+        {/* <Grid item xs={12} md={3}>
           <Paper elevation={3} sx={{ p: 3, display: "flex", alignItems: "center",  backgroundColor: colors.primary[600],   height: "110px", }}>
             <AccountCircleIcon sx={{ fontSize: 40, mr: 2, color: "blue" }} />
             <Box>
-                  <Typography variant="h5" sx={{ transition: "0.3s", "&:hover": { color: colors.blueAccent[500] } }}>
-                         {employee?.lastname}
-                  </Typography>
-                  <Typography variant="body1" color="gray">{employee?.jobPosition}</Typography>
-                               
+            <Typography
+                variant="h5"
+              >
+                {employee?.firstname || ""} {employee?.lastname || ""}
+              </Typography>
+              <Typography variant="body1" color="gray">
+                {employee?.jobPosition || ""}
+              </Typography>
             </Box>
           </Paper>
-        </Grid>
+        </Grid> */}
 
         <Grid item xs={12} md={3}>
           <Paper elevation={3} sx={{ p: 3, display: "flex", alignItems: "center",  backgroundColor: colors.primary[600],   height: "110px",  }}>

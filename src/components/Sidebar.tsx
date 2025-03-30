@@ -25,6 +25,7 @@ interface ItemProps {
   icon: React.ReactNode;
   selected: string;
   setSelected: (title: string) => void;
+  style?: React.CSSProperties;
 }
 
 interface SidebarProps {
@@ -32,7 +33,7 @@ interface SidebarProps {
 }
 
 // Reusable Item component
-function Item({ title, to, icon, selected, setSelected }: ItemProps) {
+function Item({ title, to, icon, selected, setSelected, style }: ItemProps) {
   return (
     <MenuItem
       active={selected === title}
@@ -142,33 +143,54 @@ function Sidebar({ role }: SidebarProps) {
         "& .pro-sidebar-inner": { background: `${colors.primary[400]} !important` },
         "& .pro-icon-wrapper": { backgroundColor: "transparent !important" },
         "& .pro-inner-item": { padding: "5px 35px 5px 20px !important" },
-        "& .pro-inner-item:hover": { color: "#868dfb !important" },
-        "& .pro-menu-item.active": { color: "#6870fa !important" },
+        "& .pro-inner-item:hover": { color: "white !important" },
+        "& .pro-menu-item.active": { color: "white !important" },
       }}
     >
       <ProSidebar collapsed={isCollapsed}>
         <Menu iconShape="square">
-          <MenuItem
-            onClick={() => setIsCollapsed((prev) => !prev)}
-            icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
-            style={{ margin: "10px 0 20px 0", color: colors.grey[100] }}
-          >
+        <MenuItem
+          onClick={() => setIsCollapsed((prev) => !prev)}
+          icon={
+            isCollapsed ? (
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                <img  src="/image/Logo3.png"alt="Logo" style={{ width: 30, height: 30, marginTop: "35px" }} />
+                <span style={{ fontSize: "12px", marginTop: "2px", color: colors.grey[100] }}>
+                  DepEd
+                </span>
+              </div>
+            ) : undefined
+          }
+          style={{ margin: "10px 0 20px 0", color: colors.grey[100] }}
+        >
             {!isCollapsed && (
-              <Box display="flex" justifyContent="space-between" alignItems="center" ml="15px">
-                <Typography variant="h5" fontWeight="bold" fontSize="18px" color={colors.grey[100]}>
-                  D e p E d
-                </Typography>
-                <IconButton onClick={() => setIsCollapsed((prev) => !prev)}>
-                  <MenuOutlinedIcon />
-                </IconButton>
-              </Box>
+            <Box display="flex" justifyContent="space-between" alignItems="center" ml="15px">
+            <img
+              src="/image/Logo3.png"
+              alt="DepEd Logo"
+              style={{
+                width: isCollapsed ? "20px" : "45px", // Smaller size
+                height: "auto",
+                transition: "width 0.3s ease-in-out",
+                
+              }}
+            />
+           <MenuOutlinedIcon
+            style={{
+              transition: "transform 0.3s ease-in-out",
+              transform: isCollapsed ? "rotate(180deg)" : "rotate(0deg)",
+              opacity: isCollapsed ? 0 : 1, // Hide icon when collapsed
+            }}
+          />
+          </Box>
+          
             )}
           </MenuItem>
 
           {!isCollapsed && (
             <Box textAlign="center" py={2}>
             <FaUserCircle size={50} />
-            <Typography variant="h6" color={colors.grey[300]} mt={1} fontWeight="bold">
+            <Typography variant="h6" color="white" mt={1} fontWeight="bold">
                 {loading ? "Loading..." : name || "Unknown User"} {/* ✅ show name */}
               </Typography>
               <Typography variant="body2">
@@ -181,7 +203,7 @@ function Sidebar({ role }: SidebarProps) {
           )}
 
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
-            <Item title="Dashboard" to={`/${role}`} icon={<FaTachometerAlt />} selected={selected} setSelected={setSelected} />
+            <Item title="Dashboard" to={`/${role}`} icon={<FaTachometerAlt />} selected={selected} setSelected={setSelected}   />
 
             {role === "admin" && (
               <>
@@ -210,7 +232,7 @@ function Sidebar({ role }: SidebarProps) {
                   DATA
                 </Typography>
 
-                <Item title="My Profile" to="/user/employee_profile" icon={<FaCog />} selected={selected} setSelected={setSelected} />
+                <Item title="My Profile"  to="/user/employee_profile" icon={<FaCog />} selected={selected} setSelected={setSelected} />
                 <Item title="Attendance" to="/user/attendance" icon={<FaClipboardList />} selected={selected} setSelected={setSelected} />
                 <Item title="Leave Request" to="/user/leave_request" icon={<FaClipboardList />} selected={selected} setSelected={setSelected} />
                 <Item title="Manage Document" to="/user/document_management" icon={<FaFolderOpen />} selected={selected} setSelected={setSelected} />
@@ -221,11 +243,11 @@ function Sidebar({ role }: SidebarProps) {
             {role === "payroll" && (
               <>
                 <Typography variant="h6" color={colors.grey[300]} sx={{ m: "15px 0 5px 20px" }}>
-                  PAYROLL MANAGEMENT
+                  DATA
                 </Typography>
 
                 <Item title="Upload Payroll" to="/payroll/upload" icon={<FaMoneyCheckAlt />} selected={selected} setSelected={setSelected} />
-                <Item title="View Uploaded Payrolls" to="/payroll/records" icon={<FaFileAlt />} selected={selected} setSelected={setSelected} />
+                <Item title="View Uploaded Payrolls" to="/payroll/view" icon={<FaFileAlt />} selected={selected} setSelected={setSelected} />
                 <Item title="Download Reports" to="/payroll/reports" icon={<FaFolderOpen />} selected={selected} setSelected={setSelected} />
               </>
             )}

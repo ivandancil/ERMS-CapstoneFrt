@@ -27,6 +27,8 @@ import PayrollLayout from "../layouts/PayrollLayout";
 import PayrollRoute from "../components/protectedRoutes/PayrollRoute";
 import PayrollDashboard from "../pages/payroll/PayrollDashboard";
 import PayrollUpload from "../pages/payroll/PayrollUpload";
+import PayrollView from "../pages/payroll/PayrollView";
+import PayrollReport from "../pages/payroll/PayrollReport";
 
 // Import the protected routes
 
@@ -81,6 +83,8 @@ const Approutes = () => {
       >
       <Route index element={<PayrollDashboard />} /> {/* Default payroll page */}
       <Route path="/payroll/upload" element={<PayrollUpload />} />
+      <Route path="/payroll/view" element={<PayrollView />} />
+      <Route path="/payroll/reports" element={<PayrollReport />} />
       
 
         </Route>

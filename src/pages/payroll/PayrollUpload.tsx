@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import { UploadCloud, XCircle } from "lucide-react";
+import { 
+  Box, Button, Card, CardContent, Typography, IconButton, CircularProgress 
+} from "@mui/material";
+import Header from "../../components/Header";
 
 function PayrollUpload() {
   const [file, setFile] = useState<File | null>(null);
@@ -38,7 +42,7 @@ function PayrollUpload() {
         method: "POST",
         body: formData,
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`, // Include auth token if needed
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
 
@@ -64,45 +68,88 @@ function PayrollUpload() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4 text-center">Upload Payroll File</h2>
+    <Box m="20px">
+      <Header title="UPLOAD PAYROLL FILE" subtitle="Upload and process payroll files for salary disbursement." />
 
-        {/* Custom File Upload */}
-        <div className="relative border border-gray-300 p-4 rounded-lg flex flex-col items-center">
-          <UploadCloud className="text-blue-500 w-10 h-10 mb-2" />
-          <label className="cursor-pointer text-blue-600 font-semibold hover:underline">
-            Click to select a file
-            <input type="file" className="hidden" onChange={handleFileChange} accept=".csv, .xlsx" />
-          </label>
-        </div>
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
+        <Card sx={{ width: 400, padding: 4, boxShadow: 6 }}>
+          <CardContent>
+            <Typography variant="h5" textAlign="center" gutterBottom mb={3}>
+              UPLOAD PAYROLL FILE
+            </Typography>
 
-        {/* Error Message */}
-        {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+            {/* File Upload Section */}
+            <Box 
+              sx={{
+                border: "2px dashed #90caf9", 
+                borderRadius: 2, 
+                padding: 3, 
+                textAlign: "center", 
+                backgroundColor: "#f5f5f5",
+                cursor: "pointer",
+                "&:hover": { backgroundColor: "#e3f2fd" },
+              }}
+              onClick={() => document.getElementById("fileInput")?.click()}
+            >
+              <UploadCloud size={40} color="#1e88e5" />
+              <Typography variant="body1" color="primary" sx={{ fontWeight: 600 }}>
+                Click to select a file
+              </Typography>
+              <input 
+                type="file" 
+                id="fileInput" 
+                hidden 
+                onChange={handleFileChange} 
+                accept=".csv, .xlsx" 
+              />
+            </Box>
 
-        {/* Display Selected File */}
-        {file && (
-          <div className="mt-4 flex items-center justify-between bg-gray-100 p-3 rounded">
-            <div>
-              <p className="text-gray-700 text-sm truncate">{file.name}</p>
-              <p className="text-gray-500 text-xs">{(file.size / 1024).toFixed(2)} KB</p>
-            </div>
-            <button onClick={handleClearFile} className="text-red-500 hover:text-red-700">
-              <XCircle className="w-5 h-5" />
-            </button>
-          </div>
-        )}
+            {/* Error Message */}
+            {error && (
+              <Typography color="error" variant="body2" sx={{ mt: 1 }}>
+                {error}
+              </Typography>
+            )}
 
-        {/* Upload Button */}
-        <button
-          onClick={handleUpload}
-          className="mt-4 w-full bg-blue-500 text-white font-semibold py-2 rounded-lg hover:bg-blue-600 transition duration-200 disabled:bg-gray-400"
-          disabled={!file || uploading}
-        >
-          {uploading ? "Uploading..." : "Upload File"}
-        </button>
-      </div>
-    </div>
+            {/* Display Selected File */}
+            {file && (
+              <Box 
+                sx={{ 
+                  display: "flex", 
+                  alignItems: "center", 
+                  justifyContent: "space-between", 
+                  backgroundColor: "#e3f2fd", 
+                  padding: 1.5, 
+                  borderRadius: 2, 
+                  mt: 2 
+                }}
+              >
+                <Box>
+                  <Typography variant="body2" color="black">{file.name}</Typography>
+                  <Typography variant="caption" color="black">
+                    {(file.size / 1024).toFixed(2)} KB
+                  </Typography>
+                </Box>
+                <IconButton onClick={handleClearFile} color="error">
+                  <XCircle size={20} />
+                </IconButton>
+              </Box>
+            )}
+
+            {/* Upload Button */}
+            <Button
+              variant="contained"
+              fullWidth
+              sx={{ mt: 3, height: 45, fontWeight: 600 }}
+              onClick={handleUpload}
+              disabled={!file || uploading}
+            >
+              {uploading ? <CircularProgress size={24} color="inherit" /> : "Upload File"}
+            </Button>
+          </CardContent>
+        </Card>
+      </Box>
+    </Box>
   );
 }
 

@@ -19,7 +19,7 @@ import { tokens } from "../../../theme";
 import Header from "../../../components/Header";
 import AddLeaveRequest from "./AddLeaveRequest";
 import EditLeaveRequest from "./EditLeaveRequest";
-import { useNotificationContext } from "../../../components/NotificationContext";
+
 
 interface Leave {
   id: number;
@@ -110,21 +110,11 @@ function LeaveRequest() {
     }
   };
 
-  // Trigger the notification bell only for admin
-  const { addNotificationForAdmin } = useNotificationContext(); // Get the function from the context
-
-  const triggerBell = () => {
-    // Create a new notification
-    addNotificationForAdmin({
-      id: Date.now(), // Unique ID based on timestamp
-      message: "A new leave request has been added!",
-    });
-  };
-
+  
   return (
     <Box m="20px">
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="LEAVE REQUEST MANAGEMENT" subtitle="Manage Leave Requests" />
+        <Header title="LEAVE REQUEST" subtitle="Track your leave requests" />
 
         <Button
           variant="contained"
@@ -153,7 +143,7 @@ function LeaveRequest() {
         </Typography>
       )}
 
-      <Box mt={3} height="60vh">
+      <Box mt={2} height="60vh">
         <DataGrid
           rows={leaveRequests}
           columns={[
@@ -170,7 +160,7 @@ function LeaveRequest() {
                 <Box display="flex" gap={1} mt={1}>
                   <Button
                     variant="contained"
-                    color="secondary"
+                    color="primary"
                     sx={{ textTransform: "none", fontSize: "12px", px: 2 }}
                     startIcon={<EditIcon />}
                     onClick={() => {
@@ -187,9 +177,9 @@ function LeaveRequest() {
                       textTransform: "none",
                       fontSize: "12px",
                       px: 2,
-                      backgroundColor: "red",
+                      backgroundColor: "primary",
                       color: "#fff",
-                      "&:hover": { backgroundColor: "darkred" },
+                      "&:hover": { backgroundColor: "primary" },
                     }}
                     startIcon={<DeleteIcon />}
                     onClick={() => deleteLeaveRequest(params.row.id)}
@@ -222,7 +212,7 @@ function LeaveRequest() {
           <AddLeaveRequest
             onLeaveRequestAdded={() => {
               fetchLeaveRequests(); // Refresh the leave requests
-              triggerBell(); // Trigger the bell notification for the admin
+
             }}
             onClose={() => setOpenAddDialog(false)}
           />

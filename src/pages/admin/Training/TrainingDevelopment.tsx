@@ -201,9 +201,10 @@ const [participantsError, setParticipantsError] = useState("");
         sx={{
           fontWeight: 'bold',
           backgroundColor: '#f5f5f5',
-          '& .MuiTab-root': { color: '#000' },
-          '& .Mui-selected': { color: '#1976d2' },
-          '& .MuiTabs-indicator': { backgroundColor: '#1976d2' },
+          '& .MuiTab-root': { color: '#000',  },
+          '& .Mui-selected': { color: 'black',  fontWeight: 'bold', fontSize: "14px"},
+          '& .MuiTabs-indicator': { backgroundColor: '#1976d2',  height: '3px', // Thicker indicator
+            borderRadius: '2px', },
         }}
       >
         <Tab label="Trainings" />
@@ -213,10 +214,8 @@ const [participantsError, setParticipantsError] = useState("");
 
       {tabIndex === 0 && (
         <Paper elevation={3} sx={{ p: 3 }}>
-          <Typography variant="h5" fontWeight="bold">
-            Upcoming & Completed Trainings
-          </Typography>
-      <Box mt={3} height="60vh">
+         
+      <Box height="60vh">
         <DataGrid
           rows={trainings}
           columns={[
@@ -234,7 +233,7 @@ const [participantsError, setParticipantsError] = useState("");
                 <Box display="flex" gap={1} mt={1}>
                   <Button
                     variant="contained"
-                    color="secondary"
+                    color="primary"
                     sx={{ textTransform: "none", fontSize: "12px", px: 2 }}
                     startIcon={<EditIcon />}
                     onClick={() => {
@@ -252,9 +251,9 @@ const [participantsError, setParticipantsError] = useState("");
                       textTransform: "none",
                       fontSize: "12px",
                       px: 2,
-                      backgroundColor: "red",
+                      backgroundColor: "primary",
                       color: "#fff",
-                      "&:hover": { backgroundColor: "darkred" },
+                      "&:hover": { backgroundColor: "primary" },
                     }}
                     startIcon={<DeleteIcon />}
                     onClick={() => deleteTraining(params.row.id)}
@@ -286,9 +285,7 @@ const [participantsError, setParticipantsError] = useState("");
 
   {tabIndex === 1 && (
   <Paper elevation={3} sx={{ p: 3 }}>
-    <Typography variant="h5" fontWeight="bold" mb={2}>
-      Participants
-    </Typography>
+   
     {participantsError && (
       <Typography color="error" textAlign="center" mt={2}>
         {participantsError}

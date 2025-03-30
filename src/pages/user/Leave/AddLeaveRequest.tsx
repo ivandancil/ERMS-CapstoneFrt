@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { TextField, MenuItem, Button, Box, Typography } from "@mui/material";
+import { useNotificationContext } from "../../../components/NotificationContext";
 
 interface AddLeaveRequestProps {
   onLeaveRequestAdded: () => void;
   onClose: () => void;
 }
 
-const leaveTypes = ["Vacation", "Sick", "Emergency", "Maternity", "Paternity"]; // Customize as needed
+const leaveTypes = ["Vacation", "Sick", "Emergency", "Maternity", "Paternity"];
 
 function AddLeaveRequest({ onLeaveRequestAdded, onClose }: AddLeaveRequestProps) {
+  const { addNotification, removeNotification } = useNotificationContext();
   const [formData, setFormData] = useState({
     leave_type: "",
     start_date: "",
@@ -20,10 +22,10 @@ function AddLeaveRequest({ onLeaveRequestAdded, onClose }: AddLeaveRequestProps)
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [e.target.name]: e.target.value,
-    });
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -31,8 +33,20 @@ function AddLeaveRequest({ onLeaveRequestAdded, onClose }: AddLeaveRequestProps)
     setLoading(true);
     setError("");
 
+    if (formData.end_date < formData.start_date) {
+      setError("End date cannot be before start date.");
+      setLoading(false);
+      return;
+    }
+
     try {
       const token = localStorage.getItem("token");
+      const userString = localStorage.getItem("user");
+      const user = userString ? JSON.parse(userString) : null;
+
+      if (!user || !user.name) {
+        throw new Error("User data is missing.");
+      }
 
       const response = await fetch("http://127.0.0.1:8000/api/leave-requests", {
         method: "POST",
@@ -48,16 +62,20 @@ function AddLeaveRequest({ onLeaveRequestAdded, onClose }: AddLeaveRequestProps)
         throw new Error(errorData.message || "Failed to submit leave request.");
       }
 
-      // Clear form
+      const requestData = await response.json();
+
+      // Notify admin but NOT the user
+      if (user?.role !== "admin") {
+        addNotification(`${user?.name} submitted a leave request.`, "admin", requestData.id);
+      }
+
       setFormData({ leave_type: "", start_date: "", end_date: "", reason: "" });
 
-      // Refresh leave requests
       onLeaveRequestAdded();
       onClose();
-      alert("Leave request submitted successfully.");
-    } catch (err: any) {
-      console.error(err.message);
-      setError(err.message || "Failed to submit leave request.");
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "An unknown error occurred.";
+      setError(message);
     } finally {
       setLoading(false);
     }
@@ -65,11 +83,7 @@ function AddLeaveRequest({ onLeaveRequestAdded, onClose }: AddLeaveRequestProps)
 
   return (
     <Box component="form" onSubmit={handleSubmit} display="flex" flexDirection="column" gap={2} mt={2}>
-      {error && (
-        <Typography color="error" textAlign="center">
-          {error}
-        </Typography>
-      )}
+      {error && <Typography color="error" textAlign="center">{error}</Typography>}
 
       <TextField
         select
@@ -78,7 +92,6 @@ function AddLeaveRequest({ onLeaveRequestAdded, onClose }: AddLeaveRequestProps)
         value={formData.leave_type}
         onChange={handleChange}
         required
-        sx={{...inputStyles}}
       >
         {leaveTypes.map((type) => (
           <MenuItem key={type} value={type}>
@@ -95,7 +108,6 @@ function AddLeaveRequest({ onLeaveRequestAdded, onClose }: AddLeaveRequestProps)
         onChange={handleChange}
         InputLabelProps={{ shrink: true }}
         required
-        sx={{...inputStyles}}
       />
 
       <TextField
@@ -106,46 +118,23 @@ function AddLeaveRequest({ onLeaveRequestAdded, onClose }: AddLeaveRequestProps)
         onChange={handleChange}
         InputLabelProps={{ shrink: true }}
         required
-        sx={{...inputStyles}}
       />
 
       <TextField
         label="Reason"
         name="reason"
-        
         value={formData.reason}
         onChange={handleChange}
         multiline
         rows={3}
         required
-      
-        sx={{...inputStyles} }
       />
 
-      <Button
-        variant="contained"
-        type="submit"
-        sx={{ mt: 2 }}
-        disabled={loading}
-      >
+      <Button variant="contained" type="submit" sx={{ mt: 2 }} disabled={loading}>
         {loading ? "Submitting..." : "Submit"}
       </Button>
     </Box>
   );
 }
-
-// 🔥 Styles: Placeholder turns white on hover!
-const inputStyles = {
-  "& .MuiInputLabel-root": { color: "#ccc !important" }, // Default placeholder color
-  "& .MuiInputLabel-root.Mui-focused": { color: "white !important" }, // Focus color
-  "& .MuiOutlinedInput-root": {
-    "&:hover .MuiInputLabel-root": { color: "white !important" }, // White placeholder on hover
-    "& fieldset": { borderColor: "#ccc !important" }, // Default border color
-    "&:hover fieldset": { borderColor: "white !important" }, // Border turns white on hover
-    "&.Mui-focused fieldset": { borderColor: "white !important" }, // White border on focus
-  },
-  "& .MuiInputBase-input": { color: "white" }, // Text color white
-};
-
 
 export default AddLeaveRequest;

@@ -102,7 +102,7 @@ function DocumentManagement() {
   return (
     <Box m="20px">
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="DOCUMENT MANAGEMENT" subtitle="" />
+        <Header title="DOCUMENT MANAGEMENT" subtitle="Organize and Access Your Files Efficiently" />
         <Button
           variant="contained"
           sx={{
@@ -131,22 +131,25 @@ function DocumentManagement() {
         />
       </Box>
 
-      <Paper elevation={3} sx={{ p: 3, mt: 2 }}>
-        <Tabs
+      <Tabs
           value={currentTab}
           onChange={handleTabChange}
           sx={{
             fontWeight: 'bold',
             backgroundColor: '#f5f5f5',
-            '& .MuiTab-root': { color: '#000' },
-            '& .Mui-selected': { color: '#1976d2' },
-            '& .MuiTabs-indicator': { backgroundColor: '#1976d2' },
+            '& .MuiTab-root': { color: '#000',  },
+            '& .Mui-selected': { color: 'black',  fontWeight: 'bold', fontSize: "14px"},
+            '& .MuiTabs-indicator': { backgroundColor: '#1976d2',  height: '3px', // Thicker indicator
+              borderRadius: '2px', },
           }}
         >
           <Tab value="Common" label="Common Files" />
           <Tab value="Personal" label="Personal Files" />
         </Tabs>
-        <Box mt={3} height="55vh">
+
+      <Paper elevation={3} sx={{ p: 3 }}>
+      
+        <Box height="55vh">
           <DataGrid
             rows={filteredDocuments}
             columns={columns}

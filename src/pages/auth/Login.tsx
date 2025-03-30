@@ -7,11 +7,7 @@ import { tokens } from "../../theme";
 function Login() {
   const theme = useTheme();
   const navigate = useNavigate();
-<<<<<<< HEAD
-   const colors = tokens(theme.palette.mode);
-=======
   const colors = tokens(theme.palette.mode);
->>>>>>> frontend
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

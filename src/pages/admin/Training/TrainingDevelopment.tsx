@@ -221,10 +221,32 @@ const [participantsError, setParticipantsError] = useState("");
           columns={[
         
             { field: "trainingID", headerName: "Training ID", flex: 1 },
-            { field: "training_title", headerName: "Training Title", flex: 1 },
-            { field: "start_datetime", headerName: "Start Date", flex: 1 },
-            { field: "end_datetime", headerName: "End Date", flex: 1 },
+            { field: "training_title", headerName: "Training Title", flex: 1.5 },
+            { field: "start_datetime", headerName: "Start Date", flex: 1.5 },
+            { field: "end_datetime", headerName: "End Date", flex: 1.5 },
             { field: "duration", headerName: "Duration", flex: 1 },
+            {
+              field: "status",
+              headerName: "Status",
+              flex: 1,
+              renderCell: (params) => (
+                <Typography
+                  sx={{
+                    mt: "15px",
+                    fontWeight: "bold",
+                    color:
+                      params.value === "Ongoing"
+                        ? "white"
+                        : params.value === "Completed"
+                        ? "white"
+                        : "white",
+                  }}
+                >
+                  {params.value}
+                </Typography>
+              ),
+            },
+            
             {
               field: "actions",
               headerName: "Actions",

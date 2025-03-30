@@ -166,7 +166,7 @@ function EmployeeManagement() {
       )}
 
       {/* Employee Table */}
-      <Box mt={3} height="60vh">
+      <Box mt={3} height="55vh">
         <DataGrid
           rows={employees}
           columns={[

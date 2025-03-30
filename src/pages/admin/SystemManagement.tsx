@@ -160,7 +160,7 @@ const SystemManagement = () => {
           <Typography color="white">{error}</Typography>
         </Box>
       )}
-      <Box sx={{ mt: "20px", height: "65vh" }}>
+      <Box sx={{ mt: "20px", height: "55vh" }}>
         <DataGrid
           rows={users} // Data from backend (system users)
           columns={columns}

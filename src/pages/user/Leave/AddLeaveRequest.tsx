@@ -20,6 +20,7 @@ function AddLeaveRequest({ onLeaveRequestAdded, onClose }: AddLeaveRequestProps)
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData((prev) => ({
@@ -71,6 +72,7 @@ function AddLeaveRequest({ onLeaveRequestAdded, onClose }: AddLeaveRequestProps)
 
       setFormData({ leave_type: "", start_date: "", end_date: "", reason: "" });
 
+      alert("Leave request added successfully.");
       onLeaveRequestAdded();
       onClose();
     } catch (err: unknown) {

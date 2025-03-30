@@ -215,7 +215,7 @@ const [participantsError, setParticipantsError] = useState("");
       {tabIndex === 0 && (
         <Paper elevation={3} sx={{ p: 3 }}>
          
-      <Box height="60vh">
+      <Box height="53vh">
         <DataGrid
           rows={trainings}
           columns={[
@@ -291,7 +291,7 @@ const [participantsError, setParticipantsError] = useState("");
         {participantsError}
       </Typography>
     )}
-    <Box height="60vh">
+    <Box height="53vh">
       <DataGrid
         rows={participants}
         columns={[

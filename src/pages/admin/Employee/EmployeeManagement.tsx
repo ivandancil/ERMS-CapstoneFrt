@@ -253,7 +253,7 @@ function EmployeeManagement() {
           <AddEmployee onEmployeeAdded={fetchEmployees} onClose={() => setOpenAddDialog(false)} />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenAddDialog(false)} color="secondary" autoFocus>
+          <Button onClick={() => setOpenAddDialog(false)} color="primary" variant="contained" autoFocus>
             Close
           </Button>
         </DialogActions>

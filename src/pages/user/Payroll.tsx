@@ -30,7 +30,7 @@ function Payroll() {
       headerName: "Action",
       flex: 1,
       renderCell: (params) => (
-        <Button variant="contained" color="secondary" onClick={() => handleDownloadPayslip(params.row.month)}>
+        <Button variant="contained" color="primary" onClick={() => handleDownloadPayslip(params.row.month)}>
           Download Payslip
         </Button>
       ),

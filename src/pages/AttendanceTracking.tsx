@@ -211,7 +211,11 @@ function AttendanceTracking() {
               sx={{
                 backgroundColor: colors.blueAccent[900],
                 color: "white",
+<<<<<<< HEAD
                 "&:hover": { backgroundColor: colors.blueAccent[900], },
+=======
+                "&:hover": { backgroundColor: colors.blueAccent[900] },
+>>>>>>> frontend
               }}
                 onClick={handleTimeIn}
               >
@@ -221,11 +225,19 @@ function AttendanceTracking() {
               <Button
                 variant="contained"
                   color="secondary"
+<<<<<<< HEAD
                  sx={{
                 backgroundColor: colors.blueAccent[900],
                 color: "white",
                 "&:hover": { backgroundColor: colors.blueAccent[900], },
               }}
+=======
+                sx={{
+                  backgroundColor: colors.blueAccent[900],
+                  color: "white",
+                  "&:hover": { backgroundColor: colors.blueAccent[900] },
+                }}
+>>>>>>> frontend
                 onClick={() => setShowTable(true)}
               >
                 Show Attendance Table

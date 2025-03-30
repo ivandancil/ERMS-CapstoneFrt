@@ -115,7 +115,7 @@ function EditLeaveRequest({ leaveRequest, onLeaveRequestUpdated, onClose }: Edit
       {error && <p style={{ color: "red" }}>{error}</p>}
 
       <Box display="flex" justifyContent="flex-end" gap={2}>
-        <Button variant="contained" color="secondary" onClick={onClose}>
+        <Button variant="contained" color="primary" onClick={onClose}>
           Cancel
         </Button>
         <Button variant="contained" onClick={handleSubmit} disabled={loading}>

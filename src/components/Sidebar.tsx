@@ -190,7 +190,7 @@ function Sidebar({ role }: SidebarProps) {
           {!isCollapsed && (
             <Box textAlign="center" py={2}>
             <FaUserCircle size={50} />
-            <Typography variant="h6" color="white" mt={1} fontWeight="bold">
+            <Typography variant="h5" color="white" mt={1} fontWeight="bold">
                 {loading ? "Loading..." : name || "Unknown User"} {/* ✅ show name */}
               </Typography>
               <Typography variant="body2">
@@ -247,8 +247,8 @@ function Sidebar({ role }: SidebarProps) {
                 </Typography>
 
                 <Item title="Upload Payroll" to="/payroll/upload" icon={<FaMoneyCheckAlt />} selected={selected} setSelected={setSelected} />
-                <Item title="View Uploaded Payrolls" to="/payroll/view" icon={<FaFileAlt />} selected={selected} setSelected={setSelected} />
-                <Item title="Download Reports" to="/payroll/reports" icon={<FaFolderOpen />} selected={selected} setSelected={setSelected} />
+                {/* <Item title="View Uploaded Payrolls" to="/payroll/view" icon={<FaFileAlt />} selected={selected} setSelected={setSelected} />
+                <Item title="Download Reports" to="/payroll/reports" icon={<FaFolderOpen />} selected={selected} setSelected={setSelected} /> */}
               </>
             )}
 

@@ -208,6 +208,11 @@ function AttendanceTracking() {
               <Button
               variant="contained"
               color="secondary"
+              sx={{
+                backgroundColor: colors.blueAccent[900],
+                color: "white",
+                "&:hover": { backgroundColor: colors.blueAccent[900], },
+              }}
                 onClick={handleTimeIn}
               >
                 Time In
@@ -216,11 +221,11 @@ function AttendanceTracking() {
               <Button
                 variant="contained"
                   color="secondary"
-                // sx={{
-                //   backgroundColor: "#1976d2",
-                //   color: "white",
-                //   "&:hover": { backgroundColor: "#1565c0" },
-                // }}
+                 sx={{
+                backgroundColor: colors.blueAccent[900],
+                color: "white",
+                "&:hover": { backgroundColor: colors.blueAccent[900], },
+              }}
                 onClick={() => setShowTable(true)}
               >
                 Show Attendance Table
@@ -254,8 +259,8 @@ function AttendanceTracking() {
                   borderRadius: "8px",
                   overflow: "hidden",
                   "& .MuiDataGrid-root": { border: "none" },
-                  "& .MuiDataGrid-columnHeader": { backgroundColor: colors.blueAccent[700] },
-                  "& .MuiDataGrid-footerContainer": { backgroundColor: colors.blueAccent[700] },
+                  "& .MuiDataGrid-columnHeader": { backgroundColor: colors.blueAccent[900] },
+                  "& .MuiDataGrid-footerContainer": { backgroundColor: colors.blueAccent[900] },
                 }}
               />
             </Paper>

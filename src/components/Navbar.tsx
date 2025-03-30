@@ -183,60 +183,60 @@ function Navbar() {
 
           {/* Conditional Buttons */}
           {isLoggedIn ? (
-  <>
-  {/* Profile Avatar with Margin */}
-  <Tooltip title="Account settings">
-    <IconButton onClick={handleMenuOpen} sx={{ p: 0, ml: 2, mr: 3 }}>
-      <Avatar src={photo || "/image/default-avatar.png"} sx={{ width: 40, height: 40 }} />
-    </IconButton>
-  </Tooltip>
+              <>
+              {/* Profile Avatar with Margin */}
+              <Tooltip title="Account settings">
+                <IconButton onClick={handleMenuOpen} sx={{ p: 0, ml: 2, mr: 3 }}>
+                  <Avatar src={photo || "/image/default-avatar.png"} sx={{ width: 45, height: 45 }} />
+                </IconButton>
+              </Tooltip>
 
-  {/* Dropdown Menu with Spacing */}
-  <Menu
-    anchorEl={anchorEl}
-    open={Boolean(anchorEl)}
-    onClose={handleMenuClose}
-    sx={{ mt: 1 }} // Small margin from the Avatar
-  >
-    <MenuItem disabled sx={{ mt: 1, mb: 1 }}>
-      <Typography variant="body1" fontWeight="bold">
-        {userName}
-      </Typography>
-    </MenuItem>
-    <MenuItem sx={{ my: 1, px: 3 }} onClick={() => navigate(role === "admin" ? "/admin" : "/user")}>
-      Dashboard
-    </MenuItem>
+              {/* Dropdown Menu with Spacing */}
+              <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleMenuClose}
+                sx={{ mt: 1 }} // Small margin from the Avatar
+              >
+                <MenuItem >
+                  <Typography variant="body1" fontWeight="bold">
+                    {userName}
+                  </Typography>
+                </MenuItem>
+                <MenuItem sx={{ my: 1, px: 3 }} onClick={() => navigate(role === "admin" ? "/admin" : "/user")}>
+                  Dashboard
+                </MenuItem>
 
-    <MenuItem sx={{ my: 1, px: 3 }} onClick={handleLogout}>
-      Logout
-    </MenuItem>
-  </Menu>
-</>
-) : (
-<>
-  {["Login", "Register"].map((text, index) => (
-    <NavLink key={index} to={`/${text.toLowerCase()}`} style={{ textDecoration: "none" }}>
-      {({ isActive }) => (
-        <Button
-          sx={{
-            mx: 1,
-            my: 1,
-            color: isActive ? "#1976d2" : "black",
-            fontSize: "1.1rem",
-            fontWeight: 600,
-          }}
-        >
-          {text}
-        </Button>
-      )}
-    </NavLink>
-  ))}
-</>
-)}
-        </Box>
-      </Toolbar>
-    </AppBar>
-  );
-}
+                <MenuItem sx={{ my: 1, px: 3 }} onClick={handleLogout}>
+                  Logout
+                </MenuItem>
+              </Menu>
+            </>
+            ) : (
+            <>
+              {["Login", "Register"].map((text, index) => (
+                <NavLink key={index} to={`/${text.toLowerCase()}`} style={{ textDecoration: "none" }}>
+                  {({ isActive }) => (
+                    <Button
+                      sx={{
+                        mx: 1,
+                        my: 1,
+                        color: isActive ? "#1976d2" : "black",
+                        fontSize: "1.1rem",
+                        fontWeight: 600,
+                      }}
+                    >
+                      {text}
+                    </Button>
+                  )}
+                </NavLink>
+              ))}
+            </>
+            )}
+                    </Box>
+                  </Toolbar>
+                </AppBar>
+              );
+            }
 
 export default Navbar;

@@ -1,40 +1,42 @@
-import React, { createContext, useState, ReactNode, useContext } from "react";
+import { createContext, useState, useContext } from "react";
 
-// Define types for notifications
 interface Notification {
-  id: number;
+  id: string;
   message: string;
+  role: string;
+  requestId?: string;
 }
 
 interface NotificationContextType {
-  addNotificationForAdmin: (notification: Notification) => void;
   notifications: Notification[];
+  addNotification: (message: string, role: string, requestId?: string) => void;
+  removeNotification: (requestId: string) => void;
 }
 
 const NotificationContext = createContext<NotificationContextType | undefined>(undefined);
 
-export const NotificationProvider = ({ children }: { children: ReactNode }) => {
+export function NotificationProvider({ children }: { children: React.ReactNode }) {
   const [notifications, setNotifications] = useState<Notification[]>([]);
 
-  // Add notification only for admin
-  const addNotificationForAdmin = (notification: Notification) => {
-    const role = localStorage.getItem("role"); // Get the role (admin/user) from localStorage or state
-    if (role === "admin") {
-      setNotifications((prevNotifications) => [...prevNotifications, notification]);
-    }
+  const addNotification = (message: string, role: string, requestId?: string) => {
+    setNotifications((prev) => [...prev, { id: Date.now().toString(), message, role, requestId }]);
+  };
+
+  const removeNotification = (requestId: string) => {
+    setNotifications((prev) => prev.filter((notif) => notif.requestId !== requestId));
   };
 
   return (
-    <NotificationContext.Provider value={{ addNotificationForAdmin, notifications }}>
+    <NotificationContext.Provider value={{ notifications, addNotification, removeNotification }}>
       {children}
     </NotificationContext.Provider>
   );
-};
+}
 
-export const useNotificationContext = () => {
+export function useNotificationContext() {
   const context = useContext(NotificationContext);
   if (!context) {
     throw new Error("useNotificationContext must be used within a NotificationProvider");
   }
   return context;
-};
+}

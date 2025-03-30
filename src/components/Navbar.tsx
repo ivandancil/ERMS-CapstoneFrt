@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, Button, Box, Typography } from "@mui/material";
+import { AppBar, Toolbar, Button, Box, Typography, Tooltip, IconButton, Avatar, Menu, MenuItem } from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -8,8 +8,22 @@ function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState("");
   const [role, setRole] = useState(""); // NEW
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
-  const [photo, setPhoto] = useState(""); // NEW
+
+  const [photo, setPhoto] = useState("");
+
+    // Handle profile menu open
+    function handleMenuOpen(event: React.MouseEvent<HTMLButtonElement>) {
+      setAnchorEl(event.currentTarget);
+    }
+    
+
+  
+    // Handle profile menu close
+    function handleMenuClose() {
+      setAnchorEl(null);
+    }
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -58,15 +72,18 @@ function Navbar() {
 
   // Logout function
   async function handleLogout() {
+    const confirmLogout = window.confirm("Are you sure you want to log out?");
+    if (!confirmLogout) return;
+  
     try {
       const token = localStorage.getItem("token");
-
+  
       if (!token) {
         console.warn("No token found, redirecting to login.");
-        navigate("/login");
+        clearSessionAndRedirect();
         return;
       }
-
+  
       const response = await fetch("http://localhost:8000/api/logout", {
         method: "POST",
         headers: {
@@ -74,25 +91,33 @@ function Navbar() {
           Authorization: `Bearer ${token}`,
         },
       });
-
-      if (!response.ok) {
-        throw new Error("Logout failed");
+  
+      if (response.ok) {
+        console.log("Logout successful");
+      } else {
+        console.warn("Logout failed, proceeding with local cleanup.");
       }
-
-      // Clear localStorage
-      localStorage.removeItem("token");
-      localStorage.removeItem("role");
-      localStorage.removeItem("name");
-      localStorage.removeItem("photo"); // NEW
-      setIsLoggedIn(false);
-      setRole(""); // CLEAR role
-      setPhoto(""); // NEW
-      console.log("Logged out successfully");
-      navigate("/login");
     } catch (error) {
       console.error("Error:", error instanceof Error ? error.message : error);
+    } finally {
+      clearSessionAndRedirect();
     }
   }
+  
+  function clearSessionAndRedirect() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    localStorage.removeItem("name");
+    localStorage.removeItem("photo"); 
+    sessionStorage.clear();
+  
+    setIsLoggedIn(false);
+    setRole(""); 
+    setPhoto("");
+  
+    navigate("/login");
+  }
+  
 
   return (
     <AppBar
@@ -158,63 +183,56 @@ function Navbar() {
 
           {/* Conditional Buttons */}
           {isLoggedIn ? (
-            <>
-              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                {photo && (
-                  <Box
-                    component="img"
-                    src={photo}
-                    alt="Profile"
-                    sx={{
-                      width: 40,
-                      height: 40,
-                      borderRadius: "50%",
-                      objectFit: "cover",
-                    }}
-                  />
-                )}
-              <Typography sx={{ mx: 2, fontWeight: 600, color: "black" }}>
-                {userName}
-              </Typography>
-              <Button
-                variant="outlined"
-                color="error"
-                onClick={handleLogout}
-                sx={{ fontWeight: 600 }}
-              >
-                Logout
-              </Button>
-              </Box>
-            </>
-          ) : (
-            <>
-              {["Login", "Register"].map((text, index) => (
-                <NavLink
-                  key={index}
-                  to={`/${text.toLowerCase()}`}
-                  style={{ textDecoration: "none" }}
-                >
-                  {({ isActive }) => (
-                    <Button
-                      sx={{
-                        mx: 1,
-                        color: isActive ? "#1976d2" : "black",
-                        fontSize: "1.1rem",
-                        fontWeight: 600,
-                        borderBottom: isActive ? "2px solid #1976d2" : "none",
-                        "&:hover": {
-                          bgcolor: "#f0f0f0",
-                          color: "#1976d2",
-                        },
-                      }}
-                    >
-                      {text}
-                    </Button>
-                  )}
-                </NavLink>
-              ))}
-            </>
-          )}
+  <>
+  {/* Profile Avatar with Margin */}
+  <Tooltip title="Account settings">
+    <IconButton onClick={handleMenuOpen} sx={{ p: 0, ml: 2, mr: 3 }}>
+      <Avatar src={photo || "/image/default-avatar.png"} sx={{ width: 40, height: 40 }} />
+    </IconButton>
+  </Tooltip>
+
+  {/* Dropdown Menu with Spacing */}
+  <Menu
+    anchorEl={anchorEl}
+    open={Boolean(anchorEl)}
+    onClose={handleMenuClose}
+    sx={{ mt: 1 }} // Small margin from the Avatar
+  >
+    <MenuItem disabled sx={{ mt: 1, mb: 1 }}>
+      <Typography variant="body1" fontWeight="bold">
+        {userName}
+      </Typography>
+    </MenuItem>
+    <MenuItem sx={{ my: 1, px: 3 }} onClick={() => navigate(role === "admin" ? "/admin" : "/user")}>
+      Dashboard
+    </MenuItem>
+
+    <MenuItem sx={{ my: 1, px: 3 }} onClick={handleLogout}>
+      Logout
+    </MenuItem>
+  </Menu>
+</>
+) : (
+<>
+  {["Login", "Register"].map((text, index) => (
+    <NavLink key={index} to={`/${text.toLowerCase()}`} style={{ textDecoration: "none" }}>
+      {({ isActive }) => (
+        <Button
+          sx={{
+            mx: 1,
+            my: 1,
+            color: isActive ? "#1976d2" : "black",
+            fontSize: "1.1rem",
+            fontWeight: 600,
+          }}
+        >
+          {text}
+        </Button>
+      )}
+    </NavLink>
+  ))}
+</>
+)}
         </Box>
       </Toolbar>
     </AppBar>

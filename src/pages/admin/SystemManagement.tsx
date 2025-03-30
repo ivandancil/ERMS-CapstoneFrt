@@ -101,18 +101,22 @@ const SystemManagement = () => {
       renderCell: ({ row }: { row: RowData }) => {
         return (
           <Box
-            width="60%"
+            width="30%"
             m="20 auto"
             p="5px"
             display="flex"
             justifyContent="center"
-            backgroundColor={
-              row.access === "admin"
-                ? colors.greenAccent[600]
-                : row.access === "payroll"
-                ? colors.greenAccent[900] // Payroll role color
-                : colors.blueAccent[700]
-            }
+        //  backgroundColor={
+        //   row.access === "admin"
+        //     ? "#d32f2f" // Deep Red for Admin
+        //     : row.access === "payroll"
+        //     ? "#0288d1" // Deep Blue for Payroll
+        //     : row.access === "user"
+        //     ? "#388e3c" // Deep Green for HR / Employee Management
+        //     : "#6c757d" // Muted Gray for unspecified roles
+        // }
+        
+
             borderRadius="4px"
             mt="10px"
             alignItems="center"

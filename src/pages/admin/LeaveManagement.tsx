@@ -84,6 +84,9 @@ const LeaveManagement = () => {
       },
     },
     { field: "leave_type", headerName: "Leave Type", flex: 1 },
+    { field: "start_date", headerName: "Start Date", flex: 1 },
+    { field: "end_date", headerName: "End Date", flex: 1 },
+    { field: "reason", headerName: "Reason", flex: 1 },
     { field: "status", headerName: "Status", flex: 1 },
   ];
 
@@ -91,30 +94,16 @@ const LeaveManagement = () => {
     <Box m="20px">
       {/* Header and Download Button */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="LEAVE MANAGEMENT" subtitle="" />
-        {/* <Button
-          sx={{
-            backgroundColor: colors.blueAccent[700],
-            color: colors.grey[100],
-            fontSize: "14px",
-            fontWeight: "bold",
-            px: 3,
-            py: 1.5,
-          }}
-        >
-          Download Report
-        </Button> */}
-      </Box>
-
-      {/* Status Box */}
-      <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2} my={1}>
+        <Header title="LEAVE MANAGEMENT" subtitle="Track and manage leave requests"  />
+         {/* Status Box Moved Here */}
         <Box
-          gridColumn="span 4"
-          bgcolor={colors.primary[400]}
           display="flex"
           alignItems="center"
+          bgcolor={colors.primary[400]}
+          p={3}
+          borderRadius={2}
+          minWidth="250px"
           justifyContent="center"
-          p={2}
         >
           <EventAvailableIcon sx={{ color: colors.greenAccent[600], fontSize: "26px" }} />
           <Typography variant="h6" sx={{ ml: 1 }}>
@@ -123,11 +112,11 @@ const LeaveManagement = () => {
         </Box>
       </Box>
 
+      
+
       {/* Leave Requests DataGrid */}
-      <Box mt={4} sx={{ height: "55vh" }}>
-        <Typography variant="h4" color={colors.grey[100]} mb={1}>
-          Pending Leave Requests
-        </Typography>
+      <Box mt={3} sx={{ height: "55vh" }}>
+       
         <DataGrid
           rows={leaveRequests}
           columns={columns}

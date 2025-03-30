@@ -175,7 +175,7 @@ function EditTraining({ trainingId, onTrainingUpdated, onClose }: EditTrainingPr
           />
 
           <Box display="flex" justifyContent="space-between" mt={2}>
-            <Button variant="contained" color="secondary" onClick={onClose}>
+            <Button variant="contained" color="primary" onClick={onClose}>
               Cancel
             </Button>
             <Button type="submit" variant="contained" color="primary" disabled={loading}>

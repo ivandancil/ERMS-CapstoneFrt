@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { TextField, Button, Box } from "@mui/material";
+import { useNotificationContext } from "../../../components/NotificationContext";
 
 interface AddTrainingProps {
   onTrainingAdded: () => void;
@@ -13,6 +14,8 @@ function AddTraining({ onTrainingAdded, onClose }: AddTrainingProps) {
   const [endDate, setEndDate] = useState("");
   const [duration, setDuration] = useState("");
   const [loading, setLoading] = useState(false);
+  const { addNotification } = useNotificationContext();
+  
 
   const handleAddTraining = async () => {
     setLoading(true);
@@ -51,6 +54,7 @@ function AddTraining({ onTrainingAdded, onClose }: AddTrainingProps) {
     } finally {
       setLoading(false);
     }
+    addNotification("New training session has been added!", "user");
   };
 
   return (

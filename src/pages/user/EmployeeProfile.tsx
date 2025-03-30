@@ -3,6 +3,7 @@ import { Avatar, Box, Button, Card, CardContent, Divider, Grid, IconButton, Pape
 import Header from "../../components/Header";
 import { tokens } from "../../theme";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
+import { blue } from "@mui/material/colors";
 
 // Define Employee Type
 interface Employee {
@@ -110,13 +111,27 @@ function EmployeeProfile() {
             </Box>
           </Grid>
 
+          
           {/* Profile Details */}
           <Grid item xs={12} sm={8}>
-            <Typography variant="h5" sx={{ transition: "0.3s", "&:hover": { color: colors.blueAccent[500] } }}>
-              {employee?.lastname}
+            <Typography
+              variant="h5"
+              sx={{
+               fontWeight: "bold",
+               fontSize: "1.9rem",
+              }}
+            >
+              {employee?.firstname} {employee?.lastname}
             </Typography>
-            <Typography variant="body1" color="gray">{employee?.jobPosition}</Typography>
-            {/* <Typography variant="body2" color="gray">{employee.department}</Typography> */}
+            <Typography variant="body1" sx={{ fontSize: "1rem", color: "gray" }}>
+              Employee ID: <strong>{employee?.employeeID || "N/A"}</strong>
+            </Typography>
+            <Typography variant="body1" sx={{ fontSize: "1rem", color: "gray" }}>
+              Job Position: <strong>{employee?.jobPosition || "Not Assigned"}</strong>
+            </Typography>
+
+
+          
           </Grid>
         </Grid>
 
@@ -148,8 +163,8 @@ function EmployeeProfile() {
         {/* Tab Content */}
         <Box mt={2}>
           {tabIndex === 0 && (
-            <TableContainer component={Paper} sx={{ boxShadow: 3 }}>
-              <Table>
+             <TableContainer component={Paper} sx={{ maxHeight: "400px", overflow: "auto", boxShadow: 3 }}>
+      <Table stickyHeader>
                 <TableBody>
                   {[
                     ["Employee ID", employee?.employeeID],
@@ -165,7 +180,7 @@ function EmployeeProfile() {
                     ["Address", employee?.address],
                   
                   ].map(([label, value]) => (
-                    <TableRow key={label} sx={{ "&:hover": { backgroundColor: colors.grey[200] } }}>
+                    <TableRow key={label} sx={{ "&:hover": { backgroundColor: colors.grey[700] } }}>
                       <TableCell sx={{ fontWeight: "bold" }}>{label}</TableCell>
                       <TableCell>{value}</TableCell>
                     </TableRow>

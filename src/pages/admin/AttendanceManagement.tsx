@@ -215,9 +215,10 @@ const handleCloseCalendar = () => {
         sx={{
           fontWeight: 'bold',
           backgroundColor: '#f5f5f5',
-          '& .MuiTab-root': { color: '#000' },
-          '& .Mui-selected': { color: '#1976d2' },
-          '& .MuiTabs-indicator': { backgroundColor: '#1976d2' },
+          '& .MuiTab-root': { color: '#000',  },
+          '& .Mui-selected': { color: 'black',  fontWeight: 'bold', fontSize: "14px"},
+          '& .MuiTabs-indicator': { backgroundColor: '#1976d2',  height: '3px', // Thicker indicator
+            borderRadius: '2px', },
         }}
       >
           <Tab label="Daily Attendance" />

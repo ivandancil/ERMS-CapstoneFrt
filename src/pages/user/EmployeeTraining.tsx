@@ -167,16 +167,9 @@ function EmployeeTraining() {
       <Header
         title="TRAINING & DEVELOPMENT"
         subtitle="Your training records and upcoming sessions"
-      />
-
-      {loading ? (
-        <Box display="flex" justifyContent="center" alignItems="center" height="60vh">
-          <CircularProgress />
-        </Box>
-      ) : (
-       
+      />      
         
-          <Box mt={3} height="55vh">
+        <Box mt={6} height="60vh">
             <DataGrid
               rows={trainings}
               columns={columns}
@@ -200,7 +193,7 @@ function EmployeeTraining() {
             />
           </Box>
       
-      )}
+    
 
       {/* Enroll Training Dialog */}
       <Dialog

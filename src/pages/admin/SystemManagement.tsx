@@ -1,18 +1,24 @@
-import { Box, Typography, useTheme, Tooltip, Button } from "@mui/material";
+import { Box, Typography, useTheme, Tabs, Tab, Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import Header from "../../components/Header";
 import { tokens } from "../../theme";
-import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
-import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
-import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined"; // Payroll Icon
-import { useState, useEffect, useRef } from "react";
-import AddIcon from "@mui/icons-material/Add";
+import { useState, useEffect } from "react";
+import moment from "moment";
 
 interface RowData {
   id: number;
   name: string;
   email: string;
-  access: "admin" | "user" | "payroll"; // Added payroll role
+  access: "admin" | "user" | "payroll";
+}
+
+interface LogData {
+  id: number;
+  category: string;
+  user?: string;
+  action?: string;
+  event?: string;
+  timestamp: string;
 }
 
 const SystemManagement = () => {
@@ -23,22 +29,17 @@ const SystemManagement = () => {
     pageSize: 10,
   });
 
-  const [error, setError] = useState(""); // State to hold any error messages
-  const [users, setUsers] = useState<RowData[]>([]); // Data state to hold system users
-  const [loading, setLoading] = useState<boolean>(false); // To track loading state
-  const [openAddDialog, setOpenAddDialog] = useState(false);
+  const [error, setError] = useState("");
+  const [users, setUsers] = useState<RowData[]>([]);
+  const [logs, setLogs] = useState<LogData[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [tabValue, setTabValue] = useState(0);
 
-  const addDialogRef = useRef<HTMLButtonElement>(null);
-  const editDialogRef = useRef<HTMLButtonElement>(null);
-
-  // Fetch Users from the backend
-  async function fetchUsers() {
+  const fetchUsers = async () => {
     setLoading(true);
-    setError(""); // Clear any previous errors
-
+    setError("");
     try {
       const token = localStorage.getItem("token");
-
       const response = await fetch("http://127.0.0.1:8000/api/users", {
         method: "GET",
         headers: {
@@ -46,15 +47,9 @@ const SystemManagement = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch users.");
-      }
-
+      if (!response.ok) throw new Error("Failed to fetch users.");
       const data = await response.json();
-      const usersArray = Array.isArray(data) ? data : data.data || []; // Adjust as needed based on your API response
-
-      // Ensure all users have 'access' as 'admin', 'user', or 'payroll'
+      const usersArray = Array.isArray(data) ? data : data.data || [];
       const formattedUsers = usersArray.map((user: any) => ({
         ...user,
         access:
@@ -64,120 +59,124 @@ const SystemManagement = () => {
             ? "payroll"
             : "user",
       }));
-
-      setUsers(formattedUsers); // Set the users in the state
+      setUsers(formattedUsers);
     } catch (err: any) {
-      console.error("Error fetching users:", err.message);
       setError(err.message || "Failed to load user data");
     } finally {
       setLoading(false);
     }
-  }
+  };
+
+  const fetchLogs = async () => {
+    setLoading(true);
+    setError("");
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch("http://127.0.0.1:8000/api/system-logs", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!response.ok) throw new Error("Failed to fetch logs.");
+      const data = await response.json();
+      setLogs(data.data || []);
+    } catch (err: any) {
+      setError(err.message || "Failed to load system logs");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    fetchUsers(); // Call the function to fetch users
+    fetchUsers();
+    fetchLogs();
   }, []);
 
   const columns = [
-    {
-      field: "id",
-      headerName: "ID",
-    },
-    {
-      field: "name",
-      headerName: "Name",
-      flex: 1,
-      cellClassName: "name-column-cell",
-    },
-    {
-      field: "email",
-      headerName: "Email",
-      flex: 1,
-    },
-    {
-      field: "access",
-      headerName: "Access Level",
-      flex: 1,
-      renderCell: ({ row }: { row: RowData }) => {
-        return (
-          <Box
-            width="30%"
-            m="20 auto"
-            p="5px"
-            display="flex"
-            justifyContent="center"
-        //  backgroundColor={
-        //   row.access === "admin"
-        //     ? "#d32f2f" // Deep Red for Admin
-        //     : row.access === "payroll"
-        //     ? "#0288d1" // Deep Blue for Payroll
-        //     : row.access === "user"
-        //     ? "#388e3c" // Deep Green for HR / Employee Management
-        //     : "#6c757d" // Muted Gray for unspecified roles
-        // }
-        
+    { field: "id", headerName: "ID", width: 90 },
+    { field: "name", headerName: "Name", flex: 1 },
+    { field: "email", headerName: "Email", flex: 1 },
+    { field: "access", headerName: "Access Level", flex: 1 },
+  ];
 
-            borderRadius="4px"
-            mt="10px"
-            alignItems="center"
-          >
-            <Tooltip
-              title={
-                row.access === "admin"
-                  ? "Administrator"
-                  : row.access === "payroll"
-                  ? "Payroll Manager"
-                  : "Regular User"
-              }
-            >
-              <Box display="flex" alignItems="center">
-                {row.access === "admin" && <AdminPanelSettingsOutlinedIcon />}
-                {row.access === "payroll" && <MonetizationOnOutlinedIcon />} 
-                {row.access === "user" && <LockOpenOutlinedIcon />}
-                <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
-                  {row.access === "admin"
-                    ? "Admin"
-                    : row.access === "payroll"
-                    ? "Payroll"
-                    : "User"}
-                </Typography>
-              </Box>
-            </Tooltip>
-          </Box>
-        );
-      },
+  const logColumns = [
+    { field: "id", headerName: "ID", width: 90 },
+    { field: "category", headerName: "Category", flex: 1 },
+    { field: "timestamp", headerName: "Timestamp", flex: 1 },
+    { field: "user", headerName: "User", flex: 1 },
+    { field: "action", headerName: "Action/Event", flex: 1 },
+    {
+      field: "duration",
+      headerName: "Duration",
+      flex: 1,
+      valueGetter: (params: any) => moment(params.row.timestamp).fromNow(),
     },
   ];
 
   return (
     <Box m="20px">
-      <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="SYSTEM MANAGEMENT" subtitle="View Registered System Users"  />
-      </Box>
+      <Header title="SYSTEM MANAGEMENT" subtitle="Manage Users & View System Logs" />
+      <Tabs 
+          value={tabValue}
+          onChange={(e, newValue) => setTabValue(newValue)}
+          sx={{
+            fontWeight: 'bold',
+            backgroundColor: '#f5f5f5',
+            '& .MuiTab-root': { color: '#000',  },
+            '& .Mui-selected': { color: 'black',  fontWeight: 'bold', fontSize: "14px"},
+            '& .MuiTabs-indicator': { backgroundColor: '#1976d2',  height: '3px', // Thicker indicator
+              borderRadius: '10px', },
+          }} 
+      >
+        <Tab label="Users" />
+        <Tab label="System Logs" />
+      </Tabs>
 
-      {error && (
-        <Box sx={{ backgroundColor: colors.redAccent[500], padding: "10px", borderRadius: "5px" }}>
-          <Typography color="white">{error}</Typography>
+      {tabValue === 0 && (
+        <Box sx={{ mt: "15px", height: "55vh" }}>
+          <DataGrid
+            rows={users}
+            columns={columns}
+            paginationModel={paginationModel}
+            onPaginationModelChange={setPaginationModel}
+            pageSizeOptions={[5, 10, 25]}
+            loading={loading}
+            sx={{
+              borderRadius: "8px",
+              overflow: "hidden",
+              "& .MuiDataGrid-root": { border: "none" },
+              "& .MuiDataGrid-columnHeader": { backgroundColor: colors.blueAccent[700], color: "#fff" },
+              "& .MuiDataGrid-footerContainer": { backgroundColor: colors.blueAccent[700], color: "#fff" },
+              "& .MuiDataGrid-columnSeparator": { display: "none" },
+            }}
+          />
         </Box>
       )}
-      <Box sx={{ mt: "20px", height: "55vh" }}>
-        <DataGrid
-          rows={users} // Data from backend (system users)
-          columns={columns}
-          paginationModel={paginationModel}
-          onPaginationModelChange={setPaginationModel}
-          pageSizeOptions={[5, 10, 25]}
-          loading={loading} // Show loading spinner while fetching data
-          sx={{
-            borderRadius: "8px",
-            overflow: "hidden",
-            "& .MuiDataGrid-root": { border: "none" },
-            "& .MuiDataGrid-columnHeader": { backgroundColor: colors.blueAccent[700], color: "#fff" },
-            "& .MuiDataGrid-footerContainer": { backgroundColor: colors.blueAccent[700], color: "#fff" },
-            "& .MuiDataGrid-columnSeparator": { display: "none" },
-          }}
-        />
-      </Box>
+      {tabValue === 1 && (
+        <Box sx={{ mt: "20px", height: "55vh" }}>
+          {/* <Button variant="contained" onClick={fetchLogs} sx={{ mb: 2 }}>
+            Refresh Logs
+          </Button> */}
+          <DataGrid
+            rows={logs}
+            columns={logColumns}
+            paginationModel={paginationModel}
+            onPaginationModelChange={setPaginationModel}
+            pageSizeOptions={[5, 10, 25]}
+            loading={loading}
+            sx={{
+              borderRadius: "8px",
+              overflow: "hidden",
+              "& .MuiDataGrid-root": { border: "none" },
+              "& .MuiDataGrid-columnHeader": { backgroundColor: colors.blueAccent[700], color: "#fff" },
+              "& .MuiDataGrid-footerContainer": { backgroundColor: colors.blueAccent[700], color: "#fff" },
+              "& .MuiDataGrid-columnSeparator": { display: "none" },
+            }}
+          />
+        </Box>
+      )}
     </Box>
   );
 };

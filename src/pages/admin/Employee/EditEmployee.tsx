@@ -175,20 +175,20 @@ function EditEmployee({ employeeId, onEmployeeUpdated, onClose }: EditEmployeePr
 
         {/* Job Position (Dropdown) */}
         <Grid item xs={12} md={6} sx={inputStyles}>
-  <TextField
-    select
-    label="Job Position"
-    name="jobPosition"
-    value={employeeData.jobPosition}
-    onChange={handleSelectChange}
-    fullWidth
-    variant="outlined"
-  >
-    <MenuItem value="Manager">Manager</MenuItem>
-    <MenuItem value="Supervisor">Supervisor</MenuItem>
-    <MenuItem value="Staff">Staff</MenuItem>
-  </TextField>
-</Grid>
+        <TextField
+          select
+          label="Job Position"
+          name="jobPosition"
+          value={employeeData.jobPosition}
+          onChange={handleSelectChange}
+          fullWidth
+          variant="outlined"
+        >
+          <MenuItem value="Manager">Manager</MenuItem>
+          <MenuItem value="Supervisor">Supervisor</MenuItem>
+          <MenuItem value="Staff">Staff</MenuItem>
+        </TextField>
+      </Grid>
 
       {/* Name Fields */}
       <Grid item xs={12} md={4}>
@@ -228,19 +228,19 @@ function EditEmployee({ employeeId, onEmployeeUpdated, onClose }: EditEmployeePr
       </Grid>
       {/* Sex (Dropdown) */}
       <Grid item xs={12} md={6} sx={inputStyles}>
-  <TextField
-    select
-    label="Sex"
-    name="sex" // ✅ Add name attribute
-    value={employeeData.sex}
-    onChange={handleSelectChange}
-    fullWidth
-    variant="outlined"
-  >
-    <MenuItem value="Male">Male</MenuItem>
-    <MenuItem value="Female">Female</MenuItem>
-  </TextField>
-</Grid>
+        <TextField
+          select
+          label="Sex"
+          name="sex" // ✅ Add name attribute
+          value={employeeData.sex}
+          onChange={handleSelectChange}
+          fullWidth
+          variant="outlined"
+        >
+          <MenuItem value="Male">Male</MenuItem>
+          <MenuItem value="Female">Female</MenuItem>
+        </TextField>
+      </Grid>
 
       
       {/* Date of Birth */}

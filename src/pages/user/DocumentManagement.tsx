@@ -147,9 +147,9 @@ function DocumentManagement() {
           <Tab value="Personal" label="Personal Files" />
         </Tabs>
 
-      <Paper elevation={3} sx={{ p: 3 }}>
+      {/* <Paper elevation={3} sx={{ p: 3 }}> */}
       
-        <Box height="55vh">
+        <Box height="55vh" mt={2}>
           <DataGrid
             rows={filteredDocuments}
             columns={columns}
@@ -172,7 +172,7 @@ function DocumentManagement() {
             }}
           />
         </Box>
-      </Paper>
+      {/* </Paper> */}
     </Box>
   );
 }

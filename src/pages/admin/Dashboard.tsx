@@ -186,13 +186,16 @@ const Dashboard = () => {
       <Grid container spacing={3} mt={1}>
         {/* Attendance Overview Widget */}
         <Grid item xs={12} md={4}>
-          <Paper elevation={3} sx={{ p: 3,  backgroundColor: colors.primary[400], }}>
+          <Paper elevation={3} sx={{ p: 4,  backgroundColor: colors.primary[400], }}>
             <FactCheckIcon sx={{ fontSize: 30, color: "#9b59b6" }} /> {/* Purple */}
             <Typography variant="h6" mt={2}>Attendance Overview</Typography>
             <Typography>Total Present: 140 Employees</Typography>
             <Typography>Total Absent: 10 Employees</Typography>
-            <Button variant="contained" color="primary" sx={{ mt: 2 }}>
+            <Button variant="contained" color="primary" sx={{ mt: 2, mr: 4}}>
               View Details
+            </Button>
+            <Button variant="contained" color="primary" sx={{ mt: 2 }}>
+              Daily Attendance
             </Button>
           </Paper>
         </Grid>
@@ -222,9 +225,9 @@ const Dashboard = () => {
 
 
         {/* Quick Actions Widget */}
-        <Grid item xs={12} md={6}>
+        {/* <Grid item xs={12} md={6}>
           <Paper elevation={3} sx={{ p: 3, textAlign: "center",  backgroundColor: colors.primary[400], }}>
-            <SettingsApplicationsIcon sx={{ fontSize: 30, color: "#16a085" }} /> {/* Teal */}
+            <SettingsApplicationsIcon sx={{ fontSize: 30, color: "#16a085" }} />
             <Typography variant="h6" mt={2}>Quick Actions</Typography>
             <Button variant="contained" color="primary" sx={{ m: 1 }}>
               Add Employee
@@ -233,10 +236,10 @@ const Dashboard = () => {
               Approve Leave
             </Button>
             <Button variant="contained" color="success" sx={{ m: 1 }}>
-              Generate Reports
+              Daily Attendance
             </Button>
           </Paper>
-        </Grid>
+        </Grid> */}
       </Grid>
 
     </Box>

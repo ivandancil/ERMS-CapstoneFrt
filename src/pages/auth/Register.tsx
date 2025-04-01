@@ -222,7 +222,7 @@ const Register = () => {
         </form>
         <Typography textAlign="center" mt={2} color="black">
           Already have an account?{" "}
-          <Link to="/login" style={{ color: theme.palette.secondary.dark, textDecoration: "none" }}>
+          <Link to="/login" style={{ color: theme.palette.primary.dark, fontWeight: "bold", textDecoration: "none" }}>
             Login
           </Link>
         </Typography>

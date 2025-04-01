@@ -155,14 +155,14 @@ function Login() {
                 "& .MuiOutlinedInput-root fieldset": { borderColor: "black !important", borderWidth: 2 },
                 "& .MuiInputBase-input": { color: "black" },
               }}
-            />
+            />  
             <Button type="submit" variant="contained" fullWidth sx={{ mt: 2, backgroundColor: colors.blueAccent[900] }} disabled={loading}>
               {loading ? "Logging in..." : "Login"}
             </Button>
           </form>
           <Typography textAlign="center" mt={2} color="black">
             Don't have an account?{" "}
-            <Link to="/register" style={{ color: theme.palette.secondary.dark, textDecoration: "none" }}>
+            <Link to="/register" style={{ color: theme.palette.primary.dark, fontWeight: "bold", textDecoration: "none" }}>
               Register
             </Link>
           </Typography>

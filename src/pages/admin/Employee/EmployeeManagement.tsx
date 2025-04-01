@@ -259,82 +259,82 @@ function EmployeeManagement() {
         </DialogActions>
       </Dialog>
 
-{/* View Employee Modal */}
-<Dialog open={openViewDialog} onClose={() => setOpenViewDialog(false)} fullWidth maxWidth="md">
-  <DialogTitle
-    sx={{
-      backgroundColor: colors.blueAccent[700],
-      color: "#fff",
-      fontWeight: "bold",
-      textAlign: "center",
-    }}
-  >
-    Employee Details
-  </DialogTitle>
+    {/* View Employee Modal */}
+    <Dialog open={openViewDialog} onClose={() => setOpenViewDialog(false)} fullWidth maxWidth="md">
+      <DialogTitle
+        sx={{
+          backgroundColor: colors.blueAccent[700],
+          color: "#fff",
+          fontWeight: "bold",
+          textAlign: "center",
+        }}
+      >
+        Employee Details
+      </DialogTitle>
 
-  <DialogContent dividers>
-    {selectedEmployee ? (
-      <Box p={2}>
-        <Grid container spacing={2}>
-          {/* Row 1: Employee ID & Sex */}
-          <Grid item xs={6}>
-            <TextField fullWidth label="Employee ID" value={selectedEmployee.employeeID || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}} />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField fullWidth label="Sex" value={selectedEmployee.sex || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}}/>
-          </Grid>
+      <DialogContent dividers>
+        {selectedEmployee ? (
+          <Box p={2}>
+            <Grid container spacing={2}>
+              {/* Row 1: Employee ID & Sex */}
+              <Grid item xs={6}>
+                <TextField fullWidth label="Employee ID" value={selectedEmployee.employeeID || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}} />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField fullWidth label="Sex" value={selectedEmployee.sex || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}}/>
+              </Grid>
 
-          {/* Row 2: Job Position & Date of Birth */}
-          <Grid item xs={6}>
-            <TextField fullWidth label="Job Position" value={selectedEmployee.jobPosition || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}}/>
-          </Grid>
-          <Grid item xs={6}>
-            <TextField fullWidth label="Date of Birth" value={selectedEmployee.dateOfBirth || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}} />
-          </Grid>
+              {/* Row 2: Job Position & Date of Birth */}
+              <Grid item xs={6}>
+                <TextField fullWidth label="Job Position" value={selectedEmployee.jobPosition || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}}/>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField fullWidth label="Date of Birth" value={selectedEmployee.dateOfBirth || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}} />
+              </Grid>
 
-          {/* Row 3: Last Name & Civil Status */}
-          <Grid item xs={6}>
-            <TextField fullWidth label="Last Name" value={selectedEmployee.lastname || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}}/>
-          </Grid>
-          <Grid item xs={6}>
-            <TextField fullWidth label="Civil Status" value={selectedEmployee.civilStatus || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}} />
-          </Grid>
+              {/* Row 3: Last Name & Civil Status */}
+              <Grid item xs={6}>
+                <TextField fullWidth label="Last Name" value={selectedEmployee.lastname || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}}/>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField fullWidth label="Civil Status" value={selectedEmployee.civilStatus || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}} />
+              </Grid>
 
-          {/* Row 4: First Name & Phone */}
-          <Grid item xs={6}>
-            <TextField fullWidth label="First Name" value={selectedEmployee.firstname || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}} />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField fullWidth label="Phone" value={selectedEmployee.phoneNumber || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}} />
-          </Grid>
+              {/* Row 4: First Name & Phone */}
+              <Grid item xs={6}>
+                <TextField fullWidth label="First Name" value={selectedEmployee.firstname || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}} />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField fullWidth label="Phone" value={selectedEmployee.phoneNumber || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}} />
+              </Grid>
 
-          {/* Row 5: Middle Name (if available) & Email */}
-          <Grid item xs={6}>
-            <TextField fullWidth label="Middle Name" value={selectedEmployee.middlename || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}}/>
-          </Grid>
-          <Grid item xs={6}>
-            <TextField fullWidth label="Email" value={selectedEmployee.email || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}} />
-          </Grid>
+              {/* Row 5: Middle Name (if available) & Email */}
+              <Grid item xs={6}>
+                <TextField fullWidth label="Middle Name" value={selectedEmployee.middlename || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}}/>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField fullWidth label="Email" value={selectedEmployee.email || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}} />
+              </Grid>
 
-          {/* Row 6: Address (Full Width) */}
-          <Grid item xs={12}>
-            <TextField fullWidth label="Address" value={selectedEmployee.address || "N/A"} variant="outlined" InputProps={{ readOnly: true }} multiline rows={2} sx={{...inputStyles}}/>
-          </Grid>
-        </Grid>
-      </Box>
-    ) : (
-      <Typography color="error" textAlign="center">
-        No employee details available.
-      </Typography>
-    )}
-  </DialogContent>
+              {/* Row 6: Address (Full Width) */}
+              <Grid item xs={12}>
+                <TextField fullWidth label="Address" value={selectedEmployee.address || "N/A"} variant="outlined" InputProps={{ readOnly: true }} multiline rows={2} sx={{...inputStyles}}/>
+              </Grid>
+            </Grid>
+          </Box>
+        ) : (
+          <Typography color="error" textAlign="center">
+            No employee details available.
+          </Typography>
+        )}
+      </DialogContent>
 
-  <DialogActions>
-    <Button onClick={() => setOpenViewDialog(false)} color="primary" variant="contained">
-      Close
-    </Button>
-  </DialogActions>
-</Dialog>
+      <DialogActions>
+        <Button onClick={() => setOpenViewDialog(false)} color="primary" variant="contained">
+          Close
+        </Button>
+      </DialogActions>
+    </Dialog>
 
 
       {/* Edit Employee Dialog */}
@@ -357,18 +357,18 @@ function EmployeeManagement() {
   );
 }
 
-// 🔥 Styles: Placeholder turns white on hover!
-const inputStyles = {
-  "& .MuiInputLabel-root": { color: "#ccc !important" }, // Default placeholder color
-  "& .MuiInputLabel-root.Mui-focused": { color: "white !important" }, // Focus color
-  "& .MuiOutlinedInput-root": {
-    "&:hover .MuiInputLabel-root": { color: "white !important" }, // White placeholder on hover
-    "& fieldset": { borderColor: "#ccc !important" }, // Default border color
-    "&:hover fieldset": { borderColor: "white !important" }, // Border turns white on hover
-    "&.Mui-focused fieldset": { borderColor: "white !important" }, // White border on focus
-  },
-  "& .MuiInputBase-input": { color: "white" }, // Text color white
-};
+    // 🔥 Styles: Placeholder turns white on hover!
+    const inputStyles = {
+      "& .MuiInputLabel-root": { color: "#ccc !important" }, // Default placeholder color
+      "& .MuiInputLabel-root.Mui-focused": { color: "white !important" }, // Focus color
+      "& .MuiOutlinedInput-root": {
+        "&:hover .MuiInputLabel-root": { color: "white !important" }, // White placeholder on hover
+        "& fieldset": { borderColor: "#ccc !important" }, // Default border color
+        "&:hover fieldset": { borderColor: "white !important" }, // Border turns white on hover
+        "&.Mui-focused fieldset": { borderColor: "white !important" }, // White border on focus
+      },
+      "& .MuiInputBase-input": { color: "white" }, // Text color white
+    };
 
 
 export default EmployeeManagement;

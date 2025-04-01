@@ -213,9 +213,9 @@ const [participantsError, setParticipantsError] = useState("");
 
 
       {tabIndex === 0 && (
-        <Paper elevation={3} sx={{ p: 3 }}>
+        // <Paper elevation={3} sx={{ p: 3 }}>
          
-      <Box height="53vh">
+      <Box sx={{ mt: "20px", height: "55vh" }}>
         <DataGrid
           rows={trainings}
           columns={[
@@ -302,18 +302,19 @@ const [participantsError, setParticipantsError] = useState("");
           }}
         />
       </Box>
-      </Paper>
+      // {/* </Paper> */}
       )}
 
   {tabIndex === 1 && (
-  <Paper elevation={3} sx={{ p: 3 }}>
+  // <Paper elevation={3} sx={{ p: 3 }}>
    
-    {participantsError && (
-      <Typography color="error" textAlign="center" mt={2}>
-        {participantsError}
-      </Typography>
-    )}
-    <Box height="53vh">
+  //   {participantsError && (
+  //     <Typography color="error" textAlign="center" mt={2}>
+  //       {participantsError}
+  //     </Typography>
+  //   )}
+    
+    <Box sx={{ mt: "20px", height: "55vh" }}>
       <DataGrid
         rows={participants}
         columns={[
@@ -370,7 +371,7 @@ const [participantsError, setParticipantsError] = useState("");
         }}
       />
     </Box>
-  </Paper>
+  // </Paper>
 )}
 
 

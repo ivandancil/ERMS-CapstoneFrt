@@ -21,6 +21,8 @@ import { useNavigate } from "react-router-dom";
 import AddEmployee from "./AddEmployee";
 import EditEmployee from "./EditEmployee";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import { useSearch } from "../../../components/SearchContext";
+import JobPosition from "./JobPosition";
 
 interface Employee {
   id: number;
@@ -53,6 +55,8 @@ function EmployeeManagement() {
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [openViewDialog, setOpenViewDialog] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
+  const [openAddJobPositionDialog, setOpenAddJobPositionDialog] = useState(false);
+  const { searchTerm } = useSearch();
 
 
   const addDialogRef = useRef<HTMLButtonElement>(null);
@@ -131,32 +135,74 @@ function EmployeeManagement() {
     
   };
 
+  // Filter employees based on search term
+  const filteredEmployees = employees.filter(
+    (employee) =>
+      employee.firstname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      employee.lastname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      employee.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      employee.employeeID.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+
   return (
     <Box m="20px">
-      <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="EMPLOYEE MANAGEMENT" subtitle="Manage Employee Details" />
+    <Box display="flex" justifyContent="space-between" alignItems="center">
+  <Header title="EMPLOYEE MANAGEMENT" subtitle="Manage Employee Details" />
 
-        {/* Add Employee Button */}
-        <Button
-          variant="contained"
-          sx={{
-            backgroundColor: colors.blueAccent[700],
-            color: "#fff",
-            "&:hover": { backgroundColor: colors.blueAccent[500] },
-            textTransform: "none",
-            fontSize: "13px",
-            fontWeight: "bold",
-            px: 3,
-            py: 1.5,
-            minWidth: "180px",
-          }}
-          startIcon={<AddIcon />}
-          onClick={() => setOpenAddDialog(true)}
-          ref={addDialogRef} // Store reference to button
-        >
-          Create New Employee
-        </Button>
-      </Box>
+  {/* Add Employee Button */}
+  <Button
+    variant="contained"
+    sx={{
+      backgroundColor: colors.blueAccent[700],
+      color: "#fff",
+      "&:hover": { backgroundColor: colors.blueAccent[500] },
+      textTransform: "none",
+      fontSize: "13px",
+      fontWeight: "bold",
+      px: 3,
+      py: 1.5,
+      minWidth: "180px",
+      mr: -45, // Reduced margin-right to bring buttons closer
+    }}
+    startIcon={<AddIcon />}
+    onClick={() => setOpenAddDialog(true)}
+    ref={addDialogRef} // Store reference to button
+  >
+    Create New Employee
+  </Button>
+
+  {/* Add Job Position Button */}
+  <Button
+    variant="contained"
+    sx={{
+      backgroundColor: colors.blueAccent[700],
+      color: "#fff",
+      "&:hover": { backgroundColor: colors.blueAccent[500] },
+      textTransform: "none",
+      fontSize: "13px",
+      fontWeight: "bold",
+      px: 3,
+      py: 1.5,
+      minWidth: "180px",
+    }}
+    startIcon={<AddIcon />}
+    onClick={() => setOpenAddJobPositionDialog(true)} // Open Job Position Dialog
+  >
+    Add Job Position
+  </Button>
+</Box>
+
+
+
+{/* Job Position Dialog */}
+{openAddJobPositionDialog && (
+  <JobPosition
+    onJobPositionAdded={fetchEmployees} // Refresh the list after adding a job position
+    onClose={() => setOpenAddJobPositionDialog(false)} // Close dialog after adding
+  />
+)}
+
 
       {/* Show Error Message if API Fails */}
       {error && (
@@ -168,7 +214,7 @@ function EmployeeManagement() {
       {/* Employee Table */}
       <Box mt={3} height="55vh">
         <DataGrid
-          rows={employees}
+          rows={filteredEmployees}
           columns={[
             { field: "employeeID", headerName: "Employee ID", flex: 1 },
             { field: "lastname", headerName: "Last Name", flex: 1 },

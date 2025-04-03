@@ -4,6 +4,7 @@ import Header from "../../components/Header";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import { tokens } from "../../theme";
 import { useState, useEffect } from "react"; // Add the useState and useEffect hooks
+import { useSearch } from "../../components/SearchContext";
 
 interface LeaveRequest {
   id: number;
@@ -25,6 +26,7 @@ const LeaveManagement = () => {
   const [leaveRequests, setLeaveRequests] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
+  const { searchTerm } = useSearch();
 
   // Fetch Function
   async function fetchLeaveRequests() {
@@ -70,6 +72,15 @@ const LeaveManagement = () => {
   useEffect(() => {
     fetchLeaveRequests();
   }, []); // Empty dependency array ensures this only runs on component mount
+
+  // Handle Search
+  const filteredLeaveRequests = leaveRequests.filter((request) => {
+    return (
+      request.employee_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      request.leave_type.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      request.status.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  });
 
   // Define columns for the DataGrid
   const columns = [
@@ -118,7 +129,7 @@ const LeaveManagement = () => {
       <Box mt={3} sx={{ height: "55vh" }}>
        
         <DataGrid
-          rows={leaveRequests}
+          rows={filteredLeaveRequests}
           columns={columns}
           pageSizeOptions={[5, 10, 20]}
           paginationModel={{ page: 0, pageSize: 10 }}

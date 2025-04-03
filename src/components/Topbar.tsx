@@ -7,6 +7,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { ColorModeContext, tokens } from "../theme";
 import { useNavigate } from "react-router-dom";
 import { useNotificationContext } from "./NotificationContext";
+import { useSearch } from "./SearchContext";
 
 const Topbar = () => {
   const theme = useTheme();
@@ -19,6 +20,7 @@ const Topbar = () => {
   const [anchorElNotifications, setAnchorElNotifications] = useState<null | HTMLElement>(null);
   const [userRole, setUserRole] = useState<string | null>(null);
   const [name, setName] = useState<string>("");
+  const { searchTerm, setSearchTerm } = useSearch();
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -32,6 +34,14 @@ const Topbar = () => {
       setUserRole(role);
     }
   }, []);
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value); // Update the search term
+  };
+
+  const handleSearch = () => {
+    console.log("Searching for:", searchTerm); // This is where you'd trigger a search, e.g., filtering data
+  };
 
   const handleProfileClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorElProfile(event.currentTarget);
@@ -120,10 +130,15 @@ const Topbar = () => {
           p: "5px 10px",
         }}
       >
-        <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search..." />
-        <IconButton type="button" sx={{ p: 1 }}>
-          <SearchIcon />
-        </IconButton>
+         <InputBase
+        sx={{ ml: 2, flex: 1 }}
+        placeholder="Search..."
+        value={searchTerm} // Bind value to searchTerm from context
+        onChange={handleInputChange} // Update search term on input change
+      />
+      <IconButton type="button" sx={{ p: 1 }} onClick={handleSearch}>
+        <SearchIcon />
+      </IconButton>
       </Box>
 
       {/* Icons */}

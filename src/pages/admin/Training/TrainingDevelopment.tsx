@@ -21,11 +21,12 @@ import AddTraining from "./AddTraining";
 import EditTraining from "./EditTraining";
 import { tokens } from "../../../theme";
 import Header from "../../../components/Header";
+import { useSearch } from "../../../components/SearchContext";
 
 interface Training {
   id: number;
   trainingID: string;
-  title: string;
+  training_title: string;
   description: string;
   startDate: string;
   endDate: string;
@@ -51,6 +52,7 @@ function TrainingDevelopment() {
   const [openEditDialog, setOpenEditDialog] = useState(false);
   const [selectedTrainingId, setSelectedTrainingId] = useState<number | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const { searchTerm } = useSearch();
 
   const [participants, setParticipants] = useState<Participant[]>([]);
 const [loadingParticipants, setLoadingParticipants] = useState(true);
@@ -95,7 +97,6 @@ const [participantsError, setParticipantsError] = useState("");
   useEffect(() => {
     fetchTrainings();
   }, []);
-
 
     // Fetching Participants Table
     useEffect(() => {
@@ -164,6 +165,17 @@ const [participantsError, setParticipantsError] = useState("");
     }
   };
 
+// Filter trainings based on search term with safety checks
+const filteredTrainings = trainings.filter((training) => {
+  return (
+    (training.training_title?.toLowerCase().includes(searchTerm.toLowerCase())) || // Safely check training_title
+    (training.trainingID && String(training.trainingID).toLowerCase().includes(searchTerm.toLowerCase())) || // Convert trainingID to string if defined
+    (training.description && training.description.toLowerCase().includes(searchTerm.toLowerCase()))
+  );
+});
+
+
+
   return (
     <Box m="20px">
       <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -217,7 +229,7 @@ const [participantsError, setParticipantsError] = useState("");
          
       <Box sx={{ mt: "20px", height: "55vh" }}>
         <DataGrid
-          rows={trainings}
+          rows={filteredTrainings}
           columns={[
         
             { field: "trainingID", headerName: "Training ID", flex: 1 },

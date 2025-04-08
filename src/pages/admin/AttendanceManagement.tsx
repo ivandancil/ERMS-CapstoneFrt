@@ -188,7 +188,7 @@ const handleCloseCalendar = () => {
         <Header title="ATTENDANCE MANAGEMENT" subtitle="Manage Attendance Details" />
 
         {/* Download Button */}
-        <Button
+        {/* <Button
           variant="contained"
           sx={{
             backgroundColor: colors.blueAccent[700],
@@ -204,7 +204,7 @@ const handleCloseCalendar = () => {
           startIcon={<AddIcon />}
         >
           Download Attendance Report
-        </Button>
+        </Button> */}
       </Box>
 
       {/* Tabs */}

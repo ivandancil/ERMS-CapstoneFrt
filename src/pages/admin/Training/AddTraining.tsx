@@ -95,14 +95,7 @@ function AddTraining({ onTrainingAdded, onClose }: AddTrainingProps) {
         InputLabelProps={{ shrink: true }}
         sx={inputStyles}
       />
-        <TextField
-        label="Duration (e.g., 3 days, 2 hours)"
-        value={duration}
-        onChange={(e) => setDuration(e.target.value)}
-        fullWidth
-        autoComplete="off"
-        sx={inputStyles}
-      />
+     
       <Button
         variant="contained"
         color="primary"

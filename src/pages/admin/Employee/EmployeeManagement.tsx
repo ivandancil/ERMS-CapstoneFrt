@@ -21,6 +21,8 @@ import { useNavigate } from "react-router-dom";
 import AddEmployee from "./AddEmployee";
 import EditEmployee from "./EditEmployee";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import { useSearch } from "../../../components/SearchContext";
+import JobPosition from "./JobPosition";
 
 interface Employee {
   id: number;
@@ -53,6 +55,8 @@ function EmployeeManagement() {
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [openViewDialog, setOpenViewDialog] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
+  const [openAddJobPositionDialog, setOpenAddJobPositionDialog] = useState(false);
+  const { searchTerm } = useSearch();
 
 
   const addDialogRef = useRef<HTMLButtonElement>(null);
@@ -131,32 +135,74 @@ function EmployeeManagement() {
     
   };
 
+  // Filter employees based on search term
+  const filteredEmployees = employees.filter(
+    (employee) =>
+      employee.firstname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      employee.lastname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      employee.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      employee.employeeID.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+
   return (
     <Box m="20px">
-      <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="EMPLOYEE MANAGEMENT" subtitle="Manage Employee Details" />
+    <Box display="flex" justifyContent="space-between" alignItems="center">
+  <Header title="EMPLOYEE MANAGEMENT" subtitle="Manage Employee Details" />
 
-        {/* Add Employee Button */}
-        <Button
-          variant="contained"
-          sx={{
-            backgroundColor: colors.blueAccent[700],
-            color: "#fff",
-            "&:hover": { backgroundColor: colors.blueAccent[500] },
-            textTransform: "none",
-            fontSize: "13px",
-            fontWeight: "bold",
-            px: 3,
-            py: 1.5,
-            minWidth: "180px",
-          }}
-          startIcon={<AddIcon />}
-          onClick={() => setOpenAddDialog(true)}
-          ref={addDialogRef} // Store reference to button
-        >
-          Create New Employee
-        </Button>
-      </Box>
+  {/* Add Employee Button */}
+  <Button
+    variant="contained"
+    sx={{
+      backgroundColor: colors.blueAccent[700],
+      color: "#fff",
+      "&:hover": { backgroundColor: colors.blueAccent[500] },
+      textTransform: "none",
+      fontSize: "13px",
+      fontWeight: "bold",
+      px: 3,
+      py: 1.5,
+      minWidth: "180px",
+      mr: -45, // Reduced margin-right to bring buttons closer
+    }}
+    startIcon={<AddIcon />}
+    onClick={() => setOpenAddDialog(true)}
+    ref={addDialogRef} // Store reference to button
+  >
+    Create New Employee
+  </Button>
+
+  {/* Add Job Position Button */}
+  <Button
+    variant="contained"
+    sx={{
+      backgroundColor: colors.blueAccent[700],
+      color: "#fff",
+      "&:hover": { backgroundColor: colors.blueAccent[500] },
+      textTransform: "none",
+      fontSize: "13px",
+      fontWeight: "bold",
+      px: 3,
+      py: 1.5,
+      minWidth: "180px",
+    }}
+    startIcon={<AddIcon />}
+    onClick={() => setOpenAddJobPositionDialog(true)} // Open Job Position Dialog
+  >
+    Add Job Position
+  </Button>
+</Box>
+
+
+
+{/* Job Position Dialog */}
+{openAddJobPositionDialog && (
+  <JobPosition
+    onJobPositionAdded={fetchEmployees} // Refresh the list after adding a job position
+    onClose={() => setOpenAddJobPositionDialog(false)} // Close dialog after adding
+  />
+)}
+
 
       {/* Show Error Message if API Fails */}
       {error && (
@@ -166,9 +212,9 @@ function EmployeeManagement() {
       )}
 
       {/* Employee Table */}
-      <Box mt={3} height="60vh">
+      <Box mt={3} height="55vh">
         <DataGrid
-          rows={employees}
+          rows={filteredEmployees}
           columns={[
             { field: "employeeID", headerName: "Employee ID", flex: 1 },
             { field: "lastname", headerName: "Last Name", flex: 1 },
@@ -259,82 +305,82 @@ function EmployeeManagement() {
         </DialogActions>
       </Dialog>
 
-{/* View Employee Modal */}
-<Dialog open={openViewDialog} onClose={() => setOpenViewDialog(false)} fullWidth maxWidth="md">
-  <DialogTitle
-    sx={{
-      backgroundColor: colors.blueAccent[700],
-      color: "#fff",
-      fontWeight: "bold",
-      textAlign: "center",
-    }}
-  >
-    Employee Details
-  </DialogTitle>
+    {/* View Employee Modal */}
+    <Dialog open={openViewDialog} onClose={() => setOpenViewDialog(false)} fullWidth maxWidth="md">
+      <DialogTitle
+        sx={{
+          backgroundColor: colors.blueAccent[700],
+          color: "#fff",
+          fontWeight: "bold",
+          textAlign: "center",
+        }}
+      >
+        Employee Details
+      </DialogTitle>
 
-  <DialogContent dividers>
-    {selectedEmployee ? (
-      <Box p={2}>
-        <Grid container spacing={2}>
-          {/* Row 1: Employee ID & Sex */}
-          <Grid item xs={6}>
-            <TextField fullWidth label="Employee ID" value={selectedEmployee.employeeID || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}} />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField fullWidth label="Sex" value={selectedEmployee.sex || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}}/>
-          </Grid>
+      <DialogContent dividers>
+        {selectedEmployee ? (
+          <Box p={2}>
+            <Grid container spacing={2}>
+              {/* Row 1: Employee ID & Sex */}
+              <Grid item xs={6}>
+                <TextField fullWidth label="Employee ID" value={selectedEmployee.employeeID || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}} />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField fullWidth label="Sex" value={selectedEmployee.sex || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}}/>
+              </Grid>
 
-          {/* Row 2: Job Position & Date of Birth */}
-          <Grid item xs={6}>
-            <TextField fullWidth label="Job Position" value={selectedEmployee.jobPosition || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}}/>
-          </Grid>
-          <Grid item xs={6}>
-            <TextField fullWidth label="Date of Birth" value={selectedEmployee.dateOfBirth || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}} />
-          </Grid>
+              {/* Row 2: Job Position & Date of Birth */}
+              <Grid item xs={6}>
+                <TextField fullWidth label="Job Position" value={selectedEmployee.jobPosition || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}}/>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField fullWidth label="Date of Birth" value={selectedEmployee.dateOfBirth || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}} />
+              </Grid>
 
-          {/* Row 3: Last Name & Civil Status */}
-          <Grid item xs={6}>
-            <TextField fullWidth label="Last Name" value={selectedEmployee.lastname || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}}/>
-          </Grid>
-          <Grid item xs={6}>
-            <TextField fullWidth label="Civil Status" value={selectedEmployee.civilStatus || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}} />
-          </Grid>
+              {/* Row 3: Last Name & Civil Status */}
+              <Grid item xs={6}>
+                <TextField fullWidth label="Last Name" value={selectedEmployee.lastname || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}}/>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField fullWidth label="Civil Status" value={selectedEmployee.civilStatus || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}} />
+              </Grid>
 
-          {/* Row 4: First Name & Phone */}
-          <Grid item xs={6}>
-            <TextField fullWidth label="First Name" value={selectedEmployee.firstname || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}} />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField fullWidth label="Phone" value={selectedEmployee.phoneNumber || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}} />
-          </Grid>
+              {/* Row 4: First Name & Phone */}
+              <Grid item xs={6}>
+                <TextField fullWidth label="First Name" value={selectedEmployee.firstname || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}} />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField fullWidth label="Phone" value={selectedEmployee.phoneNumber || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}} />
+              </Grid>
 
-          {/* Row 5: Middle Name (if available) & Email */}
-          <Grid item xs={6}>
-            <TextField fullWidth label="Middle Name" value={selectedEmployee.middlename || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}}/>
-          </Grid>
-          <Grid item xs={6}>
-            <TextField fullWidth label="Email" value={selectedEmployee.email || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}} />
-          </Grid>
+              {/* Row 5: Middle Name (if available) & Email */}
+              <Grid item xs={6}>
+                <TextField fullWidth label="Middle Name" value={selectedEmployee.middlename || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}}/>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField fullWidth label="Email" value={selectedEmployee.email || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}} />
+              </Grid>
 
-          {/* Row 6: Address (Full Width) */}
-          <Grid item xs={12}>
-            <TextField fullWidth label="Address" value={selectedEmployee.address || "N/A"} variant="outlined" InputProps={{ readOnly: true }} multiline rows={2} sx={{...inputStyles}}/>
-          </Grid>
-        </Grid>
-      </Box>
-    ) : (
-      <Typography color="error" textAlign="center">
-        No employee details available.
-      </Typography>
-    )}
-  </DialogContent>
+              {/* Row 6: Address (Full Width) */}
+              <Grid item xs={12}>
+                <TextField fullWidth label="Address" value={selectedEmployee.address || "N/A"} variant="outlined" InputProps={{ readOnly: true }} multiline rows={2} sx={{...inputStyles}}/>
+              </Grid>
+            </Grid>
+          </Box>
+        ) : (
+          <Typography color="error" textAlign="center">
+            No employee details available.
+          </Typography>
+        )}
+      </DialogContent>
 
-  <DialogActions>
-    <Button onClick={() => setOpenViewDialog(false)} color="primary" variant="contained">
-      Close
-    </Button>
-  </DialogActions>
-</Dialog>
+      <DialogActions>
+        <Button onClick={() => setOpenViewDialog(false)} color="primary" variant="contained">
+          Close
+        </Button>
+      </DialogActions>
+    </Dialog>
 
 
       {/* Edit Employee Dialog */}
@@ -357,18 +403,18 @@ function EmployeeManagement() {
   );
 }
 
-// 🔥 Styles: Placeholder turns white on hover!
-const inputStyles = {
-  "& .MuiInputLabel-root": { color: "#ccc !important" }, // Default placeholder color
-  "& .MuiInputLabel-root.Mui-focused": { color: "white !important" }, // Focus color
-  "& .MuiOutlinedInput-root": {
-    "&:hover .MuiInputLabel-root": { color: "white !important" }, // White placeholder on hover
-    "& fieldset": { borderColor: "#ccc !important" }, // Default border color
-    "&:hover fieldset": { borderColor: "white !important" }, // Border turns white on hover
-    "&.Mui-focused fieldset": { borderColor: "white !important" }, // White border on focus
-  },
-  "& .MuiInputBase-input": { color: "white" }, // Text color white
-};
+    // 🔥 Styles: Placeholder turns white on hover!
+    const inputStyles = {
+      "& .MuiInputLabel-root": { color: "#ccc !important" }, // Default placeholder color
+      "& .MuiInputLabel-root.Mui-focused": { color: "white !important" }, // Focus color
+      "& .MuiOutlinedInput-root": {
+        "&:hover .MuiInputLabel-root": { color: "white !important" }, // White placeholder on hover
+        "& fieldset": { borderColor: "#ccc !important" }, // Default border color
+        "&:hover fieldset": { borderColor: "white !important" }, // Border turns white on hover
+        "&.Mui-focused fieldset": { borderColor: "white !important" }, // White border on focus
+      },
+      "& .MuiInputBase-input": { color: "white" }, // Text color white
+    };
 
 
 export default EmployeeManagement;

@@ -7,6 +7,7 @@ import { tokens } from "../../theme";
 interface Training {
   id: number;
   training_title: string;
+  name: string;
   date: string;
   duration: string;
   status: string;
@@ -24,7 +25,7 @@ function EmployeeTraining() {
   const [error, setError] = useState("");
   const [selectedTraining, setSelectedTraining] = useState<Training | null>(null);
   const [certificateInfo, setCertificateInfo] = useState({
-    fullName: "",
+    name: "",
     position: "",
   
   });
@@ -61,22 +62,52 @@ function EmployeeTraining() {
     }
   }
 
+  async function fetchUserDetails() {
+    try {
+      const token = localStorage.getItem("token");
+  
+      const response = await fetch("http://127.0.0.1:8000/api/user", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error("Failed to fetch user details.");
+      }
+  
+      const userData = await response.json();
+  
+      return {
+        fullName: userData.name, // Use `name` from API instead of `full_name`
+        position: userData.job_position || "N/A", // Handle missing job position
+      };
+    } catch (err: any) {
+      console.error("Error fetching user details:", err.message);
+      return { fullName: "", position: "" }; // Default values on failure
+    }
+  }
+  
+
   useEffect(() => {
     fetchTrainings();
+    fetchUserDetails();
   }, []);
 
   const handleEnroll = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    if (!selectedTraining || !certificateInfo.fullName || !certificateInfo.position) {
-      alert("Please fill all the required fields.");
+    if (!selectedTraining || !certificateInfo.name || !certificateInfo.position) {
+      
       return;
     }
 
     const postData = {
       training_id: selectedTraining.id,
       training_title: selectedTraining.training_title,
-      fullname: certificateInfo.fullName,
+      name: certificateInfo.name,
       jobposition: certificateInfo.position,
     };
 
@@ -110,17 +141,31 @@ function EmployeeTraining() {
 
       setOpen(false);
       setSelectedTraining(null);
-      setCertificateInfo({ fullName: '', position: '' });
+      setCertificateInfo({ name: '', position: '' });
     } catch (error: any) {
       console.error(error);
       alert(error.message || "Enrollment Failed. Please try again.");
     }
   }
 
-  const handleOpenModal = (training: Training) => {
-    setSelectedTraining(training);
-    setOpen(true);
+  const handleOpenModal = async (training: Training) => {
+    try {
+      const userDetails = await fetchUserDetails(); // Fetch user details before opening modal
+      
+      setSelectedTraining(training);
+      setCertificateInfo({
+        name: userDetails.fullName || "",
+        position: userDetails.position || "",
+      });
+  
+      setOpen(true);
+    } catch (error) {
+      console.error("Error fetching user details:", error);
+      alert("Failed to fetch user details. Please try again.");
+    }
   };
+  
+  
 
   const handleCloseModal = () => {
     setOpen(false);
@@ -221,26 +266,21 @@ function EmployeeTraining() {
           <TextField
             fullWidth
             label="Full Name"
-            placeholder="Enter your full name"
+            value={certificateInfo?.name || ''}
             margin="normal"
-            value={certificateInfo.fullName}
             sx={inputStyles}
-            onChange={(e) =>
-              setCertificateInfo({ ...certificateInfo, fullName: e.target.value })
-            }
+            disabled
           />
-
+          
           <TextField
             fullWidth
             label="Job Position"
-            placeholder="Enter your job position"
+            value={certificateInfo?.position || ''}
             margin="normal"
-            value={certificateInfo.position}
             sx={inputStyles}
-            onChange={(e) =>
-              setCertificateInfo({ ...certificateInfo, position: e.target.value })
-            }
+            disabled
           />
+          
         </DialogContent>
 
         <DialogActions>

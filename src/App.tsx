@@ -5,6 +5,7 @@ import Approutes from "./routes/AppRoutes";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // import default styles
 import { NotificationProvider } from "./components/NotificationContext";
+import { SearchProvider } from "./components/SearchContext";
 
 
 
@@ -12,6 +13,7 @@ function App() {
   const { theme, colorMode } = useMode();
 
   return (
+    <SearchProvider>
     <NotificationProvider>
     <ColorModeContext.Provider value={colorMode}>
     <ThemeProvider theme={theme}>
@@ -34,6 +36,7 @@ function App() {
     </ThemeProvider>
   </ColorModeContext.Provider>
   </NotificationProvider>
+  </SearchProvider>
   );
 }
 

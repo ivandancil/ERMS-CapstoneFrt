@@ -208,7 +208,7 @@ const handleCloseCalendar = () => {
       </Box>
 
       {/* Tabs */}
-      <Box mt={2}>
+      <Box>
       <Tabs    value={tabIndex}
         onChange={(_, newValue: number) => setTabIndex(newValue)}
         sx={{

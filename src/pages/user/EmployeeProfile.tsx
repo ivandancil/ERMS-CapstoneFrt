@@ -84,8 +84,8 @@ function EmployeeProfile() {
       </Button> */}
     </Box>
 
-    <Paper elevation={3} sx={{ p: 3, mt: 2, width: "100%", borderRadius: "10px" }}>
-        <Grid container spacing={3}>
+    {/* <Paper elevation={3} sx={{ p: 3, mt: 2, width: "100%", borderRadius: "10px" }}> */}
+        <Grid container spacing={3} mt={2}>
           {/* Profile Picture */}
           <Grid item xs={12} sm={4} display="flex" flexDirection="column" alignItems="center">
             <Box position="relative">
@@ -144,12 +144,13 @@ function EmployeeProfile() {
           indicatorColor="primary"
           textColor="inherit"
           sx={{
-            backgroundColor: colors.blueAccent[700], // Background color for tabs
+            backgroundColor: "white", // Background color for tabs
             "& .MuiTab-root": {
-              color: "white", // Set text color to white
+              color: "black",
+              fontWeight: "bold" // Set text color to white
             },
             "& .Mui-selected": {
-              color: "#FFD700", // Change selected tab color (Gold for visibility)
+              color: "black", // Change selected tab color (Gold for visibility)
               fontWeight: "bold",
             },
           }}
@@ -163,9 +164,9 @@ function EmployeeProfile() {
         {/* Tab Content */}
         <Box mt={2}>
           {tabIndex === 0 && (
-             <TableContainer component={Paper} sx={{ maxHeight: "400px", overflow: "auto", boxShadow: 3 }}>
-      <Table stickyHeader>
-                <TableBody>
+             <TableContainer  sx={{ maxHeight: "400px", overflow: "auto", boxShadow: 3 }}>
+            <Table stickyHeader>
+                      <TableBody>
                   {[
                     ["Employee ID", employee?.employeeID],
                     ["Job Position", employee?.jobPosition],
@@ -192,14 +193,14 @@ function EmployeeProfile() {
 
         
           {tabIndex === 1 && (
-            <TableContainer component={Paper} sx={{ boxShadow: 3 }}>
+            <TableContainer sx={{ boxShadow: 3 }}>
               <Table>
                 <TableBody>
-                  <TableRow sx={{ "&:hover": { backgroundColor: colors.grey[200] } }}>
+                  <TableRow sx={{ "&:hover": { backgroundColor: colors.grey[700] } }}>
                     <TableCell sx={{ fontWeight: "bold" }}>Contact Name</TableCell>
                     {/* <TableCell>{employee.emergencyContactName}</TableCell> */}
                   </TableRow>
-                  <TableRow sx={{ "&:hover": { backgroundColor: colors.grey[200] } }}>
+                  <TableRow sx={{ "&:hover": { backgroundColor: colors.grey[700] } }}>
                     <TableCell sx={{ fontWeight: "bold" }}>Contact Number</TableCell>
                     {/* <TableCell>{employee.emergencyContactNumber}</TableCell> */}
                   </TableRow>
@@ -209,7 +210,7 @@ function EmployeeProfile() {
           )}
         </Box>
         
-      </Paper>
+      {/* </Paper> */}
 
     </Box>
   );

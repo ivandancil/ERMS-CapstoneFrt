@@ -21,11 +21,12 @@ import AddTraining from "./AddTraining";
 import EditTraining from "./EditTraining";
 import { tokens } from "../../../theme";
 import Header from "../../../components/Header";
+import { useSearch } from "../../../components/SearchContext";
 
 interface Training {
   id: number;
   trainingID: string;
-  title: string;
+  training_title: string;
   description: string;
   startDate: string;
   endDate: string;
@@ -51,6 +52,7 @@ function TrainingDevelopment() {
   const [openEditDialog, setOpenEditDialog] = useState(false);
   const [selectedTrainingId, setSelectedTrainingId] = useState<number | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const { searchTerm } = useSearch();
 
   const [participants, setParticipants] = useState<Participant[]>([]);
 const [loadingParticipants, setLoadingParticipants] = useState(true);
@@ -95,7 +97,6 @@ const [participantsError, setParticipantsError] = useState("");
   useEffect(() => {
     fetchTrainings();
   }, []);
-
 
     // Fetching Participants Table
     useEffect(() => {
@@ -164,6 +165,17 @@ const [participantsError, setParticipantsError] = useState("");
     }
   };
 
+// Filter trainings based on search term with safety checks
+const filteredTrainings = trainings.filter((training) => {
+  return (
+    (training.training_title?.toLowerCase().includes(searchTerm.toLowerCase())) || // Safely check training_title
+    (training.trainingID && String(training.trainingID).toLowerCase().includes(searchTerm.toLowerCase())) || // Convert trainingID to string if defined
+    (training.description && training.description.toLowerCase().includes(searchTerm.toLowerCase()))
+  );
+});
+
+
+
   return (
     <Box m="20px">
       <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -213,18 +225,40 @@ const [participantsError, setParticipantsError] = useState("");
 
 
       {tabIndex === 0 && (
-        <Paper elevation={3} sx={{ p: 3 }}>
+        // <Paper elevation={3} sx={{ p: 3 }}>
          
-      <Box height="53vh">
+      <Box sx={{ mt: "20px", height: "55vh" }}>
         <DataGrid
-          rows={trainings}
+          rows={filteredTrainings}
           columns={[
         
             { field: "trainingID", headerName: "Training ID", flex: 1 },
-            { field: "training_title", headerName: "Training Title", flex: 1 },
-            { field: "start_datetime", headerName: "Start Date", flex: 1 },
-            { field: "end_datetime", headerName: "End Date", flex: 1 },
+            { field: "training_title", headerName: "Training Title", flex: 1.5 },
+            { field: "start_datetime", headerName: "Start Date", flex: 1.5 },
+            { field: "end_datetime", headerName: "End Date", flex: 1.5 },
             { field: "duration", headerName: "Duration", flex: 1 },
+            {
+              field: "status",
+              headerName: "Status",
+              flex: 1,
+              renderCell: (params) => (
+                <Typography
+                  sx={{
+                    mt: "15px",
+                    fontWeight: "bold",
+                    color:
+                      params.value === "Ongoing"
+                        ? "white"
+                        : params.value === "Completed"
+                        ? "white"
+                        : "white",
+                  }}
+                >
+                  {params.value}
+                </Typography>
+              ),
+            },
+            
             {
               field: "actions",
               headerName: "Actions",
@@ -280,18 +314,19 @@ const [participantsError, setParticipantsError] = useState("");
           }}
         />
       </Box>
-      </Paper>
+      // {/* </Paper> */}
       )}
 
   {tabIndex === 1 && (
-  <Paper elevation={3} sx={{ p: 3 }}>
+  // <Paper elevation={3} sx={{ p: 3 }}>
    
-    {participantsError && (
-      <Typography color="error" textAlign="center" mt={2}>
-        {participantsError}
-      </Typography>
-    )}
-    <Box height="53vh">
+  //   {participantsError && (
+  //     <Typography color="error" textAlign="center" mt={2}>
+  //       {participantsError}
+  //     </Typography>
+  //   )}
+    
+    <Box sx={{ mt: "20px", height: "55vh" }}>
       <DataGrid
         rows={participants}
         columns={[
@@ -348,7 +383,7 @@ const [participantsError, setParticipantsError] = useState("");
         }}
       />
     </Box>
-  </Paper>
+  // </Paper>
 )}
 
 

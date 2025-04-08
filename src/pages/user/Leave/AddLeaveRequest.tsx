@@ -20,6 +20,7 @@ function AddLeaveRequest({ onLeaveRequestAdded, onClose }: AddLeaveRequestProps)
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData((prev) => ({
@@ -71,6 +72,7 @@ function AddLeaveRequest({ onLeaveRequestAdded, onClose }: AddLeaveRequestProps)
 
       setFormData({ leave_type: "", start_date: "", end_date: "", reason: "" });
 
+      alert("Leave request added successfully.");
       onLeaveRequestAdded();
       onClose();
     } catch (err: unknown) {
@@ -92,6 +94,7 @@ function AddLeaveRequest({ onLeaveRequestAdded, onClose }: AddLeaveRequestProps)
         value={formData.leave_type}
         onChange={handleChange}
         required
+        sx={inputStyles}
       >
         {leaveTypes.map((type) => (
           <MenuItem key={type} value={type}>
@@ -108,6 +111,7 @@ function AddLeaveRequest({ onLeaveRequestAdded, onClose }: AddLeaveRequestProps)
         onChange={handleChange}
         InputLabelProps={{ shrink: true }}
         required
+        sx={inputStyles}
       />
 
       <TextField
@@ -118,6 +122,7 @@ function AddLeaveRequest({ onLeaveRequestAdded, onClose }: AddLeaveRequestProps)
         onChange={handleChange}
         InputLabelProps={{ shrink: true }}
         required
+        sx={inputStyles}
       />
 
       <TextField
@@ -128,6 +133,7 @@ function AddLeaveRequest({ onLeaveRequestAdded, onClose }: AddLeaveRequestProps)
         multiline
         rows={3}
         required
+        sx={inputStyles}
       />
 
       <Button variant="contained" type="submit" sx={{ mt: 2 }} disabled={loading}>
@@ -136,5 +142,18 @@ function AddLeaveRequest({ onLeaveRequestAdded, onClose }: AddLeaveRequestProps)
     </Box>
   );
 }
+
+// 🔥 Styles: Placeholder turns white on hover!
+const inputStyles = {
+  "& .MuiInputLabel-root": { color: "#ccc !important" }, // Default placeholder color
+  "& .MuiInputLabel-root.Mui-focused": { color: "white !important" }, // Focus color
+  "& .MuiOutlinedInput-root": {
+    "&:hover .MuiInputLabel-root": { color: "white !important" }, // White placeholder on hover
+    "& fieldset": { borderColor: "#ccc !important" }, // Default border color
+    "&:hover fieldset": { borderColor: "white !important" }, // Border turns white on hover
+    "&.Mui-focused fieldset": { borderColor: "white !important" }, // White border on focus
+  },
+  "& .MuiInputBase-input": { color: "white" }, // Text color white
+};
 
 export default AddLeaveRequest;

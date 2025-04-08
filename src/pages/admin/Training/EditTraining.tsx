@@ -164,15 +164,7 @@ function EditTraining({ trainingId, onTrainingUpdated, onClose }: EditTrainingPr
             sx={inputStyles}
           />
 
-          <TextField
-            label="Duration"
-            name="duration"
-            value={trainingData.duration}
-            onChange={handleChange}
-            fullWidth
-            required
-            sx={inputStyles}
-          />
+         
 
           <Box display="flex" justifyContent="space-between" mt={2}>
             <Button variant="contained" color="primary" onClick={onClose}>

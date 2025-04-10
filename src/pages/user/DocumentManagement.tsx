@@ -20,20 +20,13 @@ function DocumentManagement() {
   const [documents, setDocuments] = useState([
     {
       id: 1,
-      name: "Employee Handbook.pdf",
-      type: "PDF",
+      name: "PDS",
+      type: "PDS",
       uploadedBy: "HR Admin",
       date: "2024-03-12",
       category: "Common",
     },
-    {
-      id: 2,
-      name: "Company Policies.docx",
-      type: "Word",
-      uploadedBy: "HR Admin",
-      date: "2024-03-10",
-      category: "Common",
-    },
+   
     {
       id: 3,
       name: "Personal Development Plan.pdf",

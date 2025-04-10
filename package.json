@@ -22,6 +22,7 @@
     "@mui/styled-engine-sc": "^6.4.3",
     "@mui/x-data-grid": "^7.27.2",
     "@mui/x-date-pickers": "^7.27.3",
+    "antd": "^5.24.6",
     "dayjs": "^1.11.13",
     "formik": "^2.4.6",
     "lucide-react": "^0.484.0",
@@ -35,6 +36,7 @@
     "react-router-dom": "^7.2.0",
     "react-toastify": "^11.0.5",
     "styled-components": "^6.1.15",
+    "tesseract.js": "^6.0.1",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {

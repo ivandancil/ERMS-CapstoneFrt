@@ -1,133 +1,87 @@
 import React, { useState } from 'react';
-import Tesseract from 'tesseract.js';
 
-const NationalIdReader = () => {
-  const [image, setImage] = useState(null); // State for the uploaded image
-  const [idData, setIdData] = useState({
-    lastName: '',
-    firstName: '',
-    middleName: '',
-    address: '',
-    idNumber: '',
-    dateOfBirth: '',
-  }); // Structured data extracted from OCR
-  const [isProcessing, setIsProcessing] = useState(false); // Processing state
-  const [error, setError] = useState(''); // Error state
-
-  // Handle file input change
-  const handleFileChange = (e) => {
-    setImage(e.target.files[0]); // Set the selected image
-  };
-
-  // Process the image file with Tesseract.js
-  const handleFileUpload = async (e) => {
-    e.preventDefault();
-
-    if (!image) {
-      alert('Please upload an image!');
-      return;
-    }
-
-    setIsProcessing(true); // Set processing state
-    setError('');
-    setIdData({
-      lastName: '',
-      firstName: '',
-      middleName: '',
-      address: '',
-      idNumber: '',
-      dateOfBirth: '',
+function PDSUploader() {
+    const [file, setFile] = useState(null);
+    const [formData, setFormData] = useState({
+        name: '',
+        id: '',
+        dob: '',
+        address: ''
     });
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    try {
-      // OCR processing with Tesseract.js
-      const { data: { text } } = await Tesseract.recognize(
-        image,
-        'eng', // Language to use
-        {
-          logger: (m) => console.log(m), // Log progress
-          tessedit_char_whitelist: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 ', // Limit to alphanumeric characters
-          psm: 6, // Page Segmentation Mode (best for text blocks)
-          oem: 3, // OCR Engine Mode (default: 3, which uses both the neural net and traditional algorithms)
+    const handleFileChange = (e) => {
+        setFile(e.target.files[0]);
+    };
+
+    const handleUpload = async (e) => {
+        e.preventDefault();
+
+        if (!file) {
+            setError('Please select a file first.');
+            return;
         }
-      );
 
-      extractData(text); // Extract structured data from OCR text
-    } catch (err) {
-      setError('Error processing image. Please try again.');
-      console.error(err);
-    } finally {
-      setIsProcessing(false); // Stop processing
-    }
-  };
+        const formData = new FormData();
+        formData.append('file', file);
 
-  // Extract structured data from raw OCR result
-  const extractData = (text) => {
-    console.log("OCR Output:", text); // Log OCR output for debugging
+        setLoading(true);
+        try {
+            const res = await fetch('http://localhost:8000/api/ocr-process-file', {
+                method: 'POST',
+                body: formData,
+            });
 
-    // Refined regex patterns to capture the First Name and other data
-    const lastNameMatch = text.match(/Apelyido\/Last Name\s*([A-Za-z\s]+)/i); // Last Name regex
-    const firstNameMatch = text.match(/Pangalan\/First Name\s*([A-Za-z\s]+)/i); // First Name regex
-    const middleNameMatch = text.match(/Pangalan\/Middle Name\s*([A-Za-z\s]+)/i); // Middle Name regex
-    const addressMatch = text.match(/Tirahan\/Address\s*(.*?)(?=\n|$)/i); // Address regex
-    const idNumberMatch = text.match(/Philippine Identification Number\s*([0-9]+)/i); // ID Number regex
-    const dateOfBirthMatch = text.match(/Date of Birth\s*([0-9]{2}\/[0-9]{2}\/[0-9]{4})/i); // Date of Birth regex
+            if (!res.ok) {
+                throw new Error('Failed to process file');
+            }
 
-    // Set the extracted data in the state
-    setIdData({
-      lastName: lastNameMatch ? lastNameMatch[1].trim() : 'Not Found',
-      firstName: firstNameMatch ? firstNameMatch[1].trim() : 'Not Found',
-      middleName: middleNameMatch ? middleNameMatch[1].trim() : 'Not Found',
-      address: addressMatch ? addressMatch[1].trim() : 'Not Found',
-      idNumber: idNumberMatch ? idNumberMatch[1].trim() : 'Not Found',
-      dateOfBirth: dateOfBirthMatch ? dateOfBirthMatch[1].trim() : 'Not Found',
-    });
-  };
+            const data = await res.json();
+            setFormData({
+                name: data.parsed_data.name || '',
+                id: data.parsed_data.id || '',
+                dob: data.parsed_data.dob || '',
+                address: data.parsed_data.address || ''
+            });
+            setError('');
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-  return (
-    <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
-      <h1 style={{ textAlign: 'center' }}>National ID Reader</h1>
-      <form onSubmit={handleFileUpload} style={{ textAlign: 'center', marginBottom: '20px' }}>
-        <input 
-          type="file" 
-          accept="image/*" 
-          onChange={handleFileChange} 
-          style={{ marginRight: '10px' }} 
-        />
-        <button 
-          type="submit" 
-          disabled={isProcessing} 
-          style={{ padding: '10px 20px', fontSize: '16px' }}
-        >
-          {isProcessing ? 'Processing...' : 'Upload ID Image'}
-        </button>
-      </form>
+    return (
+        <div>
+            <form onSubmit={handleUpload}>
+                <input type="file" onChange={handleFileChange} accept=".jpg,.jpeg,.png,.pdf" />
+                <button type="submit" disabled={loading}>Upload</button>
+            </form>
 
-      {/* Error Message */}
-      {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
+            {error && <p>{error}</p>}
 
-      {/* Display Extracted Data with Labels */}
-      {idData.firstName && (
-        <div 
-          style={{
-            marginTop: '20px', 
-            border: '1px solid #ccc', 
-            padding: '20px', 
-            borderRadius: '10px', 
-            backgroundColor: 'black'
-          }}
-        >
-          <h3>Extracted ID Information:</h3>
-          <p><strong>Last Name:</strong> {idData.lastName}</p>
-          <p><strong>First Name:</strong> {idData.firstName}</p>
-          <p><strong>Middle Name:</strong> {idData.middleName}</p>
-          <p><strong>Address:</strong> {idData.address}</p>
-          <p><strong>ID Number:</strong> {idData.idNumber}</p>
-          <p><strong>Date of Birth:</strong> {idData.dateOfBirth}</p>
+            {loading && <p>Processing...</p>}
+
+            <h3>Parsed Data:</h3>
+            <div>
+                <label>Name:</label>
+                <input type="text" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
+            </div>
+            <div>
+                <label>ID:</label>
+                <input type="text" value={formData.id} onChange={(e) => setFormData({ ...formData, id: e.target.value })} />
+            </div>
+            <div>
+                <label>Date of Birth:</label>
+                <input type="text" value={formData.dob} onChange={(e) => setFormData({ ...formData, dob: e.target.value })} />
+            </div>
+            <div>
+                <label>Address:</label>
+                <input type="text" value={formData.address} onChange={(e) => setFormData({ ...formData, address: e.target.value })} />
+            </div>
         </div>
-      )}
-    </div>
-  );
-};
+    );
+}
 
-export default NationalIdReader;
+export default PDSUploader;

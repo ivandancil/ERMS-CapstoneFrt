@@ -215,7 +215,7 @@ function Sidebar({ role }: SidebarProps) {
                     color="grey.300"
                     sx={{ m: "15px 0 5px 20px" }}
                   >
-                    Employee Records
+                    DATA
               </Typography>
 
               {/* <Item
@@ -337,11 +337,11 @@ function Sidebar({ role }: SidebarProps) {
                 </Typography>
 
                 <Item title="My Profile"  to="/user/employee_profile" icon={<FaCog />} selected={selected} setSelected={setSelected} />
-                <Item title="Attendance" to="/user/attendance" icon={<FaClipboardList />} selected={selected} setSelected={setSelected} />
-                <Item title="Leave Request" to="/user/leave_request" icon={<FaClipboardList />} selected={selected} setSelected={setSelected} />
+                {/* <Item title="Attendance" to="/user/attendance" icon={<FaClipboardList />} selected={selected} setSelected={setSelected} />
+                <Item title="Leave Request" to="/user/leave_request" icon={<FaClipboardList />} selected={selected} setSelected={setSelected} /> */}
                 <Item title="Manage Document" to="/user/document_management" icon={<FaFolderOpen />} selected={selected} setSelected={setSelected} />
-                <Item title="Employee Training" to="/user/employee_training" icon={<FaFolderOpen />} selected={selected} setSelected={setSelected} />
-                <Item title="Payroll" to="/user/payroll" icon={<FaMoneyCheckAlt />} selected={selected} setSelected={setSelected} />
+                {/* <Item title="Employee Training" to="/user/employee_training" icon={<FaFolderOpen />} selected={selected} setSelected={setSelected} />
+                <Item title="Payroll" to="/user/payroll" icon={<FaMoneyCheckAlt />} selected={selected} setSelected={setSelected} /> */}
               </>
             )}
             {role === "payroll" && (

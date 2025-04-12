@@ -159,7 +159,7 @@ function Navbar() {
           </NavLink>
 
           {/* Attendance link (only if admin) */}
-          {role === "admin" && (
+          {/* {role === "admin" && (
             <NavLink to="/attendance" style={{ textDecoration: "none" }}>
               {({ isActive }) => (
                 <Button
@@ -179,7 +179,7 @@ function Navbar() {
                 </Button>
               )}
             </NavLink>
-          )}
+          )} */}
 
           {/* Conditional Buttons */}
           {isLoggedIn ? (

@@ -3,7 +3,7 @@ import AdminLayout from "../layouts/AdminLayout";
 import Dashboard from "../pages/admin/Dashboard";
 import EmployeeManagement from "../pages/admin/Employee/EmployeeManagement";
 import Attendance from "../pages/user/Attendance";
-import Reports from "../pages/admin/Reports";
+import Reports from "../pages/admin/Employee/Reports";
 import UserLayout from "../layouts/UserLayout";
 import UserDashboard from "../pages/user/UserDashboard";
 import Login from "../pages/auth/Login";
@@ -32,7 +32,7 @@ import PayrollReport from "../pages/payroll/PayrollReport";
 import RecordManagement from "../pages/admin/RecordManagement";
 import RecordListTable from "../pages/admin/RecordManagement/RecordListTable";
 
-import UploadDocs from "../pages/admin/RecordManagement/UploadDocs";
+import UploadDocs from "../pages/admin/Employee/UploadDocs";
 import ViewRecord from "../pages/admin/RecordManagement/ViewRecord";
 import OCR from "../pages/admin/RecordManagement/OCR";
 import AddRecord from "../pages/admin/RecordManagement/AddRecord";
@@ -66,8 +66,8 @@ const Approutes = () => {
 
         <Route path="record_management" element={<RecordManagement />} />
         <Route path="record_list_table" element={<RecordListTable />} />
-        <Route path="add_records" element={<AddRecord />} />
-        <Route path="edit_records" element={<EditRecord />} />
+        {/* <Route path="add_records" element={<AddRecord />} />
+        <Route path="edit_records" element={<EditRecord />} /> */}
         <Route path="view_records" element={<ViewRecord />} />
         <Route path="upload_docs" element={<UploadDocs />} />
         <Route path="ocr" element={<OCR />} />

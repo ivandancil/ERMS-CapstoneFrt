@@ -133,8 +133,8 @@ const SystemManagement = () => {
 
   useEffect(() => {
     if (tabValue === 0) fetchUsers();
-    if (tabValue === 1) fetchLogs();
-    if (tabValue === 2) fetchUserLogs();
+    // if (tabValue === 1) fetchLogs();
+    if (tabValue === 1) fetchUserLogs();
   }, [tabValue]);
 
 
@@ -253,13 +253,13 @@ const SystemManagement = () => {
           '& .MuiTabs-indicator': { backgroundColor: '#1976d2', height: '3px', borderRadius: '10px' },
         }}
       >
-        <Tab label="Users" />
-        <Tab label="System Logs" />
+        <Tab label="Registered Users" />
+        {/* <Tab label="System Logs" /> */}
         <Tab label="User Logs" />
       </Tabs>
 
       {tabValue === 0 && (
-        <Box sx={{ mt: "15px", height: "55vh" }}>
+        <Box sx={{ mt: "15px", height: "50vh" }}>
           {loading ? (
             <CircularProgress />
           ) : (
@@ -273,8 +273,17 @@ const SystemManagement = () => {
                 borderRadius: "8px",
                 overflow: "hidden",
                 "& .MuiDataGrid-root": { border: "none" },
-                "& .MuiDataGrid-columnHeader": { backgroundColor: colors.blueAccent[700], color: "#fff" },
-                "& .MuiDataGrid-footerContainer": { backgroundColor: colors.blueAccent[700], color: "#fff" },
+                "& .MuiDataGrid-columnHeader": { backgroundColor: "black", color: "#fff" },
+                "& .MuiDataGrid-footerContainer": {
+                  backgroundColor: "black",
+                  color: "#fff",
+                },
+                "& .MuiTablePagination-root": {
+                  color: "#fff", 
+                },
+                "& .MuiSvgIcon-root": {
+                  color: "#fff",
+                },
                 "& .MuiDataGrid-columnSeparator": { display: "none" },
               }}
             />
@@ -282,7 +291,7 @@ const SystemManagement = () => {
         </Box>
       )}
 
-      {tabValue === 1 && (
+      {/* {tabValue === 1 && (
         <Box sx={{ mt: "20px", height: "55vh" }}>
           {loading ? (
             <CircularProgress />
@@ -304,10 +313,10 @@ const SystemManagement = () => {
             />
           )}
         </Box>
-      )}
+      )} */}
 
-      {tabValue === 2 && (
-        <Box sx={{ mt: "20px", height: "55vh" }}>
+      {tabValue === 1 && (
+        <Box sx={{ mt: "20px", height: "50vh" }}>
           {loading ? (
             <CircularProgress />
           ) : (
@@ -321,9 +330,19 @@ const SystemManagement = () => {
                 borderRadius: "8px",
                 overflow: "hidden",
                 "& .MuiDataGrid-root": { border: "none" },
-                "& .MuiDataGrid-columnHeader": { backgroundColor: colors.blueAccent[700], color: "#fff" },
-                "& .MuiDataGrid-footerContainer": { backgroundColor: colors.blueAccent[700], color: "#fff" },
+                "& .MuiDataGrid-columnHeader": { backgroundColor:"black", color: "#fff" },
+                "& .MuiDataGrid-footerContainer": {
+                  backgroundColor: "black",
+                  color: "#fff",
+                },
+                "& .MuiTablePagination-root": {
+                  color: "#fff", 
+                },
+                "& .MuiSvgIcon-root": {
+                  color: "#fff",
+                },
                 "& .MuiDataGrid-columnSeparator": { display: "none" },
+            
               }}
             />
           )}

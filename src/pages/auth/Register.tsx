@@ -214,7 +214,7 @@ const Register = () => {
             type="submit"
             variant="contained"
             fullWidth
-            sx={{ mt: 2, backgroundColor: colors.blueAccent[900] }}
+            sx={{ mt: 2, backgroundColor: "black" }}
             disabled={loading}
           >
             {loading ? "Registering..." : "Register"}

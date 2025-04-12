@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Box, Button, Paper, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import Header from "../../components/Header";
-import { tokens } from "../../theme";
+import Header from "../../../components/Header";
+import { tokens } from "../../../theme";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
 
@@ -13,16 +13,29 @@ const Reports = () => {
   
   // Mock report data
   const [reports] = useState([
-    { id: 1, name: "Employee Payroll Report", date: "2024-03-01", type: "Payroll" },
-    { id: 2, name: "Attendance Summary", date: "2024-02-28", type: "Attendance" },
-    { id: 3, name: "Leave Requests Report", date: "2024-02-25", type: "Leave Management" },
+    { id: 1, name: "Personnel Lists", date: "2024-03-01", type: "Payroll" },
+    { id: 2, name: "Service Records", date: "2024-02-28", type: "Attendance" },
+    { id: 3, name: "Employment Status Reports", date: "2024-02-25", type: "Leave Management" },
+    { id: 4, name: "Personal Data Sheets", date: "2024-02-25", type: "Leave Management" },
   ]);
 
   // Define columns for DataGrid
   const columns = [
     { field: "name", headerName: "Report Name", flex: 2 },
     { field: "date", headerName: "Date Generated", flex: 1 },
-    { field: "type", headerName: "Category", flex: 1 },
+    { field: "action", headerName: "Action", flex: 1,
+         renderCell: (params: any) => (
+              <Box display="flex" gap={1} mt={1}>
+                <Button
+                  variant="outlined"
+                
+                >
+                  Download
+                </Button>
+              
+              </Box>
+         )
+     },
   ];
 
   return (
@@ -30,10 +43,10 @@ const Reports = () => {
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Header title="REPORTS" subtitle="View and Export Reports" />
         <Box mt={3}>
-        <Button 
+        {/* <Button 
                   
                   variant="contained" 
-                  sx={{ backgroundColor: colors.blueAccent[700],
+                  sx={{ backgroundColor: "black",
                          color: "#fff", "&:hover": { backgroundColor: colors.blueAccent[500] },
                          mr: 5,
                          textTransform: "none", fontSize: "13px", fontWeight: "bold",
@@ -49,7 +62,7 @@ const Reports = () => {
        <Button 
                   
                   variant="contained" 
-                  sx={{ backgroundColor: colors.blueAccent[700],
+                  sx={{ backgroundColor: "black",
                          color: "#fff", "&:hover": { backgroundColor: colors.blueAccent[500] },
                          mr: 5,
                          textTransform: "none", fontSize: "13px", fontWeight: "bold",
@@ -61,13 +74,13 @@ const Reports = () => {
                   onClick={() => navigate("/admin/add_employee")}
                 >
                   Export to CSV
-                </Button>
+                </Button> */}
       </Box>
       </Box>
 
      
 
-      <Box mt={3} height="50vh" component={Paper}>
+      <Box mt={3} height="55vh" component={Paper}>
         {reports.length > 0 ? (
           <DataGrid
             rows={reports}
@@ -79,8 +92,18 @@ const Reports = () => {
             sx={{
               borderRadius: "8px",
               overflow: "hidden",
-              "& .MuiDataGrid-columnHeader": { backgroundColor: colors.blueAccent[700] },
-              "& .MuiDataGrid-footerContainer": { backgroundColor: colors.blueAccent[700] },
+              "& .MuiDataGrid-columnHeader": { backgroundColor: "black" , color: "#fff" },
+              "& .MuiDataGrid-footerContainer": { 
+                backgroundColor: "black", 
+                color: "#fff", 
+              },
+              "& .MuiTablePagination-root": {
+                color: "#fff", // Ensures pagination text is white
+              },
+              "& .MuiSvgIcon-root": {
+                color: "#fff", // Ensures icons (like arrows) are white
+              },
+              "& .MuiDataGrid-columnSeparator": { display: "none" },
             }}
           />
         ) : (

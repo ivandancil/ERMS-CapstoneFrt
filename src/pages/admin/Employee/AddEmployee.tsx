@@ -173,15 +173,15 @@ function AddEmployee({ onEmployeeAdded, onClose }: AddEmployeeProps) {
 
 // Styles: Placeholder turns white on hover!
 const inputStyles = {
-  "& .MuiInputLabel-root": { color: "#ccc !important" },
-  "& .MuiInputLabel-root.Mui-focused": { color: "white !important" },
+  "& .MuiInputLabel-root": { color: "black !important" },
+  "& .MuiInputLabel-root.Mui-focused": { color: "black !important" },
   "& .MuiOutlinedInput-root": {
-    "&:hover .MuiInputLabel-root": { color: "white !important" },
-    "& fieldset": { borderColor: "#ccc !important" },
-    "&:hover fieldset": { borderColor: "white !important" },
-    "&.Mui-focused fieldset": { borderColor: "white !important" },
+    "&:hover .MuiInputLabel-root": { color: "black !important" },
+    "& fieldset": { borderColor: "black !important" },
+    "&:hover fieldset": { borderColor: "black !important" },
+    "&.Mui-focused fieldset": { borderColor: "black !important" },
   },
-  "& .MuiInputBase-input": { color: "white" },
+  "& .MuiInputBase-input": { color: "black" },
 };
 
 export default AddEmployee;

@@ -1,10 +1,9 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Box,
   Button,
   Typography,
   useTheme,
-  Paper,
   Tabs,
   Tab,
 } from "@mui/material";
@@ -13,61 +12,126 @@ import AddIcon from "@mui/icons-material/Add";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 
+interface Document {
+  id: number;
+  name: string;
+  type: string;
+  uploadedBy: string;
+  date: string;
+  category: string;
+}
+
 function DocumentManagement() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  const [documents, setDocuments] = useState([
-    {
-      id: 1,
-      name: "PDS",
-      type: "PDS",
-      uploadedBy: "HR Admin",
-      date: "2024-03-12",
-      category: "Common",
-    },
-   
-    {
-      id: 3,
-      name: "Personal Development Plan.pdf",
-      type: "PDF",
-      uploadedBy: "John Ray Escarlan",
-      date: "2024-03-15",
-      category: "Personal",
-    },
-  ]);
-
+  const [documents, setDocuments] = useState<Document[]>([]);
   const [currentTab, setCurrentTab] = useState("Common");
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const cameraInputRef = useRef<HTMLInputElement>(null);
+  const [scanTargetDocId, setScanTargetDocId] = useState<number | null>(null);
 
-  const fileInputRef = useRef(null);
-
-  const handleTabChange = (event, newValue) => {
+  const handleTabChange = (_event: React.SyntheticEvent, newValue: string) => {
     setCurrentTab(newValue);
   };
 
-  const deleteDocument = (id) => {
-    setDocuments(documents.filter((doc) => doc.id !== id));
+  const deleteDocument = (id: number) => {
+    setDocuments((prevDocs) => prevDocs.filter((doc) => doc.id !== id));
   };
 
   const handleUploadClick = () => {
-    fileInputRef.current.click();
+    fileInputRef.current?.click();
   };
 
-  const handleFileChange = (event) => {
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
-    const newDocuments = Array.from(files).map((file, index) => ({
-      id: documents.length + index + 1,
+    if (!files) return;
+
+    const newDocuments: Document[] = Array.from(files).map((file, index) => ({
+      id: Date.now() + index,
       name: file.name,
-      type: file.type.split("/")[1].toUpperCase(),
-      uploadedBy: "Current User", // Replace with actual user data
+      type: file.type.split("/")[1]?.toUpperCase() || "FILE",
+      uploadedBy: "Current User",
       date: new Date().toISOString().split("T")[0],
       category: currentTab,
     }));
+
     setDocuments((prevDocs) => [...prevDocs, ...newDocuments]);
-    event.target.value = null; // Reset the input
+    event.target.value = "";
   };
 
-  const columns = [
+  const handleScanChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const files = event.target.files;
+    if (!files || files.length === 0) return;
+
+    const file = files[0];
+    const formData = new FormData();
+    formData.append("document", file);
+    formData.append("category", currentTab);
+    if (scanTargetDocId) {
+      formData.append("linked_doc_id", scanTargetDocId.toString());
+    }
+
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/upload-document", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: formData,
+      });
+
+      if (response.ok) {
+        alert("Scan uploaded successfully!");
+        fetchDocuments();
+      } else {
+        alert("Failed to upload scanned document.");
+      }
+    } catch (error) {
+      console.error("Scan error:", error);
+      alert("Error occurred during scan upload.");
+    }
+
+    event.target.value = "";
+  };
+
+  // Fetch uploaded documents from API on mount
+  useEffect(() => {
+    fetchDocuments();
+  }, []);
+
+  const fetchDocuments = async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/documents", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+
+        const mappedData: Document[] = data.map((doc: any) => ({
+          id: doc.id,
+          name: doc.original_name,
+          type: doc.type?.toUpperCase() || "FILE",
+          uploadedBy: doc.uploaded_by || "Admin",
+          date: doc.uploaded_at?.split("T")[0] || "",
+          category: doc.category || "Common",
+        }));
+
+        setDocuments(mappedData);
+      } else {
+        console.error("Failed to fetch documents");
+      }
+    } catch (error) {
+      console.error("Fetch error:", error);
+    }
+  };
+
+  const columns: GridColDef[] = [
     { field: "name", headerName: "Document Name", flex: 2 },
     { field: "type", headerName: "Type", flex: 1 },
     { field: "uploadedBy", headerName: "Uploaded By", flex: 1 },
@@ -75,15 +139,32 @@ function DocumentManagement() {
     {
       field: "actions",
       headerName: "Actions",
-      flex: 1,
+      flex: 1.5,
       renderCell: (params) => (
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => deleteDocument(params.row.id)}
-        >
-          Delete
-        </Button>
+        <Box display="flex" gap={1} mt={1}>
+
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => {
+              setScanTargetDocId(params.row.id);
+              cameraInputRef.current?.click(); // trigger camera
+            }}
+                      >
+            Download
+          </Button>
+         
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => {
+              setScanTargetDocId(params.row.id);
+              cameraInputRef.current?.click(); // trigger camera
+            }}
+                      >
+            Scan Document
+          </Button>
+        </Box>
       ),
     },
   ];
@@ -95,13 +176,16 @@ function DocumentManagement() {
   return (
     <Box m="20px">
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="DOCUMENT MANAGEMENT" subtitle="Organize and Access Your Files Efficiently" />
-        <Button
+        <Header
+          title="DOCUMENT MANAGEMENT"
+          subtitle="Organize and Access Your Files Efficiently"
+        />
+        {/* <Button
           variant="contained"
           sx={{
-            backgroundColor: colors.blueAccent[700],
+            backgroundColor: "black",
             color: "#fff",
-            "&:hover": { backgroundColor: colors.blueAccent[500] },
+            "&:hover": { backgroundColor: "black" },
             mr: 5,
             textTransform: "none",
             fontSize: "13px",
@@ -114,7 +198,7 @@ function DocumentManagement() {
           onClick={handleUploadClick}
         >
           Upload Documents
-        </Button>
+        </Button> */}
         <input
           type="file"
           ref={fileInputRef}
@@ -122,50 +206,70 @@ function DocumentManagement() {
           onChange={handleFileChange}
           multiple
         />
+        <input
+          type="file"
+          accept="image/*"
+          capture="environment"
+          ref={cameraInputRef}
+          style={{ display: "none" }}
+          onChange={handleScanChange}
+        />
       </Box>
 
       <Tabs
-          value={currentTab}
-          onChange={handleTabChange}
-          sx={{
-            fontWeight: 'bold',
-            backgroundColor: '#f5f5f5',
-            '& .MuiTab-root': { color: '#000',  },
-            '& .Mui-selected': { color: 'black',  fontWeight: 'bold', fontSize: "14px"},
-            '& .MuiTabs-indicator': { backgroundColor: '#1976d2',  height: '3px', // Thicker indicator
-              borderRadius: '2px', },
-          }}
-        >
-          <Tab value="Common" label="Common Files" />
-          <Tab value="Personal" label="Personal Files" />
-        </Tabs>
+        value={currentTab}
+        onChange={handleTabChange}
+        sx={{
+          fontWeight: "bold",
+          backgroundColor: "white",
+          "& .MuiTab-root": { color: "#000" },
+          "& .Mui-selected": {
+            color: "black",
+            fontWeight: "bold",
+            fontSize: "14px",
+          },
+          "& .MuiTabs-indicator": {
+            backgroundColor: "#1976d2",
+            height: "3px",
+            borderRadius: "2px",
+          },
+        }}
+      >
+        <Tab value="Common" label="Uploaded Files by HR" />
+        {/* <Tab value="Personal" label="Personal Files" />
+        <Tab value="Uploads" label="Upload Files/ID" /> */}
+      </Tabs>
 
-      {/* <Paper elevation={3} sx={{ p: 3 }}> */}
-      
-        <Box height="55vh" mt={2}>
-          <DataGrid
-            rows={filteredDocuments}
-            columns={columns}
-            pageSizeOptions={[5, 10, 20]}
-            initialState={{
-              pagination: { paginationModel: { pageSize: 5 } },
-            }}
-            sx={{
-              borderRadius: "8px",
-              overflow: "hidden",
-              "& .MuiDataGrid-root": { border: "none" },
-              "& .MuiDataGrid-columnHeader": {
-                backgroundColor: colors.blueAccent[700],
-                color: "#fff",
-              },
-              "& .MuiDataGrid-footerContainer": {
-                backgroundColor: colors.blueAccent[700],
-                color: "#fff",
-              },
-            }}
-          />
-        </Box>
-      {/* </Paper> */}
+      <Box height="55vh" mt={2}>
+        <DataGrid
+          rows={filteredDocuments}
+          columns={columns}
+          pageSizeOptions={[5, 10, 20]}
+          initialState={{
+            pagination: { paginationModel: { pageSize: 5 } },
+          }}
+          sx={{
+            borderRadius: "8px",
+            overflow: "hidden",
+            "& .MuiDataGrid-root": { border: "none" },
+            "& .MuiDataGrid-columnHeader": {
+              backgroundColor: "black",
+              color: "#fff",
+            },
+            "& .MuiDataGrid-footerContainer": {
+              backgroundColor: "black",
+              color: "#fff",
+            },
+            "& .MuiTablePagination-root": {
+              color: "#fff",
+            },
+            "& .MuiSvgIcon-root": {
+              color: "#fff",
+            },
+            "& .MuiDataGrid-columnSeparator": { display: "none" },
+          }}
+        />
+      </Box>
     </Box>
   );
 }

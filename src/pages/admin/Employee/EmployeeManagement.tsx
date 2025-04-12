@@ -154,9 +154,9 @@
     <Button
       variant="contained"
       sx={{
-        backgroundColor: colors.blueAccent[700],
+        backgroundColor: "black",
         color: "#fff",
-        "&:hover": { backgroundColor: colors.blueAccent[500] },
+        "&:hover": { backgroundColor: "black" },
         textTransform: "none",
         fontSize: "13px",
         fontWeight: "bold",
@@ -263,8 +263,17 @@
               borderRadius: "8px",
               overflow: "hidden",
               "& .MuiDataGrid-root": { border: "none" },
-              "& .MuiDataGrid-columnHeader": { backgroundColor: colors.blueAccent[700], color: "#fff" },
-              "& .MuiDataGrid-footerContainer": { backgroundColor: colors.blueAccent[700], color: "#fff" },
+              "& .MuiDataGrid-columnHeader": { backgroundColor: "black" , color: "#fff" },
+              "& .MuiDataGrid-footerContainer": { 
+                backgroundColor: "black", 
+                color: "#fff", 
+              },
+              "& .MuiTablePagination-root": {
+                color: "#fff", // Ensures pagination text is white
+              },
+              "& .MuiSvgIcon-root": {
+                color: "#fff", // Ensures icons (like arrows) are white
+              },
               "& .MuiDataGrid-columnSeparator": { display: "none" },
             }}
           />
@@ -277,7 +286,7 @@
           fullWidth
           maxWidth="sm"
         >
-          <DialogTitle>Please Input Employee Details</DialogTitle>
+          <DialogTitle>Please Input Employee Information</DialogTitle>
           <DialogContent>
             <AddEmployee onEmployeeAdded={fetchEmployees} onClose={() => setOpenAddDialog(false)} />
           </DialogContent>
@@ -292,7 +301,7 @@
       <Dialog open={openViewDialog} onClose={() => setOpenViewDialog(false)} fullWidth maxWidth="md">
         <DialogTitle
           sx={{
-            backgroundColor: colors.blueAccent[700],
+            backgroundColor: "black",
             color: "#fff",
             fontWeight: "bold",
             textAlign: "center",
@@ -388,15 +397,15 @@
 
       // 🔥 Styles: Placeholder turns white on hover!
       const inputStyles = {
-        "& .MuiInputLabel-root": { color: "#ccc !important" }, // Default placeholder color
-        "& .MuiInputLabel-root.Mui-focused": { color: "white !important" }, // Focus color
+        "& .MuiInputLabel-root": { color: "black !important" }, // Default placeholder color
+        "& .MuiInputLabel-root.Mui-focused": { color: "black !important" }, // Focus color
         "& .MuiOutlinedInput-root": {
-          "&:hover .MuiInputLabel-root": { color: "white !important" }, // White placeholder on hover
-          "& fieldset": { borderColor: "#ccc !important" }, // Default border color
-          "&:hover fieldset": { borderColor: "white !important" }, // Border turns white on hover
-          "&.Mui-focused fieldset": { borderColor: "white !important" }, // White border on focus
+          "&:hover .MuiInputLabel-root": { color: "black !important" }, // White placeholder on hover
+          "& fieldset": { borderColor: "black !important" }, // Default border color
+          "&:hover fieldset": { borderColor: "black !important" }, // Border turns white on hover
+          "&.Mui-focused fieldset": { borderColor: "black !important" }, // White border on focus
         },
-        "& .MuiInputBase-input": { color: "white" }, // Text color white
+        "& .MuiInputBase-input": { color: "black" }, // Text color white
       };
 
 

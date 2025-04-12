@@ -1,0 +1,301 @@
+import React, { useState } from 'react';
+import { message } from 'antd';
+import { Box, Button, Card, CardContent, CircularProgress, IconButton, Tab, Tabs, Typography } from '@mui/material';
+import Header from '../../../components/Header';
+import { UploadCloud, XCircle } from 'lucide-react';
+import { DataGrid } from '@mui/x-data-grid';
+
+const UploadDocs = () => {
+  const [documents, setDocuments] = useState<any[]>([]);
+  const [currentTab, setCurrentTab] = useState("Upload Documents/Files");
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [file, setFile] = useState<File | null>(null);
+
+    // Handle tab change
+    const handleTabChange = (event: React.SyntheticEvent, newValue: string) => {
+      setCurrentTab(newValue);
+      if (newValue === "View Uploaded Documents/File") {
+        fetchDocuments();  // Fetch documents when switching to this tab
+      }
+    };
+
+  // Function to handle file selection
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+      setError(null);
+    }
+  };
+
+  // Clear selected file
+  const handleClearFile = () => {
+    setFile(null);
+  };
+
+  // Handle file upload
+  const handleUpload = async () => {
+    if (!file) {
+      setError("Please select a file to upload.");
+      return;
+    }
+
+    setUploading(true);
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/upload-pds", {
+        method: "POST",
+        body: formData,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        alert("File uploaded successfully!");
+        setFile(null); // Reset file input field after successful upload
+      } else {
+        const result = await response.json();
+        alert(`Upload failed: ${result.message || "Something went wrong"}`);
+      }
+    } catch (error) {
+      console.error("Upload error:", error);
+      alert("Failed to upload File. Please try again.");
+    } finally {
+      setUploading(false);
+    }
+  };
+
+    // Fetch uploaded documents from the API
+    const fetchDocuments = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/api/documents", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+  
+        if (response.ok) {
+          const data = await response.json();
+          setDocuments(data);  // Update state with fetched documents
+        } else {
+          console.error("Failed to fetch documents");
+        }
+      } catch (error) {
+        console.error("Fetch error:", error);
+      }
+    };
+
+    const handleDelete = async (id: number | string) => {
+      const confirmation = window.confirm('Are you sure you want to delete this document?');
+      if (!confirmation) return;
+    
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/api/files/${id}`, {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        });
+    
+        if (response.ok) {
+          const result = await response.json();
+          message.success(result.message);
+          // Remove the deleted document from the UI by filtering it out from the state
+          setDocuments((prevDocs) => prevDocs.filter(doc => doc.id !== id));
+        } else {
+          const result = await response.json();
+          message.error(`Failed to delete file: ${result.message || 'Something went wrong'}`);
+        }
+      } catch (error) {
+        console.error('Delete error:', error);
+        message.error('Failed to delete file. Please try again.');
+      }
+    };
+    
+
+  // Columns for the uploaded documents table
+  const columns = [
+    {
+      field: 'original_name',
+      headerName: 'Document Name',
+      flex: 1,
+    },
+    {
+      field: 'uploaded_at',
+      headerName: 'Uploaded On',
+      flex: 1,
+    },
+    {
+      field: 'action',
+      headerName: 'Action',
+      flex: 1,
+      renderCell: (params: any) => (
+        <Box display="flex" gap={1} mt={1}>
+          <Button
+            variant="outlined"
+            onClick={() => window.open(params.row.fileUrl, '_blank')}
+          >
+            View
+          </Button>
+          <Button
+            variant="outlined"
+            color="error"
+            onClick={() => handleDelete(params.row.id)}
+          >
+            Delete
+          </Button>
+        </Box>
+      ),
+    },
+  ];
+
+  return (
+    <Box m="20px">
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Header title="UPLOAD DOCUMENTS" subtitle="Manage Documents and Files" />
+      </Box>
+
+      <Tabs
+        value={currentTab}
+        onChange={handleTabChange}
+        sx={{
+          fontWeight: 'bold',
+          backgroundColor: '#f5f5f5',
+          '& .MuiTab-root': { color: '#000' },
+          '& .Mui-selected': { color: 'black', fontWeight: 'bold', fontSize: "14px" },
+          '& .MuiTabs-indicator': { backgroundColor: '#1976d2', height: '3px', borderRadius: '2px' },
+        }}
+      >
+        <Tab value="Upload Documents/Files" label="Upload Documents/Files" />
+        <Tab value="View Uploaded Documents/File" label="View Uploaded Documents" />
+        {/* <Tab value="View Uploaded Scanned Images" label="Scanned Images/Files" /> */}
+      </Tabs>
+
+      {currentTab === "Upload Documents/Files" && (
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
+          <Card sx={{ width: 400, padding: 2, boxShadow: 6 }}>
+            <CardContent>
+              <Typography variant="h5" textAlign="center" gutterBottom mb={3}>
+                UPLOAD FILE
+              </Typography>
+
+              <Box
+                sx={{
+                  border: "2px dashed #90caf9",
+                  borderRadius: 2,
+                  padding: 3,
+                  textAlign: "center",
+                  backgroundColor: "#f5f5f5",
+                  cursor: "pointer",
+                  "&:hover": { backgroundColor: "#e3f2fd" },
+                }}
+                onClick={() => document.getElementById("fileInput")?.click()}
+              >
+                <UploadCloud size={40} color="#1e88e5" />
+                <Typography variant="body1" color="primary" sx={{ fontWeight: 600 }}>
+                  Click to select a file
+                </Typography>
+                <input
+                  type="file"
+                  id="fileInput"
+                  hidden
+                  onChange={handleFileChange}
+                  accept=".csv, .xlsx, .xls, .pdf, .docx"  // Added .pdf for PDF file support
+                />
+              </Box>
+
+              {error && (
+                <Typography color="error" variant="body2" sx={{ mt: 1 }}>
+                  {error}
+                </Typography>
+              )}
+
+              {file && (
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    backgroundColor: "#e3f2fd",
+                    padding: 1.5,
+                    borderRadius: 2,
+                    mt: 2,
+                  }}
+                >
+                  <Box>
+                    <Typography variant="body2" color="black">{file.name}</Typography>
+                    <Typography variant="caption" color="black">
+                      {(file.size / 1024).toFixed(2)} KB
+                    </Typography>
+                  </Box>
+                  <IconButton onClick={handleClearFile} color="error">
+                    <XCircle size={20} />
+                  </IconButton>
+                </Box>
+              )}
+
+              <Button
+                variant="contained"
+                fullWidth
+                sx={{ mt: 3, height: 45, fontWeight: 600 }}
+                onClick={handleUpload}
+                disabled={!file || uploading}
+              >
+                {uploading ? <CircularProgress size={24} color="inherit" /> : "Upload File"}
+              </Button>
+            </CardContent>
+          </Card>
+        </Box>
+      )}
+
+      {currentTab === "View Uploaded Documents/File" && (
+        <Box height="50vh" mt={2}>
+          <DataGrid
+            rows={documents}
+            columns={columns}
+            pageSizeOptions={[5, 10, 20]}
+            initialState={{
+              pagination: { paginationModel: { pageSize: 5 } },
+            }}
+            sx={{
+              borderRadius: "8px",
+              overflow: "hidden",
+              "& .MuiDataGrid-root": { border: "none" },
+              "& .MuiDataGrid-columnHeader": {
+                backgroundColor: "black",
+                color: "#fff",
+              },
+              "& .MuiDataGrid-footerContainer": {
+                backgroundColor: "black",
+                color: "#fff",
+              },
+              "& .MuiTablePagination-root": {
+                color: "#fff", 
+              },
+              "& .MuiSvgIcon-root": {
+                color: "#fff",
+              },
+              "& .MuiDataGrid-columnSeparator": { display: "none" },
+            }}
+          />
+        </Box>
+      )}
+
+      {currentTab === "View Uploaded Scanned Images" && (
+        <Box mt={3}>
+          <p style={{ fontStyle: 'italic', color: '#888' }}>
+            No scanned images uploaded yet.
+          </p>
+        </Box>
+      )}
+    </Box>
+  );
+};
+
+export default UploadDocs;

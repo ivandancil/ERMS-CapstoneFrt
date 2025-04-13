@@ -41,7 +41,7 @@ const Reports = () => {
   return (
     <Box m="20px">
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="REPORTS" subtitle="View and Export Reports" />
+        <Header title="REPORTS" subtitle="View and Download Reports" />
         <Box mt={3}>
         {/* <Button 
                   

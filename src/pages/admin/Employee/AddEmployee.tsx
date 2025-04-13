@@ -98,7 +98,6 @@ function AddEmployee({ onEmployeeAdded, onClose }: AddEmployeeProps) {
               <MenuItem value="Teacher I">Teacher I</MenuItem>
               <MenuItem value="Teacher II">Teacher II</MenuItem>
               <MenuItem value="Supervisor">Supervisor</MenuItem>
-              <MenuItem value="Staff">Staff</MenuItem>
             </TextField>
 
         </Grid>

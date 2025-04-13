@@ -11,6 +11,8 @@ import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import { useEffect, useState } from "react";
 import { grey } from "@mui/material/colors";
+import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
+
 
 interface User {
   id: number;
@@ -144,6 +146,11 @@ const Dashboard = () => {
       subtitle: "Number of Uploaded Documents",
       icon: <InsertDriveFileIcon sx={{ fontSize: 30, color: "#f39c12" }} />,
     },
+    {
+      title: loading ? "Loading..." : leaveRequests.length.toString(),
+      subtitle: "Notifications",
+      icon: <NotificationsActiveIcon sx={{ fontSize: 30, color: "red" }} />,
+    },
     // {
     //   title: loading ? "Loading..." : leaveRequests.length.toString(),
     //   subtitle: "Pending Leave Requests",
@@ -187,8 +194,11 @@ const Dashboard = () => {
               </Typography>
             </Paper>
           </Grid>
+          
         ))}
+       
       </Grid>
+      
       {/* Widgets Section */}
       <Grid container spacing={3} mt={1}>
         {/* Attendance Overview Widget */}

@@ -184,9 +184,10 @@ function EditEmployee({ employeeId, onEmployeeUpdated, onClose }: EditEmployeePr
           fullWidth
           variant="outlined"
         >
-          <MenuItem value="Manager">Manager</MenuItem>
-          <MenuItem value="Supervisor">Supervisor</MenuItem>
-          <MenuItem value="Staff">Staff</MenuItem>
+              <MenuItem value="Teacher">Teacher</MenuItem>
+              <MenuItem value="Teacher I">Teacher I</MenuItem>
+              <MenuItem value="Teacher II">Teacher II</MenuItem>
+              <MenuItem value="Supervisor">Supervisor</MenuItem>
         </TextField>
       </Grid>
 

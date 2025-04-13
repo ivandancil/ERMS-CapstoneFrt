@@ -156,15 +156,11 @@ function EmployeeProfile() {
           }}
         >
           <Tab label="Personal Details" />
-        
-          <Tab label="Emergency Contact" />
-          <Tab label="ID's" />
-          <Tab label="Family Background" />
+          <Tab label="Contact Information" />
+          <Tab label="Documents" />
           <Tab label="Educational Background" />
           <Tab label="Civil Service Eligibility" />
           <Tab label="Work Experience" />
-          <Tab label="Voluntary Work" />
-          <Tab label="Training Programs" />
          
         </Tabs>
 

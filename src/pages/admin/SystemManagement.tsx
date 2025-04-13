@@ -160,12 +160,14 @@ const SystemManagement = () => {
     { field: "access", headerName: "Access Level", flex: 1, 
       renderCell: ({ row }: { row: RowData }) => (
         <Box
+        
           width="30%"
           m="20 auto"
           p="5px"
           display="flex"
           justifyContent="center"
           mt={1.5}
+         
           // sx={{
           //   backgroundColor: row.access === "admin" ? "#d32f2f" :
           //                    row.access === "payroll" ? "#0288d1" :
@@ -182,7 +184,7 @@ const SystemManagement = () => {
             <Box display="flex" alignItems="center">
               {row.access === "admin" && <AdminPanelSettingsOutlinedIcon />}
               {row.access === "payroll" && <MonetizationOnOutlinedIcon />} 
-              {row.access === "user" && <LockOpenOutlinedIcon />}
+              {row.access === "user" && <LockOpenOutlinedIcon  />}
               <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
                 {row.access === "admin" ? "Admin" : 
                  row.access === "payroll" ? "Payroll" : 

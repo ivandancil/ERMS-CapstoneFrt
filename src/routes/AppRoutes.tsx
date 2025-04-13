@@ -40,6 +40,7 @@ import EditRecord from "../pages/admin/RecordManagement/EditRecord";
 import EmployeeList from "../pages/admin/EmployeeRecordManagement/EmployeeList";
 import EmployeeRecordTable from "../pages/admin/EmployeeRecordManagement/EmployeeTable";
 import EmployeeTable from "../pages/admin/EmployeeRecordManagement/EmployeeTable";
+import UploadPDS from "../pages/user/UploadPDS";
 
 // Import the protected routes
 
@@ -74,6 +75,10 @@ const Approutes = () => {
 
         <Route path="employee_list" element={<EmployeeList />} />
         <Route path="employee_table" element={<EmployeeTable />} />
+        
+        <Route path="employee/details/:id" element={<EmployeeProfile />} />
+       
+
       </Route>
 
       {/* User Routes */}
@@ -92,6 +97,7 @@ const Approutes = () => {
         <Route path="document_management" element={<DocumentManagement />} />
         <Route path="employee_training" element={<EmployeeTraining />} />
         <Route path="payroll" element={<Payroll />} />
+        <Route path="upload_pds" element={<UploadPDS />} />
       </Route>
 
        {/* Payroll Routes (Separate) */}

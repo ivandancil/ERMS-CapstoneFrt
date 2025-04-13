@@ -1,6 +1,5 @@
   import React, { useState, useEffect, useRef } from "react";
-  import {
-    Box,
+  import { Box,
     Button,
     Typography,
     useTheme,
@@ -9,7 +8,8 @@
     DialogContent,
     DialogActions,
     Grid,
-    TextField,
+    Card,
+    CardContent,
   } from "@mui/material";
   import { DataGrid } from "@mui/x-data-grid";
   import Header from "../../../components/Header";
@@ -23,6 +23,7 @@
   import VisibilityIcon from "@mui/icons-material/Visibility";
   import { useSearch } from "../../../components/SearchContext";
   import JobPosition from "./JobPosition";
+  import PersonIcon from '@mui/icons-material/Person';
 
   interface Employee {
     id: number;
@@ -58,14 +59,19 @@
     const [openAddJobPositionDialog, setOpenAddJobPositionDialog] = useState(false);
     const { searchTerm } = useSearch();
 
+    
+
 
     const addDialogRef = useRef<HTMLButtonElement>(null);
     const editDialogRef = useRef<HTMLButtonElement>(null);
+
+    
 
     const handleView = (employee: Employee) => {
       setSelectedEmployee(employee);
       setOpenViewDialog(true);
     };
+    
 
 
     // Fetch Employees
@@ -144,6 +150,25 @@
         employee.employeeID.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    
+    const mockDocuments = [
+      // {
+      //   documentName: "Employee ID Card",
+      //   // documentUrl: "http://example.com/document/employee_id_card.pdf"
+      // },
+      // {
+      //   documentName: "Contract",
+      //   // documentUrl: "http://example.com/document/contract.pdf"
+      // },
+      // {
+      //   documentName: "Certificate of Employment",
+      //   // documentUrl: "http://example.com/document/certificate_of_employment.pdf"
+      // },
+      {
+        documentName: "Personal Data Sheet",
+        // documentUrl: "http://example.com/document/certificate_of_employment.pdf"
+      }
+    ];
 
     return (
       <Box m="20px">
@@ -152,7 +177,7 @@
 
     {/* Add Employee Button */}
     <Button
-      variant="contained"
+      variant="outlined"
       sx={{
         backgroundColor: "black",
         color: "#fff",
@@ -202,7 +227,7 @@
               { field: "employeeID", headerName: "Employee ID", flex: 1 },
               { field: "lastname", headerName: "Last Name", flex: 1 },
               { field: "firstname", headerName: "First Name", flex: 1 },
-              { field: "email", headerName: "Email", flex: 1.5 },
+              { field: "email", headerName: "Email", flex: 1 },
               {
                 field: "actions",
                 headerName: "Actions",
@@ -251,6 +276,7 @@
                     >
                         {deleteLoading ? "Deleting..." : "Delete"}
                     </Button>
+
                   </Box>
                 ),
               },
@@ -299,80 +325,136 @@
 
       {/* View Employee Modal */}
       <Dialog open={openViewDialog} onClose={() => setOpenViewDialog(false)} fullWidth maxWidth="md">
-        <DialogTitle
-          sx={{
-            backgroundColor: "black",
-            color: "#fff",
-            fontWeight: "bold",
-            textAlign: "center",
-          }}
-        >
-          Employee Details
-        </DialogTitle>
+  <DialogTitle sx={{ backgroundColor: "#1E1E1E", color: "#fff", fontWeight: "bold", textAlign: "center" }}>
+    Employee Profile
+  </DialogTitle>
 
-        <DialogContent dividers>
-          {selectedEmployee ? (
-            <Box p={2}>
-              <Grid container spacing={2}>
-                {/* Row 1: Employee ID & Sex */}
-                <Grid item xs={6}>
-                  <TextField fullWidth label="Employee ID" value={selectedEmployee.employeeID || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}} />
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField fullWidth label="Sex" value={selectedEmployee.sex || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}}/>
-                </Grid>
-
-                {/* Row 2: Job Position & Date of Birth */}
-                <Grid item xs={6}>
-                  <TextField fullWidth label="Job Position" value={selectedEmployee.jobPosition || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}}/>
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField fullWidth label="Date of Birth" value={selectedEmployee.dateOfBirth || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}} />
-                </Grid>
-
-                {/* Row 3: Last Name & Civil Status */}
-                <Grid item xs={6}>
-                  <TextField fullWidth label="Last Name" value={selectedEmployee.lastname || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}}/>
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField fullWidth label="Civil Status" value={selectedEmployee.civilStatus || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}} />
-                </Grid>
-
-                {/* Row 4: First Name & Phone */}
-                <Grid item xs={6}>
-                  <TextField fullWidth label="First Name" value={selectedEmployee.firstname || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}} />
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField fullWidth label="Phone" value={selectedEmployee.phoneNumber || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}} />
-                </Grid>
-
-                {/* Row 5: Middle Name (if available) & Email */}
-                <Grid item xs={6}>
-                  <TextField fullWidth label="Middle Name" value={selectedEmployee.middlename || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}}/>
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField fullWidth label="Email" value={selectedEmployee.email || "N/A"} variant="outlined" InputProps={{ readOnly: true }} sx={{...inputStyles}} />
-                </Grid>
-
-                {/* Row 6: Address (Full Width) */}
-                <Grid item xs={12}>
-                  <TextField fullWidth label="Address" value={selectedEmployee.address || "N/A"} variant="outlined" InputProps={{ readOnly: true }} multiline rows={2} sx={{...inputStyles}}/>
-                </Grid>
-              </Grid>
-            </Box>
-          ) : (
-            <Typography color="error" textAlign="center">
-              No employee details available.
+  <DialogContent dividers>
+    {selectedEmployee && (
+      <Box p={3}>
+        {/* Profile Section: Image and Name */}
+        <Box display="flex" alignItems="center" mb={3} gap={3}>
+          <Box
+            sx={{
+              width: 120,
+              height: 120,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: '50%',
+              backgroundColor: "#B0BEC5", // Background color for the default icon
+            }}
+          >
+            <PersonIcon sx={{ fontSize: 60, color: "#fff" }} /> {/* Profile icon */}
+          </Box>
+          <Box>
+            <Typography variant="h3" fontWeight="bold">
+              {selectedEmployee.firstname} {selectedEmployee.middlename} {selectedEmployee.lastname}
             </Typography>
-          )}
-        </DialogContent>
+            <Typography color="textSecondary" variant="h5">{selectedEmployee.jobPosition}</Typography>
+          </Box>
+        </Box>
 
-        <DialogActions>
-          <Button onClick={() => setOpenViewDialog(false)} color="primary" variant="contained">
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
+        {/* Personal Information Section */}
+        <Card sx={{ mb: 2, boxShadow: 3 }}>
+          <CardContent>
+            <Typography variant="h5" sx={{ fontWeight: "bold", mb: 2 }}>
+              PERSONAL INFORMATION
+            </Typography>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <Typography fontWeight="bold">Employee ID:</Typography>
+                <Typography>{selectedEmployee.employeeID || "N/A"}</Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography fontWeight="bold">Sex:</Typography>
+                <Typography>{selectedEmployee.sex || "N/A"}</Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography fontWeight="bold">Date of Birth:</Typography>
+                <Typography>{selectedEmployee.dateOfBirth || "N/A"}</Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography fontWeight="bold">Civil Status:</Typography>
+                <Typography>{selectedEmployee.civilStatus || "N/A"}</Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography fontWeight="bold">Age:</Typography>
+                <Typography>{selectedEmployee.age || "N/A"}</Typography>
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Card>
+
+        {/* Contact Information Section */}
+        <Card sx={{ mb: 2, boxShadow: 3 }}>
+          <CardContent>
+            <Typography variant="h5" sx={{ fontWeight: "bold", mb: 2 }}>
+              CONTACT INFORMATION
+            </Typography>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <Typography fontWeight="bold">Email:</Typography>
+                <Typography>{selectedEmployee.email || "N/A"}</Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography fontWeight="bold">Phone Number:</Typography>
+                <Typography>{selectedEmployee.phoneNumber || "N/A"}</Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography fontWeight="bold">Address:</Typography>
+                <Typography>{selectedEmployee.address || "N/A"}</Typography>
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Card>
+
+       
+        <Card sx={{ mb: 2, boxShadow: 3 }}>
+              <CardContent>
+                <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 2 }}>
+                  DOCUMENTS
+                </Typography>
+                {mockDocuments && mockDocuments.length > 0 ? (
+                  <Grid container spacing={2}>
+                    {mockDocuments.map((doc, index) => (
+                      <Grid item xs={12} sm={6} md={4} key={index}>
+                        <Card sx={{ boxShadow: 1, p: 2 }}>
+                          <Typography fontWeight="bold">{doc.documentName}</Typography>
+                          <Box mt={2}>
+                            <Button
+                              variant="outlined"
+                              color="primary"
+                              onClick={() => window.open(doc.documentUrl, '_blank')}
+                              fullWidth
+                            >
+                              View Document
+                            </Button>
+                          </Box>
+                        </Card>
+                  </Grid>
+                ))}
+              </Grid>
+            ) : (
+              <Typography>No documents available</Typography>
+            )}
+          </CardContent>
+        </Card>
+
+
+        
+
+      </Box>
+    )}
+  </DialogContent>
+  
+  <DialogActions>
+    <Button onClick={() => setOpenViewDialog(false)} color="primary" variant="contained" sx={{ borderRadius: "8px" }}>
+      Close
+    </Button>
+  </DialogActions>
+</Dialog>
+
 
 
         {/* Edit Employee Dialog */}

@@ -210,7 +210,7 @@ function Sidebar({ role }: SidebarProps) {
           
           )}
 
-          <Box paddingLeft={isCollapsed ? undefined : "10%"} color={"black"}>
+          <Box paddingLeft={isCollapsed ? undefined : "10%"} color={"black"} mt={3}>
             <Item title="Dashboard" to={`/${role}`} icon={<FaTachometerAlt />} selected={selected} setSelected={setSelected}
                />
 
@@ -282,15 +282,18 @@ function Sidebar({ role }: SidebarProps) {
             icon={<FaEye />}
             selected={selected}
             setSelected={setSelected}
-          />
-                <Item
+          /> */}
+
+     
+
+                {/* <Item
                   title="Record Management"
                   to="/admin/record_management"
                   icon={<FaFolderOpen />}
                   selected={selected}
                   setSelected={setSelected}
-                /> */}
-          
+                />
+           */}
         
           
 
@@ -361,6 +364,13 @@ function Sidebar({ role }: SidebarProps) {
                 {/* <Item title="Attendance" to="/user/attendance" icon={<FaClipboardList />} selected={selected} setSelected={setSelected} />
                 <Item title="Leave Request" to="/user/leave_request" icon={<FaClipboardList />} selected={selected} setSelected={setSelected} /> */}
                 <Item title="Document Management" to="/user/document_management" icon={<FaFolderOpen />} selected={selected} setSelected={setSelected} />
+                <Item
+                    title="Upload Image"
+                    to="/user/upload_pds"
+                    icon={<FaEye />}
+                    selected={selected}
+                    setSelected={setSelected}
+                  />
                 {/* <Item title="Employee Training" to="/user/employee_training" icon={<FaFolderOpen />} selected={selected} setSelected={setSelected} />
                 <Item title="Payroll" to="/user/payroll" icon={<FaMoneyCheckAlt />} selected={selected} setSelected={setSelected} /> */}
               </>

@@ -1,23 +1,15 @@
-import { Box, IconButton, useTheme, InputBase, Menu, MenuItem, Divider, Badge } from "@mui/material";
-import { useState, useContext, useEffect, MouseEvent } from "react";
-import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
-import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
+import { Box, IconButton, InputBase, Menu, MenuItem, Divider, Badge } from "@mui/material";
+import { useState, useEffect, MouseEvent } from "react";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import SearchIcon from "@mui/icons-material/Search";
-import { ColorModeContext, tokens } from "../theme";
 import { useNavigate } from "react-router-dom";
 import { useNotificationContext } from "./NotificationContext";
 import { useSearch } from "./SearchContext";
-import { grey } from "@mui/material/colors";
 
 const Topbar = () => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-  const colorMode = useContext(ColorModeContext);
   const navigate = useNavigate();
-
   const { notifications } = useNotificationContext();
   const [anchorElProfile, setAnchorElProfile] = useState<null | HTMLElement>(null);
   const [anchorElNotifications, setAnchorElNotifications] = useState<null | HTMLElement>(null);
@@ -29,21 +21,21 @@ const Topbar = () => {
     const storedUser = localStorage.getItem("user");
     const role = localStorage.getItem("role");
 
-    if (storedUser) {
-      const parsedUser = JSON.parse(storedUser);
-      setName(parsedUser.name || "");
-    }
-    if (role) {
-      setUserRole(role);
-    }
-  }, []);
+      if (storedUser) {
+        const parsedUser = JSON.parse(storedUser);
+        setName(parsedUser.name || "");
+      }
+      if (role) {
+        setUserRole(role);
+      }
+    }, []);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value); // Update the search term
+    setSearchTerm(event.target.value);
   };
 
   const handleSearch = () => {
-    console.log("Searching for:", searchTerm); // This is where you'd trigger a search, e.g., filtering data
+    console.log("Searching for:", searchTerm);
   };
 
   const handleProfileClick = (event: MouseEvent<HTMLElement>) => {
@@ -74,7 +66,7 @@ const Topbar = () => {
 
   const userNotifications = notifications.filter((notification) => notification.role === userRole);
 
-  // ✅ IMPROVED LOGOUT FUNCTION
+  // ✅ LOGOUT FUNCTION
   const handleLogout = async () => {
     const confirmLogout = window.confirm("Are you sure you want to logout?");
     if (!confirmLogout) return;
@@ -123,22 +115,21 @@ const Topbar = () => {
 
   return (
     <Box display="flex" justifyContent="space-between" p={2} alignItems="center">
-      {/* Search Bar */}
       <Box
         display="flex"
         sx={{
-          backgroundColor: "#f5f5f5", // or use theme.palette.grey[200] if using MUI theme
+          backgroundColor: "#f5f5f5",
           borderRadius: "8px",
           boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-          padding: "8px 16px", // easier to read than shorthand with px
+          padding: "8px 16px", 
         }}
-        
       >
+
          <InputBase
         sx={{ ml: 2, flex: 1 }}
         placeholder="Search..."
-        value={searchTerm} // Bind value to searchTerm from context
-        onChange={handleInputChange} // Update search term on input change
+        value={searchTerm} 
+        onChange={handleInputChange} 
       />
       <IconButton type="button" sx={{ p: 1 }} onClick={handleSearch}>
         <SearchIcon />
@@ -147,13 +138,6 @@ const Topbar = () => {
 
       {/* Icons */}
       <Box display="flex" justifyContent="space-between" p={2} alignItems="center">
-      {/* <IconButton onClick={colorMode.toggleColorMode}>
-          {theme.palette.mode === "dark" ? (
-            <DarkModeOutlinedIcon />
-          ) : (
-            <LightModeOutlinedIcon />
-          )}
-        </IconButton> */}
         {/* Notifications */}
         <IconButton onClick={handleNotificationsClick}>
           <Badge color="error" badgeContent={userNotifications.length}>

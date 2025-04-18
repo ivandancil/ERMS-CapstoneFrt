@@ -1,4 +1,4 @@
-import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from "@mui/material";
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from "@mui/material";
 
 interface AttendanceRecord {
   id: number;
@@ -39,7 +39,7 @@ const TableComponent = ({ type }: TableComponentProps) => {
 
   // Type guard function to check if row is AttendanceRecord
   const isAttendanceRecord = (row: AttendanceRecord | LeaveRequest): row is AttendanceRecord => {
-    return "checkIn" in row; // If row has 'checkIn', it is an AttendanceRecord
+    return "checkIn" in row;
   };
 
   return (

@@ -1,25 +1,10 @@
 import { useState, useEffect } from "react";
-import { ProSidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
-import { Box, IconButton, Typography, useTheme } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
+import { Box, Typography, useTheme } from "@mui/material";
+import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import {
-  FaUserCircle,
-  FaTachometerAlt,
-  FaUsers,
-  FaUserAlt,
-  FaUpload,
-  FaEye,
-  FaClipboardList,
-  FaUserClock,
-  FaMoneyCheckAlt,
-  FaFileAlt,
-  FaCog,
-  FaSignOutAlt,
-  FaChalkboardTeacher,
-  FaFolderOpen,
-} from "react-icons/fa";
+import { FaUserCircle, FaTachometerAlt, FaUsers, FaUpload, FaEye, FaCog, FaFolderOpen } from "react-icons/fa";
 import { tokens } from "../theme";
 
 interface ItemProps {
@@ -32,11 +17,11 @@ interface ItemProps {
 }
 
 interface SidebarProps {
-  role: "admin" | "user" | "payroll"; // Add "payroll" here
+  role: "admin" | "user" ;
 }
 
 // Reusable Item component
-function Item({ title, to, icon, selected, setSelected, style }: ItemProps) {
+function Item({ title, to, icon, selected, setSelected }: ItemProps) {
   return (
     <MenuItem
       active={selected === title}
@@ -54,12 +39,6 @@ function Sidebar({ role }: SidebarProps) {
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
-  const navigate = useNavigate();
-  const [employeeData, setEmployeeData] = useState([]);
-  const [user, setUser] = useState(null);
-
-
-
   const [name, setName] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -90,53 +69,6 @@ function Sidebar({ role }: SidebarProps) {
 
     fetchCurrentUser();
   }, []);
-
-  // LOGOUT FUNCTION
-  async function handleLogout() {
-    try {
-      const token = localStorage.getItem("token");
-  
-      if (!token) {
-        console.warn("No token found, redirecting to login.");
-        navigate("/login");
-        return;
-      }
-  
-      const response = await fetch("http://localhost:8000/api/logout", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-  
-      if (!response.ok) {
-        throw new Error("Logout failed");
-      }
-  
-      // Clear storage
-      localStorage.removeItem("token");
-      localStorage.removeItem("role");
-      localStorage.removeItem("user"); // Any additional
-      sessionStorage.clear();
-  
-      // Reset states
-      setName("");
-      setSelected("Dashboard");
-      setUser(null);
-      setEmployeeData([]);
-      setLoading(true);
-  
-      // Clear API cache if using
-      // queryClient.clear();
-  
-      console.log("Logged out successfully");
-  
-      navigate("/login");
-    } catch (error) {
-      console.error("Error:", error instanceof Error ? error.message : error);
-    }
-  }
   
 
   return (
@@ -150,64 +82,59 @@ function Sidebar({ role }: SidebarProps) {
         "& .pro-menu-item.active": {
           color: `${theme.palette.primary.dark} !important`,
           fontWeight: "bold",
-          backgroundColor: "#d0d0d0 !important", // Optional: background for selected item
+          backgroundColor: "#d0d0d0 !important",
         },
       }}
     >
       <ProSidebar collapsed={isCollapsed}>
         <Menu iconShape="square">
-        <MenuItem
-          onClick={() => setIsCollapsed((prev) => !prev)}
-          icon={
-            isCollapsed ? (
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                <img  src="/image/Logo3.png"alt="Logo" style={{ width: 30, height: 30, marginTop: "35px" }} />
-                <span style={{ fontSize: "12px", marginTop: "2px", color: colors.grey[100] }}>
-                  DepEd
-                </span>
-              </div>
-            ) : undefined
-          }
-          style={{ margin: "10px 0 20px 0", color: colors.grey[100] }}
-        >
-            {!isCollapsed && (
-            <Box display="flex" justifyContent="space-between" alignItems="center" ml="15px">
-            <img
-              src="/image/Logo3.png"
-              alt="DepEd Logo"
+          <MenuItem
+            onClick={() => setIsCollapsed((prev) => !prev)}
+            icon={
+              isCollapsed ? (
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                  <img  src="/image/Logo3.png"alt="Logo" style={{ width: 30, height: 30, marginTop: "35px" }} />
+                  <span style={{ fontSize: "12px", marginTop: "2px", color: colors.grey[100] }}>
+                    DepEd
+                  </span>
+                </div>
+              ) : undefined
+            }
+            style={{ margin: "10px 0 20px 0", color: colors.grey[100] }}
+          >
+              {!isCollapsed && (
+              <Box display="flex" justifyContent="space-between" alignItems="center" ml="15px">
+              <img
+                src="/image/Logo3.png"
+                alt="DepEd Logo"
+                style={{
+                  width: isCollapsed ? "20px" : "45px", 
+                  height: "auto",
+                  transition: "width 0.3s ease-in-out",  
+                }}
+              />
+            <MenuOutlinedIcon
               style={{
-                width: isCollapsed ? "20px" : "45px", // Smaller size
-                height: "auto",
-                transition: "width 0.3s ease-in-out",
-                
+                transition: "transform 0.3s ease-in-out",
+                transform: isCollapsed ? "rotate(180deg)" : "rotate(0deg)",
+                opacity: isCollapsed ? 0 : 1,
+                color: "black",
               }}
             />
-           <MenuOutlinedIcon
-            style={{
-              transition: "transform 0.3s ease-in-out",
-              transform: isCollapsed ? "rotate(180deg)" : "rotate(0deg)",
-              opacity: isCollapsed ? 0 : 1, // Hide icon when collapsed
-              color: "black",
-            }}
-          />
-          </Box>
-          
-            )}
-          </MenuItem>
+            </Box>
+          )}
+            </MenuItem>
 
           {!isCollapsed && (
             <Box textAlign="center" py={2}>
-            <FaUserCircle size={50} />
-            <Typography variant="h5" color="black" mt={1} fontWeight="bold">
-                {loading ? "Loading..." : name || "Unknown User"} {/* ✅ show name */}
-              </Typography>
-              <Typography variant="body2" color="black">
-              {role === "admin" ? "Admin" : role === "payroll" ? "Accounting" : "Employee"}
-            </Typography>
-
-            
-          </Box>
-          
+              <FaUserCircle size={50} />
+                <Typography variant="h5" color="black" mt={1} fontWeight="bold">
+                    {loading ? "Loading..." : name || "Unknown User"} 
+                  </Typography>
+                  <Typography variant="body2" color="black">
+                    {role === "admin" ? "Admin" : "Employee"}
+                  </Typography>
+            </Box>
           )}
 
           <Box paddingLeft={isCollapsed ? undefined : "10%"} color={"black"} mt={3}>
@@ -224,174 +151,30 @@ function Sidebar({ role }: SidebarProps) {
                     DATA
               </Typography>
 
-             
-    <Item title="System Management" to="/admin/system_management" icon={<FaUsers />} selected={selected} setSelected={setSelected} />
-    <Item title="Employee List" to="/admin/employee_management" icon={<FaUsers />} selected={selected} setSelected={setSelected} />
-    <Item
-            title="Uploaded Documents"
-            to="/admin/upload_docs"
-            icon={<FaUpload />}
-            selected={selected}
-            setSelected={setSelected}
-            
-          />
-           <Item
-            title="Reports"
-            to="/admin/reports"
-            icon={<FaEye />}
-            selected={selected}
-            setSelected={setSelected}
-          />
-            {/* <Item
-                  title="OCR"
-                  to="/admin/ocr"
-                  icon={<FaFolderOpen />}
-                  selected={selected}
-                  setSelected={setSelected}
-                /> */}
-
+          <Item title="System Management" to="/admin/system_management" icon={<FaUsers />} selected={selected} setSelected={setSelected} />
+          <Item title="Employee List" to="/admin/employee_management" icon={<FaUsers />} selected={selected} setSelected={setSelected} />
+          <Item title="Uploaded Documents" to="/admin/upload_docs" icon={<FaUpload />} selected={selected} setSelected={setSelected} />
+          <Item title="Reports" to="/admin/reports" icon={<FaEye />} selected={selected} setSelected={setSelected} />
            
-           {/* <Item
-                title="Employee List"
-                to="/admin/employee_list"
-                icon={<FaUserAlt />}
-                selected={selected}
-                setSelected={setSelected}
-              /> */}
-        {/* <Item
-            title="Add Employee Record"
-            to="/admin/add_records"
-            icon={<FaFileAlt />}
-            selected={selected}
-            setSelected={setSelected}
-          /> */}
-
-          {/* <Item
-            title="Record Table"
-            to="/admin/employee_table"
-            icon={<FaFileAlt />}
-            selected={selected}
-            setSelected={setSelected}
-          /> */}
-
-         
-
-          {/* <Item
-            title="OCR Extract"
-            to="/admin/ocr"
-            icon={<FaEye />}
-            selected={selected}
-            setSelected={setSelected}
-          /> */}
-
-     
-
-                {/* <Item
-                  title="Record Management"
-                  to="/admin/record_management"
-                  icon={<FaFolderOpen />}
-                  selected={selected}
-                  setSelected={setSelected}
-                />
-           */}
-        
-          
-
-              {/* <Item
-                  title="Record List Table"
-                  to="/admin/record_list_table"
-                  icon={<FaFolderOpen />}
-                  selected={selected}
-                  setSelected={setSelected}
-                />
-
-              <Item
-                  title="Add Records"
-                  to="/admin/add_records"
-                  icon={<FaFolderOpen />}
-                  selected={selected}
-                  setSelected={setSelected}
-                />
-
-              <Item
-                  title="Edit Records"
-                  to="/admin/edit_records"
-                  icon={<FaFolderOpen />}
-                  selected={selected}
-                  setSelected={setSelected}
-                />
-
-              <Item
-                  title="View Records"
-                  to="/admin/view_records"
-                  icon={<FaFolderOpen />}
-                  selected={selected}
-                  setSelected={setSelected}
-                />
-
-              <Item
-                  title="Upload Documents"
-                  to="/admin/upload_docs"
-                  icon={<FaFolderOpen />}
-                  selected={selected}
-                  setSelected={setSelected}
-                /> */}
-
-            
-
-             
-                {/* <Item title="Employee Management" to="/admin/employee_management" icon={<FaUsers />} selected={selected} setSelected={setSelected} />
-                <Item title="Leave Management" to="/admin/leave_management" icon={<FaClipboardList />} selected={selected} setSelected={setSelected} />
-                <Item title="Training Development" to="/admin/training_development" icon={<FaChalkboardTeacher />} selected={selected} setSelected={setSelected} />
-
-                <SubMenu title="Payroll & Attendance" icon={<FaUserClock />}>
-                  <Item title="Payroll " to="/admin/payroll" icon={<FaMoneyCheckAlt />} selected={selected} setSelected={setSelected} />
-                  <Item title="Attendance" to="/admin/attendance_management" icon={<FaClipboardList />} selected={selected} setSelected={setSelected} />
-                </SubMenu>
-
-               
-                <Item title="Reports" to="/admin/reports" icon={<FaFileAlt />} selected={selected} setSelected={setSelected} />  */}
-              </>
+        </>
             )}
 
             {role === "user" && (
               <>
-                <Typography variant="h6" color={colors.grey[300]} sx={{ m: "15px 0 5px 20px" }}>
-                  DATA
+                <Typography 
+                    variant="h6" 
+                    color={colors.grey[300]} 
+                    sx={{ m: "15px 0 5px 20px" }}
+                >
+                    DATA
                 </Typography>
 
-                <Item title="My Profile"  to="/user/employee_profile" icon={<FaCog />} selected={selected} setSelected={setSelected} />
-                {/* <Item title="Attendance" to="/user/attendance" icon={<FaClipboardList />} selected={selected} setSelected={setSelected} />
-                <Item title="Leave Request" to="/user/leave_request" icon={<FaClipboardList />} selected={selected} setSelected={setSelected} /> */}
-                <Item title="Document Management" to="/user/document_management" icon={<FaFolderOpen />} selected={selected} setSelected={setSelected} />
-                <Item
-                    title="Upload Image"
-                    to="/user/upload_pds"
-                    icon={<FaEye />}
-                    selected={selected}
-                    setSelected={setSelected}
-                  />
-                {/* <Item title="Employee Training" to="/user/employee_training" icon={<FaFolderOpen />} selected={selected} setSelected={setSelected} />
-                <Item title="Payroll" to="/user/payroll" icon={<FaMoneyCheckAlt />} selected={selected} setSelected={setSelected} /> */}
+          <Item title="My Profile"  to="/user/employee_profile" icon={<FaCog />} selected={selected} setSelected={setSelected} />
+          <Item title="Document Management" to="/user/document_management" icon={<FaFolderOpen />} selected={selected} setSelected={setSelected} />
+          <Item title="Upload Image" to="/user/upload_pds" icon={<FaEye />} selected={selected} setSelected={setSelected} />
+
               </>
             )}
-            {role === "payroll" && (
-              <>
-                <Typography variant="h6" color={colors.grey[300]} sx={{ m: "15px 0 5px 20px" }}>
-                  DATA
-                </Typography>
-
-                <Item title="Upload Payroll" to="/payroll/upload" icon={<FaMoneyCheckAlt />} selected={selected} setSelected={setSelected} />
-                {/* <Item title="View Uploaded Payrolls" to="/payroll/view" icon={<FaFileAlt />} selected={selected} setSelected={setSelected} />
-                <Item title="Download Reports" to="/payroll/reports" icon={<FaFolderOpen />} selected={selected} setSelected={setSelected} /> */}
-              </>
-            )}
-
-            <br />
-
-            {/* <MenuItem title="Logout" icon={<FaSignOutAlt />} onClick={handleLogout}>
-              Logout
-            </MenuItem> */}
           </Box>
         </Menu>
       </ProSidebar>

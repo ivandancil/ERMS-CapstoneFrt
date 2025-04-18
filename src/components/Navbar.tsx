@@ -114,47 +114,23 @@ function Navbar() {
   
 
   return (
-    <AppBar
-      position="static"
-      sx={{
-        bgcolor: "white",
-        boxShadow: "none",
-        height: 90,
-        justifyContent: "center",
-      }}
-    >
-      <Toolbar
-        sx={{ display: "flex", justifyContent: "space-between", minHeight: "90px" }}
+      <AppBar
+        position="static"
+        sx={{
+          bgcolor: "white",
+          boxShadow: "none",
+          height: 90,
+          justifyContent: "center",
+        }}
       >
-        {/* Logo */}
-        <Box component="img" src="/image/depedLogo.png" alt="DepEd Logo" sx={{ height: 70, width: "auto", ml: 2 }} />
+        <Toolbar
+          sx={{ display: "flex", justifyContent: "space-between", minHeight: "90px" }}
+        >
+            <Box component="img" src="/image/depedLogo.png" alt="DepEd Logo" sx={{ height: 70, width: "auto", ml: 2 }} />
 
-        {/* Nav Links */}
-        <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-          {/* Home link (always visible) */}
-          <NavLink to="/" style={{ textDecoration: "none" }}>
-            {({ isActive }) => (
-              <Button
-                sx={{
-                  mx: 1,
-                  color: isActive ? "#1976d2" : "black",
-                  fontSize: "1.1rem",
-                  fontWeight: 600,
-                  borderBottom: isActive ? "2px solid #1976d2" : "none",
-                  "&:hover": {
-                    bgcolor: "#f0f0f0",
-                    color: "#1976d2",
-                  },
-                }}
-              >
-                Home
-              </Button>
-            )}
-          </NavLink>
-
-          {/* Attendance link (only if admin) */}
-          {/* {role === "admin" && (
-            <NavLink to="/attendance" style={{ textDecoration: "none" }}>
+          {/* Nav Links */}
+          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+            <NavLink to="/" style={{ textDecoration: "none" }}>
               {({ isActive }) => (
                 <Button
                   sx={{
@@ -169,68 +145,67 @@ function Navbar() {
                     },
                   }}
                 >
-                  Attendance
+                  Home
                 </Button>
               )}
             </NavLink>
-          )} */}
 
-          {/* Conditional Buttons */}
-          {isLoggedIn ? (
+            {/* Conditional Buttons */}
+            {isLoggedIn ? (
+                <>
+                {/* Profile Avatar with Margin */}
+                <Tooltip title="Account settings">
+                  <IconButton onClick={handleMenuOpen} sx={{ p: 0, ml: 2, mr: 3 }}>
+                    <Avatar src={photo || "/image/default-avatar.png"} sx={{ width: 45, height: 45 }} />
+                  </IconButton>
+                </Tooltip>
+
+                {/* Dropdown Menu with Spacing */}
+                <Menu
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={handleMenuClose}
+                  sx={{ mt: 1 }} 
+                >
+                  <MenuItem >
+                    <Typography variant="body1" fontWeight="bold">
+                      {userName}
+                    </Typography>
+                  </MenuItem>
+                  <MenuItem sx={{ my: 1, px: 3 }} onClick={() => navigate(role === "admin" ? "/admin" : "/user")}>
+                    Dashboard
+                  </MenuItem>
+
+                  <MenuItem sx={{ my: 1, px: 3 }} onClick={handleLogout}>
+                    Logout
+                  </MenuItem>
+                </Menu>
+              </>
+              ) : (
               <>
-              {/* Profile Avatar with Margin */}
-              <Tooltip title="Account settings">
-                <IconButton onClick={handleMenuOpen} sx={{ p: 0, ml: 2, mr: 3 }}>
-                  <Avatar src={photo || "/image/default-avatar.png"} sx={{ width: 45, height: 45 }} />
-                </IconButton>
-              </Tooltip>
-
-              {/* Dropdown Menu with Spacing */}
-              <Menu
-                anchorEl={anchorEl}
-                open={Boolean(anchorEl)}
-                onClose={handleMenuClose}
-                sx={{ mt: 1 }} // Small margin from the Avatar
-              >
-                <MenuItem >
-                  <Typography variant="body1" fontWeight="bold">
-                    {userName}
-                  </Typography>
-                </MenuItem>
-                <MenuItem sx={{ my: 1, px: 3 }} onClick={() => navigate(role === "admin" ? "/admin" : "/user")}>
-                  Dashboard
-                </MenuItem>
-
-                <MenuItem sx={{ my: 1, px: 3 }} onClick={handleLogout}>
-                  Logout
-                </MenuItem>
-              </Menu>
-            </>
-            ) : (
-            <>
-              {["Login", "Register"].map((text, index) => (
-                <NavLink key={index} to={`/${text.toLowerCase()}`} style={{ textDecoration: "none" }}>
-                  {({ isActive }) => (
-                    <Button
-                      sx={{
-                        mx: 1,
-                        my: 1,
-                        color: isActive ? "#1976d2" : "black",
-                        fontSize: "1.1rem",
-                        fontWeight: 600,
-                      }}
-                    >
-                      {text}
-                    </Button>
-                  )}
-                </NavLink>
-              ))}
-            </>
-            )}
-                    </Box>
-                  </Toolbar>
-                </AppBar>
-              );
-            }
+                {["Login", "Register"].map((text, index) => (
+                  <NavLink key={index} to={`/${text.toLowerCase()}`} style={{ textDecoration: "none" }}>
+                    {({ isActive }) => (
+                      <Button
+                        sx={{
+                          mx: 1,
+                          my: 1,
+                          color: isActive ? "#1976d2" : "black",
+                          fontSize: "1.1rem",
+                          fontWeight: 600,
+                        }}
+                      >
+                        {text}
+                      </Button>
+                    )}
+                  </NavLink>
+                ))}
+              </>
+              )}
+          </Box>
+        </Toolbar>
+      </AppBar>
+    );
+  }
 
 export default Navbar;

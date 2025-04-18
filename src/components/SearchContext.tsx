@@ -8,7 +8,7 @@ interface SearchContextProps {
 
 // Define the type for the SearchProvider props
 interface SearchProviderProps {
-  children: ReactNode; // This defines that children can be any React nodes (components)
+  children: ReactNode; 
 }
 
 const SearchContext = createContext<SearchContextProps | undefined>(undefined);

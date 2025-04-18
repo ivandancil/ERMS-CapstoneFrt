@@ -18,11 +18,11 @@ function UserRoute({ children }: Props) {
       toast.error("Unauthorized! Please Login.");
       setUnauthorized(true);
     }
-  }, [token, role, location.pathname]);
+      }, [token, role, location.pathname]);
 
-  if (unauthorized) {
-    return <Navigate to="/" replace />;
-  }
+      if (unauthorized) {
+        return <Navigate to="/" replace />;
+      }
 
   return children;
 }

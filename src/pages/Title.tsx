@@ -90,8 +90,11 @@ const Title = () => {
           }}
         >
           <Box component="span" sx={{ whiteSpace: 'nowrap' }}>
-            HUMAN RESOURCE INFORMATION SYSTEM
+          EMPLOYEE RECORD MANAGEMENT SYSTEM
           </Box>
+          <br />
+         
+          WITH OPTICAL CHARACTER RECOGNITION
           <br />
           IN DEPARTMENT OF EDUCATION
           <br />

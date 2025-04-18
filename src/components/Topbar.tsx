@@ -1,5 +1,7 @@
 import { Box, IconButton, useTheme, InputBase, Menu, MenuItem, Divider, Badge } from "@mui/material";
 import { useState, useContext, useEffect, MouseEvent } from "react";
+import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
+import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
@@ -8,6 +10,7 @@ import { ColorModeContext, tokens } from "../theme";
 import { useNavigate } from "react-router-dom";
 import { useNotificationContext } from "./NotificationContext";
 import { useSearch } from "./SearchContext";
+import { grey } from "@mui/material/colors";
 
 const Topbar = () => {
   const theme = useTheme();
@@ -124,11 +127,12 @@ const Topbar = () => {
       <Box
         display="flex"
         sx={{
-          backgroundColor: colors.primary[400],
-          borderRadius: "5px",
-          boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)",
-          p: "5px 10px",
+          backgroundColor: "#f5f5f5", // or use theme.palette.grey[200] if using MUI theme
+          borderRadius: "8px",
+          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+          padding: "8px 16px", // easier to read than shorthand with px
         }}
+        
       >
          <InputBase
         sx={{ ml: 2, flex: 1 }}
@@ -143,6 +147,13 @@ const Topbar = () => {
 
       {/* Icons */}
       <Box display="flex" justifyContent="space-between" p={2} alignItems="center">
+      {/* <IconButton onClick={colorMode.toggleColorMode}>
+          {theme.palette.mode === "dark" ? (
+            <DarkModeOutlinedIcon />
+          ) : (
+            <LightModeOutlinedIcon />
+          )}
+        </IconButton> */}
         {/* Notifications */}
         <IconButton onClick={handleNotificationsClick}>
           <Badge color="error" badgeContent={userNotifications.length}>

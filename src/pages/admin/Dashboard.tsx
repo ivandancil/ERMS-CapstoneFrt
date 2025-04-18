@@ -8,7 +8,11 @@ import FactCheckIcon from "@mui/icons-material/FactCheck";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
+import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import { useEffect, useState } from "react";
+import { grey } from "@mui/material/colors";
+import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
+
 
 interface User {
   id: number;
@@ -129,7 +133,7 @@ const Dashboard = () => {
   const overviewData = [
     {
       title: loading ? "Loading..." : employees.length.toString(),
-      subtitle: "Total Employees",
+      subtitle: "Total Number of Employees",
       icon: <GroupsIcon sx={{ fontSize: 30, color: "#3498db" }} />,
     },
     {
@@ -139,9 +143,19 @@ const Dashboard = () => {
     },
     {
       title: loading ? "Loading..." : leaveRequests.length.toString(),
-      subtitle: "Pending Leave Requests",
-      icon: <PendingActionsIcon sx={{ fontSize: 30, color: "#f39c12" }} />,
+      subtitle: "Number of Uploaded Documents",
+      icon: <InsertDriveFileIcon sx={{ fontSize: 30, color: "#f39c12" }} />,
     },
+    {
+      title: loading ? "Loading..." : leaveRequests.length.toString(),
+      subtitle: "Notifications",
+      icon: <NotificationsActiveIcon sx={{ fontSize: 30, color: "red" }} />,
+    },
+    // {
+    //   title: loading ? "Loading..." : leaveRequests.length.toString(),
+    //   subtitle: "Pending Leave Requests",
+    //   icon: <PendingActionsIcon sx={{ fontSize: 30, color: "#f39c12" }} />,
+    // },
   ];
 
   return (
@@ -163,7 +177,7 @@ const Dashboard = () => {
               sx={{
                 p: 2,
                 textAlign: "center",
-                backgroundColor: colors.primary[600],
+                backgroundColor: grey,
                 height: "110px",
                 display: "flex",
                 flexDirection: "column",
@@ -180,14 +194,17 @@ const Dashboard = () => {
               </Typography>
             </Paper>
           </Grid>
+          
         ))}
+       
       </Grid>
+      
       {/* Widgets Section */}
       <Grid container spacing={3} mt={1}>
         {/* Attendance Overview Widget */}
-        <Grid item xs={12} md={4}>
+        {/* <Grid item xs={12} md={4}>
           <Paper elevation={3} sx={{ p: 4,  backgroundColor: colors.primary[400], }}>
-            <FactCheckIcon sx={{ fontSize: 30, color: "#9b59b6" }} /> {/* Purple */}
+            <FactCheckIcon sx={{ fontSize: 30, color: "#9b59b6" }} />
             <Typography variant="h6" mt={2}>Attendance Overview</Typography>
             <Typography>Total Present: 140 Employees</Typography>
             <Typography>Total Absent: 10 Employees</Typography>
@@ -198,12 +215,12 @@ const Dashboard = () => {
               Daily Attendance
             </Button>
           </Paper>
-        </Grid>
+        </Grid> */}
 
         {/* Payroll Summary Widget */}
-        <Grid item xs={12} md={4}>
+        {/* <Grid item xs={12} md={4}>
           <Paper elevation={3} sx={{ p: 3,  backgroundColor: colors.primary[400], }}>
-            <AttachMoneyIcon sx={{ fontSize: 30, color: "#27ae60" }} /> {/* Green */}
+            <AttachMoneyIcon sx={{ fontSize: 30, color: "#27ae60" }} />
             <Typography variant="h6" mt={2}>Payroll Summary</Typography>
             <Typography>Total Salary: $150,000</Typography>
             <Typography>Next Payroll: March 15</Typography>
@@ -211,17 +228,17 @@ const Dashboard = () => {
               View Payroll
             </Button>
           </Paper>
-        </Grid>
+        </Grid> */}
 
         {/* Announcements Widget */}
-        <Grid item xs={12} md={4}>
+        {/* <Grid item xs={12} md={4}>
           <Paper elevation={3} sx={{ p: 3,  backgroundColor: colors.primary[400]  }}>
-            <CampaignIcon sx={{ fontSize: 30, color: "#e67e22" }} /> {/* Orange */}
+            <CampaignIcon sx={{ fontSize: 30, color: "#e67e22" }} />
             <Typography variant="h6" mt={2}>Recent Announcements</Typography>
             <Typography>- Payroll processed for February</Typography>
             <Typography>- Team Meeting on March 10</Typography>
           </Paper>
-        </Grid>
+        </Grid> */}
 
 
         {/* Quick Actions Widget */}

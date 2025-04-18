@@ -156,7 +156,7 @@ function Login() {
                 "& .MuiInputBase-input": { color: "black" },
               }}
             />  
-            <Button type="submit" variant="contained" fullWidth sx={{ mt: 2, backgroundColor: colors.blueAccent[900] }} disabled={loading}>
+            <Button type="submit" variant="contained" fullWidth sx={{ mt: 2, backgroundColor: "black" }} disabled={loading}>
               {loading ? "Logging in..." : "Login"}
             </Button>
           </form>

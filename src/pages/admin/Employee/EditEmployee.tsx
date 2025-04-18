@@ -165,7 +165,7 @@ function EditEmployee({ employeeId, onEmployeeUpdated, onClose }: EditEmployeePr
         <TextField
           label="Employee ID"
           name="employeeID"
-          disabled
+          
           value={employeeData.employeeID}
           fullWidth
           required
@@ -184,9 +184,10 @@ function EditEmployee({ employeeId, onEmployeeUpdated, onClose }: EditEmployeePr
           fullWidth
           variant="outlined"
         >
-          <MenuItem value="Manager">Manager</MenuItem>
-          <MenuItem value="Supervisor">Supervisor</MenuItem>
-          <MenuItem value="Staff">Staff</MenuItem>
+              <MenuItem value="Teacher">Teacher</MenuItem>
+              <MenuItem value="Teacher I">Teacher I</MenuItem>
+              <MenuItem value="Teacher II">Teacher II</MenuItem>
+              <MenuItem value="Supervisor">Supervisor</MenuItem>
         </TextField>
       </Grid>
 
@@ -298,7 +299,7 @@ function EditEmployee({ employeeId, onEmployeeUpdated, onClose }: EditEmployeePr
           label="Email"
           name="email"
           type="email"
-          disabled
+         
           value={employeeData.email}
           fullWidth
           required
@@ -337,15 +338,16 @@ function EditEmployee({ employeeId, onEmployeeUpdated, onClose }: EditEmployeePr
 
 // 🔥 Styles: Placeholder turns white on hover!
 const inputStyles = {
-  "& .MuiInputLabel-root": { color: "#ccc !important" }, // Default placeholder color
-  "& .MuiInputLabel-root.Mui-focused": { color: "white !important" }, // Focus color
+  "& .MuiInputLabel-root": { color: "black !important" }, // Default placeholder color
+  "& .MuiInputLabel-root.Mui-focused": { color: "black !important" }, // Focus color
   "& .MuiOutlinedInput-root": {
-    "&:hover .MuiInputLabel-root": { color: "white !important" }, // White placeholder on hover
-    "& fieldset": { borderColor: "#ccc !important" }, // Default border color
-    "&:hover fieldset": { borderColor: "white !important" }, // Border turns white on hover
-    "&.Mui-focused fieldset": { borderColor: "white !important" }, // White border on focus
+    "&:hover .MuiInputLabel-root": { color: "black !important" }, // White placeholder on hover
+    "& fieldset": { borderColor: "black !important" }, // Default border color
+    "&:hover fieldset": { borderColor: "black !important" }, // Border turns white on hover
+    "&.Mui-focused fieldset": { borderColor: "black !important" }, // White border on focus
   },
-  "& .MuiInputBase-input": { color: "white" }, // Text color white
+  "& .MuiInputBase-input": { color: "black" }, // Text color white
+  
 };
 
 export default EditEmployee;

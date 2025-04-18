@@ -15,18 +15,18 @@ function AdminRoute({ children }: Props) {
     if (!token || role !== "admin") {
       toast.error("Unauthorized Access. Admins only!");
       setIsAuthorized(false);
-    } else {
-      setIsAuthorized(true);
-    }
-  }, [token, role]);
+      } else {
+        setIsAuthorized(true);
+      }
+        }, [token, role]);
 
-  if (isAuthorized === false) {
-    return <Navigate to="/" />;
-  }
+        if (isAuthorized === false) {
+          return <Navigate to="/" />;
+        }
 
-  if (isAuthorized === true) {
-    return children;
-  }
+        if (isAuthorized === true) {
+          return children;
+        }
 
   // Optional: Return null or a loader while checking
   return null;

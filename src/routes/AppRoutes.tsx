@@ -3,7 +3,7 @@ import AdminLayout from "../layouts/AdminLayout";
 import Dashboard from "../pages/admin/Dashboard";
 import EmployeeManagement from "../pages/admin/Employee/EmployeeManagement";
 import Attendance from "../pages/user/Attendance";
-import Reports from "../pages/admin/Reports";
+import Reports from "../pages/admin/Employee/Reports";
 import UserLayout from "../layouts/UserLayout";
 import UserDashboard from "../pages/user/UserDashboard";
 import Login from "../pages/auth/Login";
@@ -29,6 +29,18 @@ import PayrollDashboard from "../pages/payroll/PayrollDashboard";
 import PayrollUpload from "../pages/payroll/PayrollUpload";
 import PayrollView from "../pages/payroll/PayrollView";
 import PayrollReport from "../pages/payroll/PayrollReport";
+import RecordManagement from "../pages/admin/RecordManagement";
+import RecordListTable from "../pages/admin/RecordManagement/RecordListTable";
+
+import UploadDocs from "../pages/admin/Employee/UploadDocs";
+import ViewRecord from "../pages/admin/RecordManagement/ViewRecord";
+import OCR from "../pages/admin/RecordManagement/OCR";
+import AddRecord from "../pages/admin/RecordManagement/AddRecord";
+import EditRecord from "../pages/admin/RecordManagement/EditRecord";
+import EmployeeList from "../pages/admin/EmployeeRecordManagement/EmployeeList";
+import EmployeeRecordTable from "../pages/admin/EmployeeRecordManagement/EmployeeTable";
+import EmployeeTable from "../pages/admin/EmployeeRecordManagement/EmployeeTable";
+import UploadPDS from "../pages/user/UploadPDS";
 
 // Import the protected routes
 
@@ -52,6 +64,21 @@ const Approutes = () => {
         <Route path="payroll" element={<PayrollProcess />} />
         <Route path="training_development" element={<TrainingDevelopment />} />
         <Route path="reports" element={<Reports />} />
+
+        <Route path="record_management" element={<RecordManagement />} />
+        <Route path="record_list_table" element={<RecordListTable />} />
+        {/* <Route path="add_records" element={<AddRecord />} />
+        <Route path="edit_records" element={<EditRecord />} /> */}
+        <Route path="view_records" element={<ViewRecord />} />
+        <Route path="upload_docs" element={<UploadDocs />} />
+        <Route path="ocr" element={<OCR />} />
+
+        <Route path="employee_list" element={<EmployeeList />} />
+        <Route path="employee_table" element={<EmployeeTable />} />
+        
+        <Route path="employee/details/:id" element={<EmployeeProfile />} />
+       
+
       </Route>
 
       {/* User Routes */}
@@ -70,6 +97,7 @@ const Approutes = () => {
         <Route path="document_management" element={<DocumentManagement />} />
         <Route path="employee_training" element={<EmployeeTraining />} />
         <Route path="payroll" element={<Payroll />} />
+        <Route path="upload_pds" element={<UploadPDS />} />
       </Route>
 
        {/* Payroll Routes (Separate) */}

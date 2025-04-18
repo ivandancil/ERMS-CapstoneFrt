@@ -99,10 +99,10 @@ function EmployeeProfile() {
                   position: "absolute",
                   bottom: 5,
                   right: 5,
-                  backgroundColor: colors.blueAccent[700],
+                  backgroundColor: "black",
                   color: "white",
                   boxShadow: 2,
-                  "&:hover": { backgroundColor: colors.blueAccent[500] },
+                  "&:hover": { backgroundColor: "black" },
                 }}
               >
                 <CameraAltIcon />
@@ -144,20 +144,24 @@ function EmployeeProfile() {
           indicatorColor="primary"
           textColor="inherit"
           sx={{
-            backgroundColor: "white", // Background color for tabs
+            backgroundColor: "black", // Background color for tabs
             "& .MuiTab-root": {
-              color: "black",
+              color: "white",
               fontWeight: "bold" // Set text color to white
             },
             "& .Mui-selected": {
-              color: "black", // Change selected tab color (Gold for visibility)
+              color: "white", // Change selected tab color (Gold for visibility)
               fontWeight: "bold",
             },
           }}
         >
           <Tab label="Personal Details" />
-        
-          <Tab label="Emergency Contact" />
+          <Tab label="Contact Information" />
+          <Tab label="Documents" />
+          <Tab label="Educational Background" />
+          <Tab label="Civil Service Eligibility" />
+          <Tab label="Work Experience" />
+         
         </Tabs>
 
 

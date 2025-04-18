@@ -7,10 +7,8 @@ function Navbar() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState("");
-  const [role, setRole] = useState(""); // NEW
+  const [role, setRole] = useState("");
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-
-
   const [photo, setPhoto] = useState("");
 
     // Handle profile menu open
@@ -18,8 +16,6 @@ function Navbar() {
       setAnchorEl(event.currentTarget);
     }
     
-
-  
     // Handle profile menu close
     function handleMenuClose() {
       setAnchorEl(null);
@@ -56,7 +52,6 @@ function Navbar() {
           setIsLoggedIn(true);
           setUserName(data.name);
       
-  
           // Optional: update localStorage too
           localStorage.setItem("name", data.name);
           localStorage.setItem("role", data.role);
@@ -69,7 +64,6 @@ function Navbar() {
   }, []);
   
   
-
   // Logout function
   async function handleLogout() {
     const confirmLogout = window.confirm("Are you sure you want to log out?");
@@ -159,7 +153,7 @@ function Navbar() {
           </NavLink>
 
           {/* Attendance link (only if admin) */}
-          {role === "admin" && (
+          {/* {role === "admin" && (
             <NavLink to="/attendance" style={{ textDecoration: "none" }}>
               {({ isActive }) => (
                 <Button
@@ -179,7 +173,7 @@ function Navbar() {
                 </Button>
               )}
             </NavLink>
-          )}
+          )} */}
 
           {/* Conditional Buttons */}
           {isLoggedIn ? (

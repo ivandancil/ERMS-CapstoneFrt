@@ -2,12 +2,14 @@ import { useState } from "react";
 import { Box, TextField, Button, Typography, Snackbar, Alert, useTheme } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
-import { tokens } from "../../theme";
+import { IconButton, InputAdornment } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+
+
 
 function Login() {
   const theme = useTheme();
   const navigate = useNavigate();
-  const colors = tokens(theme.palette.mode);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,6 +17,7 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [user, setUser] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
 
   async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -64,12 +67,11 @@ function Login() {
       setUser(data.user);
 
       // **Updated redirection logic**
-      let redirectPath = "/user"; // Default path for regular users
+      let redirectPath = "/user"; 
       if (data.user.role === "admin") {
         redirectPath = "/admin";
-      } else if (data.user.role === "payroll") {
-        redirectPath = "/payroll"; // Payroll manager dashboard
       }
+
       navigate(redirectPath);
     } catch (error) {
       if (error instanceof Error) {
@@ -140,10 +142,10 @@ function Login() {
                 "& .MuiInputBase-input": { color: "black" },
               }}
             />
-            <TextField
+           <TextField
               variant="outlined"
               label="Password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               fullWidth
               margin="normal"
               required
@@ -155,7 +157,21 @@ function Login() {
                 "& .MuiOutlinedInput-root fieldset": { borderColor: "black !important", borderWidth: 2 },
                 "& .MuiInputBase-input": { color: "black" },
               }}
-            />  
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={() => setShowPassword((prev) => !prev)}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+
             <Button type="submit" variant="contained" fullWidth sx={{ mt: 2, backgroundColor: "black" }} disabled={loading}>
               {loading ? "Logging in..." : "Login"}
             </Button>

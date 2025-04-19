@@ -2,20 +2,20 @@ import { Box, TextField, Button, Typography, Snackbar, Alert, useTheme } from "@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
-import backgroundImage from "../../assets/your-background-image.jpg"; 
-import { tokens } from "../../theme";
+import { IconButton, InputAdornment } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+
 
 const Register = () => {
   const theme = useTheme();
   const navigate = useNavigate();
-  const colors = tokens(theme.palette.mode);
-
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
   async function handleRegister(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -46,14 +46,14 @@ const Register = () => {
         console.log("API Error Response:", data);
     
         const lowerMessage = data.message?.toLowerCase();
-    
-        if (lowerMessage?.includes("not registered")) {
-          setError("This email is not registered in the system.");
-        } else if (lowerMessage?.includes("already registered")) {
-          setError("This email is already registered. Please login.");
-        } else {
-          setError(data.message || "Registration failed. Please try again.");
-        }
+
+          if (lowerMessage?.includes("not registered")) {
+            setError("This email is not registered in the system.");
+          } else if (lowerMessage?.includes("already registered")) {
+            setError("This email is already registered. Please login.");
+          } else {
+            setError(data.message || "Registration failed. Please try again.");
+          }
     
         setOpenSnackbar(true);
         return;
@@ -67,6 +67,7 @@ const Register = () => {
       localStorage.setItem("user", JSON.stringify(data.user));
     
       const redirectPath = data.user.role === "admin" ? "/admin" : "/user";
+
       navigate(redirectPath);
     } catch (error) {
       console.error("Registration failed:", error);
@@ -79,50 +80,49 @@ const Register = () => {
 
   return (
    <Box sx={{ width: "100%", minHeight: "100vh", height: "100vh", position: "relative", overflow: "hidden", bgcolor: "black" }}>
-    <Navbar />
-    
-    {/* Background Image */}
-    <Box
-      component="img"
-      src="/image/enhance.png"
-      alt="DepEd Logo Background"
-      sx={{
-        position: "absolute",
-        top: "90px", // Adjusted for navbar
-        left: 0,
-        width: "100%",
-        height: "calc(100vh - 90px)",
-        objectFit: "fill",
-        opacity: 0.3,
-        zIndex: 0,
-        pointerEvents: "none",
-      }}
-    />
+      <Navbar />
+  
+        {/* Background Image */}
+        <Box
+          component="img"
+          src="/image/enhance.png"
+          alt="DepEd Logo Background"
+          sx={{
+            position: "absolute",
+            top: "90px", 
+            left: 0,
+            width: "100%",
+            height: "calc(100vh - 90px)",
+            objectFit: "fill",
+            opacity: 0.3,
+            zIndex: 0,
+            pointerEvents: "none",
+          }}
+        />
 
-    {/* Form Container */}
-    <Box
-      sx={{
-        height: "calc(100vh - 64px)", // Adjust if Navbar height differs
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Box
-       sx={{
-        maxWidth: 400,
-        width: "90%",
-        p: 4,
-        boxShadow: 5,
-        borderRadius: 3,
-        bgcolor: "rgba(255, 250, 250, 0.7)", // White with 70% opacity
-        color: theme.palette.text.primary,
-        textAlign: "center",
-        backdropFilter: "blur(3px)", // Adds a blur effect to enhance readability
-        border: "1px solid rgba(255, 255, 255, 0.3)"
-
-      }}
-      >
+        {/* Form Container */}
+        <Box
+          sx={{
+            height: "calc(100vh - 64px)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+        <Box
+          sx={{
+            maxWidth: 400,
+            width: "90%",
+            p: 4,
+            boxShadow: 5,
+            borderRadius: 3,
+            bgcolor: "rgba(255, 250, 250, 0.7)",
+            color: theme.palette.text.primary,
+            textAlign: "center",
+            backdropFilter: "blur(3px)",
+            border: "1px solid rgba(255, 255, 255, 0.3)"
+        }}
+        >
          <Typography
           variant="h3"
           textAlign="center"
@@ -132,7 +132,7 @@ const Register = () => {
             textTransform: "uppercase",
             letterSpacing: 1,
             color: "black",
-            fontFamily: '"Roboto", "Arial", sans-serif', // Change to your desired font
+            fontFamily: '"Roboto", "Arial", sans-serif',
           }}
         >
           Register
@@ -141,7 +141,6 @@ const Register = () => {
           variant="body1" 
           textAlign="center" 
           color="black"
-       
           mb={2}
         >
           Fill in your details to create a new account. Make sure your email matches our employee records.
@@ -160,8 +159,8 @@ const Register = () => {
             "& .MuiInputLabel-root": { color: "black !important" },
               "& .MuiOutlinedInput-root": {
                 fieldset: {
-                  borderColor: "black !important", // Always black border
-                  borderWidth: 2, // Adjust border width if needed
+                  borderColor: "black !important", 
+                  borderWidth: 2,
                 },
               },
               "& .MuiInputBase-input": { color: "black" },
@@ -181,34 +180,42 @@ const Register = () => {
              "& .MuiInputLabel-root": { color: "black !important" },
               "& .MuiOutlinedInput-root": {
                 fieldset: {
-                  borderColor: "black !important", // Always black border
-                  borderWidth: 2, // Adjust border width if needed
+                  borderColor: "black !important", 
+                  borderWidth: 2, 
                 },
               },
               "& .MuiInputBase-input": { color: "black" },
             }}
           />
-          <TextField
-            variant="outlined"
-            label="Password"
-            type="password"
-            fullWidth
-            margin="normal"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            autoComplete="new-password"
-            sx={{
-           "& .MuiInputLabel-root": { color: "black !important" },
-              "& .MuiOutlinedInput-root": {
-                fieldset: {
-                  borderColor: "black !important", // Always black border
-                  borderWidth: 2, // Adjust border width if needed
-                },
-              },
-              "& .MuiInputBase-input": { color: "black" },
-            }}
-          />
+            <TextField
+              variant="outlined"
+              label="Password"
+              type={showPassword ? "text" : "password"}
+              fullWidth
+              margin="normal"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              autoComplete="current-password"
+              sx={{
+                "& .MuiInputLabel-root": { color: "black !important" },
+                "& .MuiOutlinedInput-root fieldset": { borderColor: "black !important", borderWidth: 2 },
+                "& .MuiInputBase-input": { color: "black" },
+              }}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={() => setShowPassword((prev) => !prev)}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
 
           <Button
             type="submit"
@@ -220,6 +227,7 @@ const Register = () => {
             {loading ? "Registering..." : "Register"}
           </Button>
         </form>
+        
         <Typography textAlign="center" mt={2} color="black">
           Already have an account?{" "}
           <Link to="/login" style={{ color: theme.palette.primary.dark, fontWeight: "bold", textDecoration: "none" }}>

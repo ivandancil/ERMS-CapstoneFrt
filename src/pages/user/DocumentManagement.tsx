@@ -2,14 +2,10 @@ import React, { useState, useRef, useEffect } from "react";
 import {
   Box,
   Button,
-  Typography,
-  useTheme,
   Tabs,
   Tab,
 } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import AddIcon from "@mui/icons-material/Add";
-import { tokens } from "../../theme";
 import Header from "../../components/Header";
 
 interface Document {
@@ -22,14 +18,12 @@ interface Document {
 }
 
 function DocumentManagement() {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-
   const [documents, setDocuments] = useState<Document[]>([]);
   const [currentTab, setCurrentTab] = useState("Common");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const [scanTargetDocId, setScanTargetDocId] = useState<number | null>(null);
+
 
   const handleTabChange = (_event: React.SyntheticEvent, newValue: string) => {
     setCurrentTab(newValue);
@@ -47,33 +41,35 @@ function DocumentManagement() {
     const files = event.target.files;
     if (!files) return;
 
-    const newDocuments: Document[] = Array.from(files).map((file, index) => ({
-      id: Date.now() + index,
-      name: file.name,
-      type: file.type.split("/")[1]?.toUpperCase() || "FILE",
-      uploadedBy: "Current User",
-      date: new Date().toISOString().split("T")[0],
-      category: currentTab,
-    }));
+      const newDocuments: Document[] = Array.from(files).map((file, index) => ({
+        id: Date.now() + index,
+        name: file.name,
+        type: file.type.split("/")[1]?.toUpperCase() || "FILE",
+        uploadedBy: "Current User",
+        date: new Date().toISOString().split("T")[0],
+        category: currentTab,
+      }));
 
-    setDocuments((prevDocs) => [...prevDocs, ...newDocuments]);
-    event.target.value = "";
+      setDocuments((prevDocs) => [...prevDocs, ...newDocuments]);
+      event.target.value = "";
   };
 
   const handleScanChange = async (
     event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const files = event.target.files;
-    if (!files || files.length === 0) return;
+      ) => {
+        const files = event.target.files;
+        if (!files || files.length === 0) return;
 
-    const file = files[0];
-    const formData = new FormData();
-    formData.append("document", file);
-    formData.append("category", currentTab);
-    if (scanTargetDocId) {
-      formData.append("linked_doc_id", scanTargetDocId.toString());
+        const file = files[0];
+        const formData = new FormData();
+        formData.append("document", file);
+        formData.append("category", currentTab);
+        if (scanTargetDocId) {
+          formData.append("linked_doc_id", scanTargetDocId.toString());
     }
 
+
+    // Fetch API to upload the scanned document
     try {
       const response = await fetch("http://127.0.0.1:8000/api/upload-document", {
         method: "POST",
@@ -89,13 +85,13 @@ function DocumentManagement() {
       } else {
         alert("Failed to upload scanned document.");
       }
-    } catch (error) {
-      console.error("Scan error:", error);
-      alert("Error occurred during scan upload.");
-    }
+        } catch (error) {
+          console.error("Scan error:", error);
+          alert("Error occurred during scan upload.");
+        }
 
-    event.target.value = "";
-  };
+        event.target.value = "";
+      };
 
   // Fetch uploaded documents from API on mount
   useEffect(() => {
@@ -148,7 +144,7 @@ function DocumentManagement() {
             color="primary"
             onClick={() => {
               setScanTargetDocId(params.row.id);
-              cameraInputRef.current?.click(); // trigger camera
+              cameraInputRef.current?.click();
             }}
                       >
             Download
@@ -159,7 +155,7 @@ function DocumentManagement() {
             color="primary"
             onClick={() => {
               setScanTargetDocId(params.row.id);
-              cameraInputRef.current?.click(); // trigger camera
+              cameraInputRef.current?.click(); 
             }}
                       >
             Scan Document
@@ -180,25 +176,7 @@ function DocumentManagement() {
           title="DOCUMENT MANAGEMENT"
           subtitle="Organize and Access Your Files Efficiently"
         />
-        {/* <Button
-          variant="contained"
-          sx={{
-            backgroundColor: "black",
-            color: "#fff",
-            "&:hover": { backgroundColor: "black" },
-            mr: 5,
-            textTransform: "none",
-            fontSize: "13px",
-            fontWeight: "bold",
-            px: 3,
-            py: 1.5,
-            minWidth: "180px",
-          }}
-          startIcon={<AddIcon />}
-          onClick={handleUploadClick}
-        >
-          Upload Documents
-        </Button> */}
+      
         <input
           type="file"
           ref={fileInputRef}
@@ -219,25 +197,23 @@ function DocumentManagement() {
       <Tabs
         value={currentTab}
         onChange={handleTabChange}
-        sx={{
-          fontWeight: "bold",
-          backgroundColor: "white",
-          "& .MuiTab-root": { color: "#000" },
-          "& .Mui-selected": {
-            color: "black",
+          sx={{
             fontWeight: "bold",
-            fontSize: "14px",
-          },
-          "& .MuiTabs-indicator": {
-            backgroundColor: "#1976d2",
-            height: "3px",
-            borderRadius: "2px",
-          },
-        }}
+            backgroundColor: "white",
+            "& .MuiTab-root": { color: "#000" },
+            "& .Mui-selected": {
+              color: "black",
+              fontWeight: "bold",
+              fontSize: "14px",
+            },
+            "& .MuiTabs-indicator": {
+              backgroundColor: "#1976d2",
+              height: "3px",
+              borderRadius: "2px",
+            },
+          }}
       >
         <Tab value="Common" label="Uploaded Files by HR" />
-        {/* <Tab value="Personal" label="Personal Files" />
-        <Tab value="Uploads" label="Upload Files/ID" /> */}
       </Tabs>
 
       <Box height="55vh" mt={2}>
@@ -248,26 +224,26 @@ function DocumentManagement() {
           initialState={{
             pagination: { paginationModel: { pageSize: 5 } },
           }}
-          sx={{
-            borderRadius: "8px",
-            overflow: "hidden",
-            "& .MuiDataGrid-root": { border: "none" },
-            "& .MuiDataGrid-columnHeader": {
-              backgroundColor: "black",
-              color: "#fff",
-            },
-            "& .MuiDataGrid-footerContainer": {
-              backgroundColor: "black",
-              color: "#fff",
-            },
-            "& .MuiTablePagination-root": {
-              color: "#fff",
-            },
-            "& .MuiSvgIcon-root": {
-              color: "#fff",
-            },
-            "& .MuiDataGrid-columnSeparator": { display: "none" },
-          }}
+            sx={{
+              borderRadius: "8px",
+              overflow: "hidden",
+              "& .MuiDataGrid-root": { border: "none" },
+              "& .MuiDataGrid-columnHeader": {
+                backgroundColor: "black",
+                color: "#fff",
+              },
+              "& .MuiDataGrid-footerContainer": {
+                backgroundColor: "black",
+                color: "#fff",
+              },
+              "& .MuiTablePagination-root": {
+                color: "#fff",
+              },
+              "& .MuiSvgIcon-root": {
+                color: "#fff",
+              },
+              "& .MuiDataGrid-columnSeparator": { display: "none" },
+            }}
         />
       </Box>
     </Box>

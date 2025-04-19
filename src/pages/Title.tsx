@@ -15,7 +15,6 @@ const Title = () => {
         bgcolor: "black",
       }}
     >
-      {/* Navbar */}
       <Navbar />
 
       {/* Full Page Watermark */}
@@ -81,10 +80,10 @@ const Title = () => {
             wordBreak: "break-word",
            
             fontSize: {
-              xs: "1.4rem", // Small screens
+              xs: "1.4rem", 
               sm: "1.6rem",
-              md: "2rem",   // Medium screens
-              lg: "2.5rem", // Large screens
+              md: "2rem",  
+              lg: "2.5rem", 
               
             },
           }}
@@ -93,7 +92,6 @@ const Title = () => {
           EMPLOYEE RECORD MANAGEMENT SYSTEM
           </Box>
           <br />
-         
           WITH OPTICAL CHARACTER RECOGNITION
           <br />
           IN DEPARTMENT OF EDUCATION

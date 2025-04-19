@@ -3,10 +3,9 @@ import { ColorModeContext, useMode } from "./theme";
 import { BrowserRouter } from "react-router-dom";
 import Approutes from "./routes/AppRoutes";
 import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; // import default styles
+import "react-toastify/dist/ReactToastify.css"; 
 import { NotificationProvider } from "./components/NotificationContext";
 import { SearchProvider } from "./components/SearchContext";
-
 
 
 function App() {

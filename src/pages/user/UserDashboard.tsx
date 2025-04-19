@@ -1,12 +1,10 @@
 import { Box, Grid, Paper, Typography, Button, useTheme } from "@mui/material";
 import Header from "../../components/Header";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import EventAvailableIcon from "@mui/icons-material/EventAvailable";
-import PaidIcon from "@mui/icons-material/Paid";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import { tokens } from "../../theme";
 import { useEffect, useState } from "react";
-import { blue, green, grey, red, yellow } from "@mui/material/colors";
+import { blue, grey, red } from "@mui/material/colors";
 import WorkIcon from "@mui/icons-material/Work";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 
@@ -26,12 +24,12 @@ interface User {
 function UserDashboard() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
   const [employee, setEmployee] = useState<Employee | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [user, setUser] = useState<User | null>(null);
 
+  // Fetch employee data from the API
   useEffect(() => {
     const token = localStorage.getItem("token");
 
@@ -57,9 +55,9 @@ function UserDashboard() {
       });
   }, []);
 
+
   return (
     <Box m="20px">
-      {/* Dashboard Header */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Header
           title="DASHBOARD"
@@ -108,7 +106,6 @@ function UserDashboard() {
               <Typography variant="h5">Pending Tasks</Typography>
               <Typography variant="body2">4 Tasks</Typography>
             </Box>
-          
           </Paper>
         </Grid>
 
@@ -134,7 +131,6 @@ function UserDashboard() {
 
       {/* Widgets Section */}
       <Grid container spacing={3} mt={2}>
-        {/* Employment Details */}
         <Grid item xs={12} md={6}>
           <Paper
             sx={{
@@ -155,20 +151,18 @@ function UserDashboard() {
                 Employment Details
               </Typography>
             </Box>
-            <Typography variant="body1" color="black">
-              Job Position: {employee?.jobPosition}
-            </Typography>
-            <Typography variant="body1" color="black">
-              Date Hired: {employee?.dateHired}
-            </Typography>
-            <Typography variant="body1" color="black">
-              Work Status: {employee?.status}
-            </Typography>
+              <Typography variant="body1" color="black">
+                Job Position: {employee?.jobPosition}
+              </Typography>
+              <Typography variant="body1" color="black">
+                Date Hired:
+              </Typography>
+              <Typography variant="body1" color="black">
+                Work Status:
+              </Typography>
           </Paper>
         </Grid>
        
-
-     
 
         {/* Quick Actions */}
         <Grid item xs={12} md={6}>
@@ -196,11 +190,8 @@ function UserDashboard() {
             <Button variant="contained" color="secondary" sx={{ m: 1 }}>
               View Profile
             </Button>
-          
           </Paper>
         </Grid>
-
-       
       </Grid>
     </Box>
   );

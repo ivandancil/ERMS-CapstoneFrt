@@ -3,6 +3,7 @@ import Topbar from "../components/Topbar";
 import { Outlet, useLocation } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 
+
 const AdminLayout = () => {
   const location = useLocation();
   const hideLayout = location.pathname === "/login" || location.pathname === "/register";

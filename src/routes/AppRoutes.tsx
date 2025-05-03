@@ -15,6 +15,7 @@ import DocumentManagement from "../pages/user/DocumentManagement";
 import AdminRoute from "../components/protectedRoutes/AdminRoute";
 import UserRoute from "../components/protectedRoutes/UserRoute";
 import UploadPDS from "../pages/user/UploadPDS";
+import ExtractNationalId from "../pages/user/ExtractNationalId";
 
 
 const Approutes = () => {
@@ -51,6 +52,8 @@ const Approutes = () => {
         <Route path="employee_profile" element={<EmployeeProfile />} />
         <Route path="document_management" element={<DocumentManagement />} />
         <Route path="upload_pds" element={<UploadPDS />} />
+        <Route path="extract_id" element={<ExtractNationalId />} />
+
       </Route>
 
 

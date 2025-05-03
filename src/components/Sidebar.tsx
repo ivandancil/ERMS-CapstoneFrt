@@ -4,7 +4,7 @@ import { Box, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import { FaUserCircle, FaTachometerAlt, FaUsers, FaUpload, FaEye, FaCog, FaFolderOpen } from "react-icons/fa";
+import { FaUserCircle, FaTachometerAlt, FaUsers, FaUpload, FaEye, FaCog, FaFolderOpen, FaIdCard } from "react-icons/fa";
 import { tokens } from "../theme";
 
 interface ItemProps {
@@ -172,6 +172,8 @@ function Sidebar({ role }: SidebarProps) {
           <Item title="My Profile"  to="/user/employee_profile" icon={<FaCog />} selected={selected} setSelected={setSelected} />
           <Item title="Document Management" to="/user/document_management" icon={<FaFolderOpen />} selected={selected} setSelected={setSelected} />
           <Item title="Upload Image" to="/user/upload_pds" icon={<FaEye />} selected={selected} setSelected={setSelected} />
+          <Item title="Extract National ID" to="/user/extract_id" icon={<FaIdCard />} selected={selected} setSelected={setSelected} />
+
 
               </>
             )}

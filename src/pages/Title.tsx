@@ -80,7 +80,7 @@ const Title = () => {
             wordBreak: "break-word",
            
             fontSize: {
-              xs: "1.4rem", 
+              xs: "1.2rem", 
               sm: "1.6rem",
               md: "2rem",  
               lg: "2.5rem", 
@@ -90,13 +90,14 @@ const Title = () => {
         >
           <Box component="span" sx={{ whiteSpace: 'nowrap' }}>
           EMPLOYEE RECORD MANAGEMENT SYSTEM
-          </Box>
+         
           <br />
           WITH OPTICAL CHARACTER RECOGNITION
           <br />
           IN DEPARTMENT OF EDUCATION
           <br />
           TACLOBAN CITY DIVISION
+          </Box>
         </Typography>
       </Box>
     </Box>

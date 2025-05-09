@@ -58,7 +58,10 @@ const UploadDocs = () => {
       if (response.ok) {
         const result = await response.json();
         alert("File uploaded successfully!");
+
         setFile(null); // Reset file input field after successful upload
+        setCurrentTab("View Uploaded Documents/File"); // 👈 Redirect to the view tab
+        fetchDocuments(); // 👈 Refresh the uploaded docs list
       } else {
         const result = await response.json();
         alert(`Upload failed: ${result.message || "Something went wrong"}`);
@@ -79,10 +82,14 @@ const UploadDocs = () => {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
-  
+    
         if (response.ok) {
           const data = await response.json();
-          setDocuments(data);  // Update state with fetched documents
+          const documentsWithUrl = data.map((doc: any) => ({
+            ...doc,
+            fileUrl: `http://127.0.0.1:8000${doc.file_path}`, // 👈 Construct full URL here
+          }));
+          setDocuments(documentsWithUrl);
         } else {
           console.error("Failed to fetch documents");
         }
@@ -90,6 +97,7 @@ const UploadDocs = () => {
         console.error("Fetch error:", error);
       }
     };
+    
 
     const handleDelete = async (id: number | string) => {
       const confirmation = window.confirm('Are you sure you want to delete this document?');
@@ -137,12 +145,13 @@ const UploadDocs = () => {
       flex: 1,
       renderCell: (params: any) => (
         <Box display="flex" gap={1} mt={1}>
-          <Button
-            variant="outlined"
-            onClick={() => window.open(params.row.fileUrl, '_blank')}
-          >
-            View
-          </Button>
+         <Button
+          variant="outlined"
+          onClick={() => window.open(params.row.file_path, '_blank')}
+        >
+          View
+        </Button>
+
           <Button
             variant="outlined"
             color="error"

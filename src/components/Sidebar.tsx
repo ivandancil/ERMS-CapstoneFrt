@@ -23,10 +23,10 @@ interface SidebarProps {
 // Reusable Item component
 function Item({ title, to, icon, selected, setSelected }: ItemProps) {
   return (
-    <MenuItem
+      <MenuItem
       active={selected === title}
       onClick={() => setSelected(title)}
-      icon={icon}
+      icon={<span style={{ color: selected === title ? "#1976d2" : "#757575" }}>{icon}</span>} // Add color styling
     >
       <Typography>{title}</Typography>
       <Link to={to} />

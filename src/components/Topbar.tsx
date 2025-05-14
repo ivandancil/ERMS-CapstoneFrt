@@ -117,15 +117,16 @@ const Topbar = () => {
     <Box display="flex" justifyContent="space-between" p={2} alignItems="center">
       <Box
         display="flex"
+        
         sx={{
-          backgroundColor: "#f5f5f5",
+          backgroundColor: "white",
           borderRadius: "8px",
-          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+          boxShadow: "0px 1px 2px rgba(0, 0, 0, 1)",
           padding: "8px 16px", 
         }}
       >
 
-         <InputBase
+       <InputBase
         sx={{ ml: 2, flex: 1 }}
         placeholder="Search..."
         value={searchTerm} 

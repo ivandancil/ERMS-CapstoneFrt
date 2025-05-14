@@ -177,10 +177,9 @@ const SystemManagement = () => {
 
       {tabValue === 0 && (
         <Box sx={{ mt: "15px", height: "50vh" }}>
-          {loading ? (
-            <CircularProgress />
-          ) : (
+       
             <DataGrid
+              loading={loading}
               rows={filteredUsers}
               columns={columns}
               paginationModel={userPagination}
@@ -190,30 +189,29 @@ const SystemManagement = () => {
                 borderRadius: "8px",
                 overflow: "hidden",
                 "& .MuiDataGrid-root": { border: "none" },
-                "& .MuiDataGrid-columnHeader": { backgroundColor: "black", color: "#fff" },
+                "& .MuiDataGrid-columnHeader": { backgroundColor: "black", color: "white" },
                 "& .MuiDataGrid-footerContainer": {
                   backgroundColor: "black",
-                  color: "#fff",
+                  color: "white",
                 },
                 "& .MuiTablePagination-root": {
-                  color: "#fff", 
+                  color: "white", 
                 },
                 "& .MuiSvgIcon-root": {
-                  color: "#fff",
+                  color: "white",
                 },
                 "& .MuiDataGrid-columnSeparator": { display: "none" },
               }}
             />
-          )}
+        
         </Box>
       )}
 
       {tabValue === 1 && (
         <Box sx={{ mt: "20px", height: "50vh" }}>
-          {loading ? (
-            <CircularProgress />
-          ) : (
+        
             <DataGrid
+              loading={loading}
               rows={filteredUserLogs}
               columns={userLogColumns}
               paginationModel={userLogPagination}
@@ -237,8 +235,9 @@ const SystemManagement = () => {
                 "& .MuiDataGrid-columnSeparator": { display: "none" },
             
               }}
+             
             />
-          )}
+         
         </Box>
       )}
     </Box>

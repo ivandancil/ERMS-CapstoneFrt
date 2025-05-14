@@ -9,6 +9,7 @@ const UploadDocs = () => {
   const [documents, setDocuments] = useState<any[]>([]);
   const [currentTab, setCurrentTab] = useState("Upload Documents/Files");
   const [uploading, setUploading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
 
@@ -76,6 +77,7 @@ const UploadDocs = () => {
 
     // Fetch uploaded documents from the API
     const fetchDocuments = async () => {
+        setLoading(true);
       try {
         const response = await fetch("http://127.0.0.1:8000/api/documents", {
           headers: {
@@ -85,9 +87,10 @@ const UploadDocs = () => {
     
         if (response.ok) {
           const data = await response.json();
-          const documentsWithUrl = data.map((doc: any) => ({
+          const files = data.files || []; // 👈 extract only the files
+          const documentsWithUrl = files.map((doc: any) => ({
             ...doc,
-            fileUrl: `http://127.0.0.1:8000${doc.file_path}`, // 👈 Construct full URL here
+            fileUrl: `http://127.0.0.1:8000${doc.file_path}`,
           }));
           setDocuments(documentsWithUrl);
         } else {
@@ -95,8 +98,11 @@ const UploadDocs = () => {
         }
       } catch (error) {
         console.error("Fetch error:", error);
-      }
-    };
+      } finally {
+      setLoading(false);
+    }
+  };
+    
     
 
     const handleDelete = async (id: number | string) => {
@@ -266,6 +272,7 @@ const UploadDocs = () => {
       {currentTab === "View Uploaded Documents/File" && (
         <Box height="50vh" mt={2}>
           <DataGrid
+          loading={loading}
             rows={documents}
             columns={columns}
             pageSizeOptions={[5, 10, 20]}

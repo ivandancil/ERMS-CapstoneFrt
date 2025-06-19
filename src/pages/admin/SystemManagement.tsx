@@ -154,14 +154,10 @@ const SystemManagement = () => {
   ];
   
  const userLogColumns: GridColDef[] = [
-  { field: "id", headerName: "ID", width: 90 },
-  {
-    field: "name",
-    headerName: "Name",
-    flex: 1,
-  },
-  { field: "action", headerName: "Action", flex: 1 },
-  { field: 'timestamp', headerName: 'Timestamp', flex: 1, valueFormatter: ({ value }: any) => moment(value).format('MMMM Do YYYY, h:mm:ss a') },
+  { field: "id", headerName: "ID", width: isSmallScreen ? 80 : 90, },
+  { field: "name", headerName: "Name", flex: 1, minWidth: 120, },
+  { field: "action", headerName: "Action", flex: 1, minWidth: 120, },
+  { field: 'timestamp', headerName: 'Timestamp', flex: 1, minWidth: 160, valueFormatter: ({ value }: any) => moment(value).format('MMMM Do YYYY, h:mm:ss a') },
  
 ];
 
@@ -180,7 +176,7 @@ const SystemManagement = () => {
           mt: '20px',
           fontWeight: 'bold',
           fontFamily: "Poppins",
-          backgroundColor: '#f5f5f5',
+          background: `${colors.primary[400]}`,
            borderRadius: "5px",
           '& .MuiTab-root': { color: '#000', fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" }, },
           '& .Mui-selected': { color: 'black', fontWeight: 'bold', fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" }, },
@@ -203,7 +199,7 @@ const SystemManagement = () => {
             borderBottom: "none"
           },
           "& .MuiDataGrid-columnHeader": {
-             backgroundColor: '#f5f5f5',
+            background: `${colors.primary[400]}`,
             borderBottom: "none",
             fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" },
             fontFamily: "Poppins"
@@ -214,7 +210,7 @@ const SystemManagement = () => {
             fontFamily: "Poppins"
           },
           "& .MuiDataGrid-footerContainer": {
-            backgroundColor: '#f5f5f5',
+            background: `${colors.primary[400]}`,
             borderTop: "none",
             fontSize: { xs: ".2rem", sm: ".7rem", md: ".9rem" },
             fontFamily: "Poppins"
@@ -259,7 +255,7 @@ const SystemManagement = () => {
             borderBottom: "none"
           },
           "& .MuiDataGrid-columnHeader": {
-            backgroundColor: '#f5f5f5',
+            background: `${colors.primary[400]}`,
             borderBottom: "none",
             fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" },
             fontFamily: "Poppins"
@@ -270,7 +266,7 @@ const SystemManagement = () => {
             fontFamily: "Poppins"
           },
           "& .MuiDataGrid-footerContainer": {
-             backgroundColor: '#f5f5f5',
+            background: `${colors.primary[400]}`,
             borderTop: "none",
             fontSize: { xs: ".2rem", sm: ".7rem", md: ".9rem" },
             fontFamily: "Poppins"

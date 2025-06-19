@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { message } from 'antd';
-import { Box, Button, Card, CardContent, CircularProgress, IconButton, Tab, Tabs, Typography, useTheme } from '@mui/material';
+import { Box, Button, Card, CardContent, CircularProgress, IconButton, Tab, Tabs, Typography, useMediaQuery, useTheme } from '@mui/material';
 import Header from '../../../components/Header';
 import { UploadCloud, XCircle } from 'lucide-react';
 import { DataGrid } from '@mui/x-data-grid';
 import { tokens } from '../../../theme';
+  import VisibilityIcon from "@mui/icons-material/Visibility";
+    import DeleteIcon from "@mui/icons-material/Delete";
 
 const UploadDocs = () => {
    const theme = useTheme();
@@ -15,6 +17,8 @@ const UploadDocs = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
+
+            const isSmallScreen = useMediaQuery(theme.breakpoints.down('md')); 
 
     // Handle tab change
     const handleTabChange = (_: React.SyntheticEvent, newValue: string) => {
@@ -158,14 +162,25 @@ const UploadDocs = () => {
       renderCell: (params: any) => (
         <Box display="flex" gap={1} mt={1}>
          <Button
-          variant="outlined"
+           sx={{ 
+              textTransform: "none",
+              color: colors.grey[100],
+              fontSize: { xs: ".5rem", sm: ".6rem", md: ".8rem" }
+            }}
+          startIcon={<VisibilityIcon sx={{ fontSize: isSmallScreen ? '1rem' : 'inherit' }} />}
           onClick={() => window.open(params.row.file_path, '_blank')}
         >
           View
         </Button>
 
           <Button
-            variant="outlined"
+            sx={{
+              textTransform: "none",
+              fontSize: { xs: ".5rem", sm: ".6rem", md: ".8rem" },
+              backgroundColor: "primary", 
+              "&:hover": { backgroundColor: "primary" },
+            }}
+            startIcon={<DeleteIcon sx={{ fontSize: isSmallScreen ? '1rem' : 'inherit' }} />}
             color="error"
             onClick={() => handleDelete(params.row.id)}
           >

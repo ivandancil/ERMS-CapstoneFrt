@@ -73,7 +73,7 @@ function UserDashboard() {
             sx={{
               p: 2,
               textAlign: "center",
-              backgroundColor: grey[200],
+              backgroundColor: grey[100],
               height: "120px",
               display: "flex",
               flexDirection: "column",
@@ -83,7 +83,7 @@ function UserDashboard() {
           >
             <AccountCircleIcon 
               sx={{ 
-                fontSize: { xs: 40, sm: 45, md: 50 }, 
+                fontSize: { xs: 36, sm: 38, md: 40 },  
                 color: blue[700] 
               }} 
             />
@@ -116,7 +116,7 @@ function UserDashboard() {
             sx={{
               p: 2,
               textAlign: "center",
-              backgroundColor: grey[200],
+              backgroundColor: grey[100],
               height: "120px",
               display: "flex",
               flexDirection: "column",
@@ -126,7 +126,7 @@ function UserDashboard() {
           >
               <AssignmentIcon 
                 sx={{ 
-                  fontSize: { xs: 40, sm: 45, md: 50 }, 
+                  fontSize: { xs: 36, sm: 38, md: 40 }, 
                 color: "orange" 
               }}
             />
@@ -159,7 +159,7 @@ function UserDashboard() {
             sx={{
               p: 2,
               textAlign: "center",
-              backgroundColor: grey[200],
+              backgroundColor: grey[100],
               height: "120px",
               display: "flex",
               flexDirection: "column",
@@ -169,7 +169,7 @@ function UserDashboard() {
           >
             <NotificationsActiveIcon 
               sx={{ 
-                    fontSize: { xs: 40, sm: 45, md: 50 },  
+                   fontSize: { xs: 36, sm: 38, md: 40 },  
                   color: "red" 
                 }}
               />
@@ -202,7 +202,7 @@ function UserDashboard() {
             sx={{
               p: 2,
               textAlign: "center",
-              backgroundColor: grey[200],
+              backgroundColor: grey[100],
               height: "120px",
               display: "flex",
               flexDirection: "column",
@@ -212,7 +212,7 @@ function UserDashboard() {
           >
             <NotificationsActiveIcon 
               sx={{ 
-                    fontSize: { xs: 40, sm: 45, md: 50 }, 
+                    fontSize: { xs: 36, sm: 38, md: 40 }, 
                   color: "red" 
                 }}
               />

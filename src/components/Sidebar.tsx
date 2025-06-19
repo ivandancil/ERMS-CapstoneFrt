@@ -80,12 +80,14 @@ function Sidebar({ role, isCollapsed, toggleSidebar }: SidebarProps) {
       sx={{
         height: "100vh",
         "& .pro-sidebar-inner": { background: `${colors.primary[400]} !important` },
+        
         "& .pro-icon-wrapper": { backgroundColor: "transparent !important" },
 
-        "& .pro-inner-item:hover": { color: "black !important" },
+        // "& .pro-inner-item:hover": { color: "black !important" },
         "& .pro-item-content .MuiTypography-root": {
           fontSize: { xs: ".6rem", sm: ".8rem", md: "1rem" },
           fontFamily: "Poppins",
+          color: colors.grey[100],
         },
         "& .pro-menu-item.active": {
           color: `${theme.palette.primary.dark} !important`,

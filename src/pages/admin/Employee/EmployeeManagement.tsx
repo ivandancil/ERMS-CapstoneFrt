@@ -11,7 +11,6 @@
   } from "@mui/material";
   import { DataGrid } from "@mui/x-data-grid";
   import Header from "../../../components/Header";
-  import AddIcon from "@mui/icons-material/Add";
   import EditIcon from "@mui/icons-material/Edit";
   import DeleteIcon from "@mui/icons-material/Delete";
   import AddEmployee from "./AddEmployee";
@@ -51,7 +50,6 @@ import { tokens } from "../../../theme";
     const [openViewDialog, setOpenViewDialog] = useState(false);
     const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
     const { searchTerm } = useSearch();
-    const addDialogRef = useRef<HTMLButtonElement>(null);
     const editDialogRef = useRef<HTMLButtonElement>(null);
 
           const isSmallScreen = useMediaQuery(theme.breakpoints.down('md')); 
@@ -191,7 +189,7 @@ import { tokens } from "../../../theme";
                     borderBottom: "none"
                   },
                   "& .MuiDataGrid-columnHeader": {
-                   backgroundColor: '#f5f5f5',
+                   background: `${colors.primary[400]}`,
                     borderBottom: "none",
                     fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" },
                     fontFamily: "Poppins"
@@ -202,7 +200,7 @@ import { tokens } from "../../../theme";
                     fontFamily: "Poppins"
                   },
                   "& .MuiDataGrid-footerContainer": {
-                     backgroundColor: '#f5f5f5',
+                   background: `${colors.primary[400]}`,
                     borderTop: "none",
                     fontSize: { xs: ".2rem", sm: ".7rem", md: ".9rem" },
                     fontFamily: "Poppins"
@@ -226,12 +224,12 @@ import { tokens } from "../../../theme";
               { field: "employeeID", headerName: "Employee ID", flex: 1,  minWidth: 130,  },
               { field: "lastname", headerName: "Last Name", flex: 1,  minWidth: 120,  },
               { field: "firstname", headerName: "First Name", flex: 1,  minWidth: 120,  },
-              { field: "email", headerName: "Email", flex: 1,  minWidth: 180,  },
+              { field: "email", headerName: "Email", flex: 1,  minWidth: 230,  },
               {
                 field: "actions",
                 headerName: "Actions",
                 flex: 1.5,
-                minWidth: 230,
+                minWidth: 250,
                 renderCell: (params) => (
                   <Box display="flex" gap={1} mt={1}>
 
@@ -265,16 +263,14 @@ import { tokens } from "../../../theme";
 
                   {/* Delete Button */}
                     <Button
-                      variant="contained"
-                      sx={{
-                        textTransform: "none",
-                        fontSize: { xs: ".5rem", sm: ".6rem", md: ".8rem" },
-                       
-                        backgroundColor: "primary",
-                        color: "#fff",
-                        "&:hover": { backgroundColor: "primary" },
-                      }}
+                        sx={{
+                          textTransform: "none",
+                          fontSize: { xs: ".5rem", sm: ".6rem", md: ".8rem" },
+                          backgroundColor: "primary", 
+                          "&:hover": { backgroundColor: "primary" },
+                        }}
                       startIcon={<DeleteIcon sx={{ fontSize: isSmallScreen ? '1rem' : 'inherit' }} />}
+                      color="error"
                       onClick={() => deleteEmployee(params.row.id)}
                       disabled={deleteLoading}
                     >

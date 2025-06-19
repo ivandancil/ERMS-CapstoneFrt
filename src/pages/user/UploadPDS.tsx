@@ -104,12 +104,18 @@ function UploadPDS() {
     <Box sx={{ padding: "20px" }}>
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Header
-          title="UPLOAD SCANNED DOCUMENT"
+          title="Upload Scanned Document"
           subtitle="Extract text using OCR and upload securely."
         />
       </Box>
 
-      <Paper sx={{ padding: "24px", maxWidth: "900px", margin: "0 auto" }}>
+      <Paper 
+        sx={{ 
+          padding: "24px", 
+          maxWidth: "900px", 
+          margin: "20px auto" 
+        }}
+      >
         <input
           type="file"
           accept="image/*"

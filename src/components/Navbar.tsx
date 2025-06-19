@@ -112,8 +112,14 @@ function Navbar() {
   const drawer = (
     <Box sx={{ width: 250 }} onClick={handleDrawerToggle}>
       <Box sx={{ p: 2, borderBottom: "1px solid #ddd" }}>
-        <Typography variant="h6" fontWeight="bold">
-          {userName || "Welcome"}
+         <Typography
+           variant="h6" 
+           fontWeight="bold" 
+              sx={{ 
+                fontSize: { xs: ".8rem", sm: "1rem", md: "1.1rem" } 
+              }}
+            >
+          {userName || "ERMS"}
         </Typography>
       </Box>
       <Box sx={{ display: "flex", flexDirection: "column", p: 2 }}>
@@ -161,11 +167,17 @@ function Navbar() {
         sx={{
           bgcolor: "white",
           boxShadow: "none",
-          height: 90,
+          height: { xs: "60px", sm: "70px", md: "80px" },
           justifyContent: "center",
         }}
       >
-        <Toolbar sx={{ display: "flex", justifyContent: "space-between", minHeight: "90px" }}>
+        <Toolbar 
+          sx={{ 
+            display: "flex", 
+            justifyContent: "space-between", 
+            minHeight: "90px" 
+            }}
+          >
           {/* Logo and title */}
           <Box
             sx={{
@@ -173,9 +185,20 @@ function Navbar() {
               flexDirection: { xs: "column", sm: "row" },
               alignItems: "center",
               
-            }}
+            }} 
           >
-            <Box component="img" src="/image/depedLogo.png" alt="DepEd Logo" sx={{ height: 60 }} />
+          <Box 
+              component="img" 
+              src="/image/depedLogo.png"
+              alt="DepEd Logo" 
+                sx={{ 
+                  height:  { 
+                    xs: "40px", 
+                    sm: "50px", 
+                    md: "60px" 
+                  } 
+                }} 
+              />
           
           </Box>
 
@@ -245,7 +268,7 @@ function Navbar() {
           {/* Mobile hamburger */}
           <Box sx={{ display: { xs: "flex", sm: "none" }, mr: 2 }}>
             <IconButton onClick={handleDrawerToggle} edge="end">
-              <MenuIcon />
+               <MenuIcon sx={{ fontSize:  { xs: "1.5rem", sm: "2rem" }, color: "black"}}/>
             </IconButton>
           </Box>
         </Toolbar>

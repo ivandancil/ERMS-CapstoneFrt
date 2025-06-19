@@ -1,30 +1,38 @@
-import { Typography, Box, useTheme } from "@mui/material";
-import { tokens } from "../theme";
+import { Box, Typography, useTheme } from '@mui/material'
+import { tokens } from '../theme';
 
 interface HeaderProps {
-  title: string;
-  subtitle: string;
+    title: string;
+    subtitle: string;
 }
 
-const Header = ({ title, subtitle }: HeaderProps) => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-  
-  return (
-    <Box mb="30px">
-      <Typography
-        variant="h3"
-        color={colors.grey[100]}
-        fontWeight="bold"
-        sx={{ m: "0 0 5px 0" }}
-      >
-        {title}
-      </Typography>
-      <Typography variant="h6" >
-        {subtitle}
-      </Typography>
-    </Box>
-  );
-};
+const Header = ({title, subtitle}: HeaderProps) => {
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
 
-export default Header;
+  return (
+    <Box>
+        <Typography
+            variant='h2'
+            color={colors.grey[100]}
+            fontWeight='bold'
+            fontFamily="Poppins"
+            sx={{
+                 mb: "2px",
+                fontSize: { xs: "1rem", sm: "1.50rem", md: "1.75rem" }, }}
+        >
+            {title}
+        </Typography>
+        <Typography
+            variant='h5'
+            color={colors.grey[300]}
+            fontFamily="Poppins"
+            sx={{  fontSize: { xs: ".6rem", sm: ".9rem", md: "1rem" } }}
+        >
+            {subtitle}
+        </Typography>
+    </Box>
+  )
+}
+
+export default Header

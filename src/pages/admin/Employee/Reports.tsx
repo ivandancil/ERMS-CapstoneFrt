@@ -6,12 +6,12 @@ import { tokens } from "../../../theme";
 import DownloadIcon from "@mui/icons-material/Download";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import TableViewIcon from "@mui/icons-material/TableView";
-import { useNavigate } from "react-router-dom";
+
 
 const Reports = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const navigate = useNavigate();
+ 
 
   // Mock report data based on your suggestions
   const [reports] = useState([
@@ -79,17 +79,22 @@ const Reports = () => {
   };
 
   const columns = [
-    { field: "name", headerName: "Report Name", flex: 2 },
-    { field: "date", headerName: "Date Generated", flex: 1 },
-    { field: "type", headerName: "Report Type", flex: 1 },
-    { field: "description", headerName: "Description", flex: 2 },
+    { field: "name", headerName: "Report Name", flex: 2,  minWidth: 160, },
+    { field: "date", headerName: "Date Generated", flex: 1,  minWidth: 120, },
+    { field: "type", headerName: "Report Type", flex: 1,  minWidth: 150, },
+    { field: "description", headerName: "Description", flex: 3,  minWidth: 180, },
     {
       field: "action",
       headerName: "Action",
-      flex: 1,
+      flex: 1.5,
+      minWidth: 120,
       renderCell: (params: any) => (
         <Button
         variant="outlined"
+        sx={{ textTransform: "none",
+                          color: colors.grey[100],
+                             fontSize: { xs: ".5rem", sm: ".6rem", md: ".8rem" }
+                             }}
         startIcon={<DownloadIcon sx={{ color: 'green' }} />} // You can use any color name or hex code
         onClick={() => handleDownload(params.row.file_name)}
       >
@@ -103,9 +108,9 @@ const Reports = () => {
   return (
     <Box m="20px">
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="REPORTS" subtitle="View and Download Reports" />
+        <Header title="Reports" subtitle="View and Download Reports" />
         <Box display="flex" gap={2} mt={3}>
-          <Button
+          {/* <Button
             variant="contained"
             startIcon={<PictureAsPdfIcon />}
             onClick={exportToPDF}
@@ -140,11 +145,54 @@ const Reports = () => {
             }}
           >
             Export All to CSV
-          </Button>
+          </Button> */}
         </Box>
       </Box>
 
-      <Box mt={3} height="55vh" component={Paper}>
+             <Box
+                     m="20px 0 0 0"
+                     height="65vh"
+                     sx={{
+                       "& .MuiDataGrid-root": {
+                         border: "outlined",
+                       },
+                       "& .MuiDataGrid-cell": {
+                         borderBottom: "none"
+                       },
+                       "& .MuiDataGrid-columnHeader": {
+                          backgroundColor: '#f5f5f5',
+                         borderBottom: "none",
+                         fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" },
+                         fontFamily: "Poppins"
+                       },
+                       "& .MuiDataGrid-virtualScroller": {
+                         // backgroundColor: colors.primary[400],
+                         fontSize: { xs: ".5rem", sm: ".6rem", md: ".8rem" },
+                         fontFamily: "Poppins"
+                       },
+                       "& .MuiDataGrid-footerContainer": {
+                         backgroundColor: '#f5f5f5',
+                         borderTop: "none",
+                         fontSize: { xs: ".2rem", sm: ".7rem", md: ".9rem" },
+                         fontFamily: "Poppins"
+                       },
+                       "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+                           color: `${colors.grey[100]} !important`,
+                           
+                       },
+                        "& .MuiSvgIcon-root": {
+                         color: colors.grey[100],
+                        },
+                       "& .MuiDataGrid-columnHeader, & .MuiDataGrid-cell": {
+                           '@media (max-width: 900px)': {
+                               '&.MuiDataGrid-columnHeader--hide, &.MuiDataGrid-cell--hide': {
+                                   display: 'none !important',
+                               },
+                           },
+                       },
+                     }}
+                   >
+      
         {reports.length > 0 ? (
           <DataGrid
             rows={reports}
@@ -153,22 +201,7 @@ const Reports = () => {
             initialState={{
               pagination: { paginationModel: { pageSize: 5 } },
             }}
-            sx={{
-              borderRadius: "8px",
-              overflow: "hidden",
-              "& .MuiDataGrid-columnHeader": { backgroundColor: "black", color: "#fff" },
-              "& .MuiDataGrid-footerContainer": {
-                backgroundColor: "black",
-                color: "#fff",
-              },
-              "& .MuiTablePagination-root": {
-                color: "#fff",
-              },
-              "& .MuiSvgIcon-root": {
-                color: "#fff",
-              },
-              "& .MuiDataGrid-columnSeparator": { display: "none" },
-            }}
+       
           />
         ) : (
           <Typography textAlign="center" p={2}>

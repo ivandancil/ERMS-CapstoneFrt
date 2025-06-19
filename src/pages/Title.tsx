@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 
 const Title = () => {
   const isSmallScreen = useMediaQuery("(max-width:960px)");
-  const NAVBAR_HEIGHT = 90;
+  const NAVBAR_HEIGHT = 0;
 
   return (
     <Box
@@ -42,10 +42,10 @@ const Title = () => {
         alt="DepEd Logo"
         sx={{
           position: "absolute",
-          top: "55%",
+          top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          width: isSmallScreen ? "250px" : "480px",
+          width: isSmallScreen ? "200px" : "480px",
           height: "auto",
           zIndex: 1,
           opacity: 0.4,
@@ -61,44 +61,93 @@ const Title = () => {
           transform: "translate(-50%, -50%)",
           textAlign: "center",
           zIndex: 2,
-          px: 2,
           maxWidth: "90%",
         }}
       >
-        <Typography
-          variant="h3"
-          fontWeight="750"
-          mt={4}
-          sx={{
-            lineHeight: 1.5,
-            textTransform: "uppercase",
-            color: "#fff",
-            fontFamily: '"Poppins", "Arial", sans-serif',
-            letterSpacing: "2px",
-            textShadow:
-              "3px 2px 6px rgba(0, 0, 0, 0.8), 0px 0px 12px rgba(0, 0, 0, 0.2)",
-            wordBreak: "break-word",
-           
-            fontSize: {
-              xs: "1.2rem", 
-              sm: "1.6rem",
-              md: "2rem",  
-              lg: "2.5rem", 
+
+    <Box sx={{ /* Your existing Box styles, if any, can go here */ }}>
+      <Typography 
+        variant="h3"
+               component="p" 
+                 sx={{ 
+                   fontStyle: 'italic', 
+                   color: 'white', 
+                   lineHeight: 1.2,  
+                   textShadow: "3px 2px 6px rgba(0, 0, 0, 0.8), 0px 0px 12px rgba(0, 0, 0, 0.2)", 
+                   mb: 0.5,
+                     fontSize: {
+                     xs: ".9rem", 
+                     sm: "1.4rem",
+                     md: "2.5rem",  
+                   
+                   },  
+                      whiteSpace: 'nowrap', 
+                 }}
+               >
+          EMPLOYEE RECORD MANAGEMENT SYSTEM
+      </Typography>
+      <Typography 
+        variant="h3"
+        component="p" 
+          sx={{ 
+            fontStyle: 'italic', 
+            color: 'white',
+            lineHeight: 1.2,  
+            textShadow: "3px 2px 6px rgba(0, 0, 0, 0.8), 0px 0px 12px rgba(0, 0, 0, 0.2)", 
+            mb: 0.5,
+              fontSize: {
+              xs: ".9rem", 
+              sm: "1.4rem",
+              md: "2.4rem",  
               
-            },
+            },  
+               whiteSpace: 'nowrap', // Keeps it on one line 
           }}
         >
-          <Box component="span" sx={{ whiteSpace: 'nowrap' }}>
-          EMPLOYEE RECORD MANAGEMENT SYSTEM
-         
-          <br />
           WITH OPTICAL CHARACTER RECOGNITION
-          <br />
+      </Typography>
+      <Typography 
+        variant="h3"
+        component="p" 
+          sx={{ 
+            fontStyle: 'italic', 
+            color: 'white',
+            lineHeight: 1.2,  
+            textShadow: "3px 2px 6px rgba(0, 0, 0, 0.8), 0px 0px 12px rgba(0, 0, 0, 0.2)", 
+            mb: 0.5,
+              fontSize: {
+              xs: ".9rem", 
+              sm: "1.4rem",
+              md: "2.4rem",  
+              
+            },  
+               whiteSpace: 'nowrap', // Keeps it on one line 
+          }}
+        >
           IN DEPARTMENT OF EDUCATION
-          <br />
+      </Typography>
+      <Typography 
+        variant="h3"
+        component="p" 
+          sx={{ 
+            fontStyle: 'italic', 
+            color: 'white',
+            lineHeight: 1.2,  
+            textShadow: "3px 2px 6px rgba(0, 0, 0, 0.8), 0px 0px 12px rgba(0, 0, 0, 0.2)", 
+            mb: 0.5,
+              fontSize: {
+              xs: ".9rem", 
+              sm: "1.4rem",
+              md: "2.4rem",  
+              
+            },  
+               whiteSpace: 'nowrap', // Keeps it on one line 
+          }}
+        >
           TACLOBAN CITY DIVISION
+      </Typography>
+      
           </Box>
-        </Typography>
       </Box>
     </Box>
   );

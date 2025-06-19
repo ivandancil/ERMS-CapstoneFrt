@@ -68,7 +68,7 @@ function EmployeeProfile() {
   return (
     <Box m="20px">
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="EMPLOYEE PROFILE" subtitle="Detailed Employee Information" />
+        <Header title="Employee Profile" subtitle="Detailed Employee Information" />
         {/* <Button
           variant="contained"
           sx={{
@@ -112,15 +112,30 @@ function EmployeeProfile() {
               variant="h5"
               sx={{
                fontWeight: "bold",
-               fontSize: "1.9rem",
+               fontSize: { xs: "1.7rem", sm: "1.8rem", md: "2rem" },
+               fontFamily: "Poppins",
               }}
             >
               {employee?.firstname} {employee?.lastname}
             </Typography>
-            <Typography variant="body1" sx={{ fontSize: "1rem", color: "gray" }}>
+            <Typography 
+              variant="body1" 
+              sx={{ 
+                  fontSize: { xs: ".8rem", sm: ".9rem", md: "1.1rem" },
+                  fontFamily: "Poppins",
+                  color: "gray" 
+                }}
+              >
               Employee ID: <strong>{employee?.employeeID || "N/A"}</strong>
             </Typography>
-            <Typography variant="body1" sx={{ fontSize: "1rem", color: "gray" }}>
+            <Typography 
+              variant="body1" 
+                sx={{ 
+                   fontSize: { xs: ".8rem", sm: ".9rem", md: "1.1rem" },
+                  fontFamily: "Poppins",
+                  color: "gray" 
+                }}
+              >
               Job Position: <strong>{employee?.jobPosition || "Not Assigned"}</strong>
             </Typography>
 
@@ -135,17 +150,18 @@ function EmployeeProfile() {
           onChange={handleTabChange}
           indicatorColor="primary"
           textColor="inherit"
-            sx={{
-              backgroundColor: "black", 
-              "& .MuiTab-root": {
-                color: "white",
-                fontWeight: "bold" 
-              },
-              "& .Mui-selected": {
-                color: "white", 
-                fontWeight: "bold",
-              },
-            }}
+          variant="scrollable" // Add this prop
+          scrollButtons="auto" // Add this prop
+          sx={{ 
+            backgroundColor: '#f5f5f5',
+            borderRadius: "5px",
+            fontFamily: "Poppins",
+            '& .MuiTab-root': { color: '#000',  fontSize: { xs: ".6rem", sm: ".5rem", md: ".8rem" }, },
+            '& .Mui-selected': { color: 'black', fontWeight: 'bold', fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" }, },
+            '& .MuiTabs-indicator': { backgroundColor: 'black', height: '3px', borderRadius: '10px' },
+          }}
+          
+        
         >
           <Tab label="Personal Details" />
           <Tab label="Contact Information" />
@@ -160,26 +176,40 @@ function EmployeeProfile() {
         {/* Tab Content */}
         <Box mt={2}>
           {tabIndex === 0 && (
-             <TableContainer  sx={{ maxHeight: "400px", overflow: "auto", boxShadow: 3 }}>
+             <TableContainer  sx={{ maxHeight: "470px", overflow: "auto", boxShadow: 3 }}>
                 <Table stickyHeader>
                     <TableBody>
                       {[
-                        ["Employee ID", employee?.employeeID],
-                        ["Job Position", employee?.jobPosition],
-                        ["Last Name", employee?.lastname],
-                        ["First Name", employee?.firstname],
-                        ["Middle Name", employee?.middlename],
-                        ["Sex", employee?.sex],
-                        ["Date of Birth", employee?.dateOfBirth],
-                        ["Civil Status", employee?.civilStatus],
-                        ["Phone Number", employee?.phoneNumber],
-                        ["Email", employee?.email],
-                        ["Address", employee?.address],
+                        ["Employee ID :", employee?.employeeID],
+                        ["Job Position :", employee?.jobPosition],
+                        ["Last Name :", employee?.lastname],
+                        ["First Name :", employee?.firstname],
+                        ["Middle Name :", employee?.middlename],
+                        ["Sex :", employee?.sex],
+                        ["Date of Birth :", employee?.dateOfBirth],
+                        ["Civil Status :", employee?.civilStatus],
+                        ["Phone Number :", employee?.phoneNumber],
+                        ["Email :", employee?.email],
+                        ["Address :", employee?.address],
                       
                       ].map(([label, value]) => (
-                        <TableRow key={label} sx={{ "&:hover": { backgroundColor: colors.grey[700] } }}>
-                          <TableCell sx={{ fontWeight: "bold" }}>{label}</TableCell>
-                          <TableCell>{value}</TableCell>
+                        <TableRow key={label} sx={{ "&:hover": { backgroundColor: colors.grey[900] } }}>
+                          <TableCell 
+                            sx={{ 
+                              fontFamily: "Poppins" ,
+                              fontSize: { xs: ".7rem", sm: ".8rem", md: ".9rem" },
+                            }}
+                          >
+                            {label}
+                          </TableCell>
+                          <TableCell
+                             sx={{ 
+                              fontFamily: "Poppins" ,
+                              fontSize: { xs: ".7rem", sm: ".8rem", md: ".9rem" },
+                            }}
+                          >
+                            {value}
+                          </TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
@@ -193,10 +223,24 @@ function EmployeeProfile() {
               <Table>
                 <TableBody>
                   <TableRow sx={{ "&:hover": { backgroundColor: colors.grey[700] } }}>
-                    <TableCell sx={{ fontWeight: "bold" }}>Contact Name</TableCell>
+                    <TableCell 
+                      sx={{ 
+                        fontFamily: "Poppins" ,
+                        fontSize: { xs: ".7rem", sm: ".8rem", md: ".9rem" },
+                    }}
+                  >
+                    Contact Name :
+                  </TableCell>
                   </TableRow>
                   <TableRow sx={{ "&:hover": { backgroundColor: colors.grey[700] } }}>
-                    <TableCell sx={{ fontWeight: "bold" }}>Contact Number</TableCell>
+                    <TableCell   
+                      sx={{ 
+                        fontFamily: "Poppins" ,
+                        fontSize: { xs: ".7rem", sm: ".8rem", md: ".9rem" },
+                    }}
+                  >
+                    Contact Number :
+                  </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>

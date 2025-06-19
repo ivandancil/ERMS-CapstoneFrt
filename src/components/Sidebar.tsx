@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
@@ -18,6 +18,8 @@ interface ItemProps {
 
 interface SidebarProps {
   role: "admin" | "user" ;
+   isCollapsed: boolean;
+  toggleSidebar: () => void;
 }
 
 // Reusable Item component
@@ -34,13 +36,15 @@ function Item({ title, to, icon, selected, setSelected }: ItemProps) {
   );
 }
 
-function Sidebar({ role }: SidebarProps) {
+function Sidebar({ role, isCollapsed, toggleSidebar }: SidebarProps) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
   const [name, setName] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
+  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
+
+  
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
@@ -77,42 +81,93 @@ function Sidebar({ role }: SidebarProps) {
         height: "100vh",
         "& .pro-sidebar-inner": { background: `${colors.primary[400]} !important` },
         "& .pro-icon-wrapper": { backgroundColor: "transparent !important" },
-        "& .pro-inner-item": { padding: "5px 35px 5px 20px !important" },
+
         "& .pro-inner-item:hover": { color: "black !important" },
+        "& .pro-item-content .MuiTypography-root": {
+          fontSize: { xs: ".6rem", sm: ".8rem", md: "1rem" },
+          fontFamily: "Poppins",
+        },
         "& .pro-menu-item.active": {
           color: `${theme.palette.primary.dark} !important`,
           fontWeight: "bold",
           backgroundColor: "#d0d0d0 !important",
         },
+           // --- IMPORTANT: Conditional styles for the root Box of the Sidebar ---
+        ...(isDesktop
+          ? {
+              // Desktop styles: Sidebar remains in the normal document flow
+              position: 'relative', // Part of the flex layout in App.js
+              // Width for desktop is controlled by react-pro-sidebar's 'collapsed' prop directly
+              // based on its own width/collapsedWidth props.
+             // Default desktop width when not collapsed
+              // If you have a separate desktop collapse button, its state would dictate isCollapsed
+          }
+          : {
+              // Mobile styles: Sidebar acts as an overlay (fixed position)
+              position: 'fixed', // Makes it an overlay, out of document flow
+              top: 0,
+              left: 0,
+              // Dynamically set width based on the `isCollapsed` prop from App.js
+              // When isCollapsed is true (initial mobile state, or after toggle to close), width is 0.
+              // When isCollapsed is false (after toggle to open), width is 250px.
+              width: isCollapsed ? '0px' : '250px',
+              zIndex: 110, // Higher than Topbar's zIndex (100) to ensure it appears on top
+              transition: 'width 0.3s ease-in-out', // Smooth open/close animation
+              boxShadow: theme.shadows[5], // Add a shadow for visual depth
+              // Hide overflow to prevent scrollbars when sidebar is collapsed
+              overflowX: 'hidden',
+          }),
+
       }}
     >
-      <ProSidebar collapsed={isCollapsed}>
-        <Menu iconShape="square">
+      <ProSidebar 
+        collapsed={isCollapsed}
+        width="300px"
+        collapsedWidth={isDesktop ? "80px" : "0px"}
+      >
+        <Menu >
           <MenuItem
-            onClick={() => setIsCollapsed((prev) => !prev)}
+            onClick={toggleSidebar}
+              style={{
+              margin: "2px 0 15px 0",
+              color: colors.grey[100],
+            }}
             icon={
               isCollapsed ? (
-                <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                  <img  src="/image/Logo3.png"alt="Logo" style={{ width: 30, height: 30, marginTop: "35px" }} />
+                <div 
+                  style={{ 
+                    display: "flex", 
+                    flexDirection: "column", 
+                    alignItems: "center" 
+                  }}
+                >
+                  <img  src="/image/Logo3.png"alt="Logo" style={{ width: 30, height: 30, marginTop: "20px" }} />
                   <span style={{ fontSize: "12px", marginTop: "2px", color: colors.grey[100] }}>
                     DepEd
                   </span>
                 </div>
               ) : undefined
             }
-            style={{ margin: "10px 0 20px 0", color: colors.grey[100] }}
+        
           >
               {!isCollapsed && (
-              <Box display="flex" justifyContent="space-between" alignItems="center" ml="15px">
+              <Box 
+                display="flex" 
+                justifyContent="space-between" 
+                alignItems="center" 
+              >
+             
               <img
                 src="/image/Logo3.png"
                 alt="DepEd Logo"
                 style={{
-                  width: isCollapsed ? "20px" : "45px", 
+                  width: isCollapsed ? "20px" : "40px", 
                   height: "auto",
+                  margin: "none",
                   transition: "width 0.3s ease-in-out",  
                 }}
               />
+              
             <MenuOutlinedIcon
               style={{
                 transition: "transform 0.3s ease-in-out",
@@ -126,27 +181,52 @@ function Sidebar({ role }: SidebarProps) {
             </MenuItem>
 
           {!isCollapsed && (
-            <Box textAlign="center" py={2}>
-              <FaUserCircle size={50} />
-                <Typography variant="h5" color="black" mt={1} fontWeight="bold">
+            <Box mb="25px">
+               <Box display="flex" justifyContent="center" alignItems="center">
+                 <FaUserCircle size={80} />
+              </Box>
+
+            <Box textAlign="center">
+                <Typography 
+                  variant="h2" 
+                  color={colors.grey[100]}
+                  fontWeight="bold"
+                  fontFamily="Poppins"
+                  sx={{ fontSize: { xs: ".9rem", sm: "1.2rem", md: "1.4rem" }}}
+                >
                     {loading ? "Loading..." : name || "Unknown User"} 
                   </Typography>
-                  <Typography variant="body2" color="black">
+                  <Typography 
+                    variant="body2" 
+                     color={colors.grey[300]}
+                     fontFamily="Poppins"
+                      sx={{  fontSize: { xs: ".7rem", sm: ".9rem", md: "1rem" } }}
+                    >
                     {role === "admin" ? "Admin" : "Employee"}
                   </Typography>
+              </Box>
             </Box>
           )}
 
-          <Box paddingLeft={isCollapsed ? undefined : "10%"} color={"black"} mt={3}>
-            <Item title="Dashboard" to={`/${role}`} icon={<FaTachometerAlt />} selected={selected} setSelected={setSelected}
+          <Box paddingLeft={isCollapsed ? undefined : "5%"}>
+            <Item 
+              title="Dashboard" 
+              to={`/${role}`} 
+              icon={<FaTachometerAlt />} 
+              selected={selected} 
+              setSelected={setSelected}
                />
 
             {role === "admin" && (
               <>
                 <Typography
                     variant="h6"
-                    color="black"
-                    sx={{ m: "15px 0 5px 20px" }}
+                    color={colors.grey[300]}
+                    sx={{  
+                      fontSize: { xs: ".6rem", sm: ".7rem", 
+                      md: ".9rem" }, 
+                      m: "5px 0 5px 20px" 
+                  }}
                   >
                     DATA
               </Typography>

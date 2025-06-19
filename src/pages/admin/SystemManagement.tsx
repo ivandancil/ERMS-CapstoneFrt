@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme, Tabs, Tab, Tooltip, CircularProgress, Grid } from "@mui/material";
+import { Box, Typography, useTheme, Tabs, Tab, Tooltip, Grid, useMediaQuery } from "@mui/material";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import { useSearch } from "../../components/SearchContext";
@@ -30,13 +30,14 @@ interface UserLogData {
 const SystemManagement = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [error, setError] = useState("");
+  const [_, setError] = useState("");
   const { searchTerm } = useSearch();
   const [users, setUsers] = useState<RowData[]>([]);
   const [userLogs, setUserLogs] = useState<UserLogData[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [tabValue, setTabValue] = useState(0);
  
+      const isSmallScreen = useMediaQuery(theme.breakpoints.down('md')); 
 
   const [userPagination, setUserPagination] = useState({ page: 0, pageSize: 10 });
   const [userLogPagination, setUserLogPagination] = useState({ page: 0, pageSize: 10 });
@@ -111,10 +112,10 @@ const SystemManagement = () => {
   
 
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
-    { field: "name", headerName: "Name", flex: 1 },
-    { field: "email", headerName: "Email", flex: 1 },
-    { field: "access", headerName: "Access Level", flex: 1, 
+    { field: "id", headerName: "ID", width: isSmallScreen ? 80 : 90,},
+    { field: "name", headerName: "Name", flex: 1,  minWidth: 120,  },
+    { field: "email", headerName: "Email", flex: 1, minWidth: 180,  },
+    { field: "access", headerName: "Access Level", flex: 1, minWidth: 150, 
       renderCell: ({ row }: { row: RowData }) => (
         <Box
           width="30%"
@@ -127,10 +128,22 @@ const SystemManagement = () => {
           <Tooltip
              title={row.access === "admin" ? "Administrator" : "Regular User"}
           >
-             <Box display="flex" alignItems="center">
-                {row.access === "admin" && <AdminPanelSettingsOutlinedIcon />}
-                {row.access === "user" && <LockOpenOutlinedIcon />}
-                <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
+             <Box 
+              display="flex" 
+              alignItems="center"
+              
+            >
+                {row.access === "admin" && <AdminPanelSettingsOutlinedIcon  sx={{ fontSize: isSmallScreen ? '1rem' : 'inherit' }} />}
+                {row.access === "user" && <LockOpenOutlinedIcon  sx={{ fontSize: isSmallScreen ? '1rem' : 'inherit' }} />}
+                <Typography 
+                  color={colors.grey[100]} 
+                  sx={{ 
+                    ml: "5px",
+                    display: isSmallScreen ? 'flex' : 'block',
+                    fontSize: { xs: ".5rem", sm: ".6rem", md: ".8rem" },
+                    fontFamily: "Poppins",
+                  }}
+                >
                   {row.access === "admin" ? "Admin" : "User"} 
                 </Typography>
               </Box>
@@ -157,17 +170,20 @@ const SystemManagement = () => {
     <Box m="20px">
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>
-            <Header title="SYSTEM MANAGEMENT" subtitle="Manage Users & View System Logs" />
+            <Header title="System Management" subtitle="Manage Users & View System Logs" />
           </Grid>
       </Grid>
       <Tabs 
         value={tabValue}
-        onChange={(e, newValue) => setTabValue(newValue)}
+        onChange={(_, newValue) => setTabValue(newValue)}
         sx={{
+          mt: '20px',
           fontWeight: 'bold',
+          fontFamily: "Poppins",
           backgroundColor: '#f5f5f5',
-          '& .MuiTab-root': { color: '#000' },
-          '& .Mui-selected': { color: 'black', fontWeight: 'bold', fontSize: "14px" },
+           borderRadius: "5px",
+          '& .MuiTab-root': { color: '#000', fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" }, },
+          '& .Mui-selected': { color: 'black', fontWeight: 'bold', fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" }, },
           '& .MuiTabs-indicator': { backgroundColor: '#1976d2', height: '3px', borderRadius: '10px' },
         }}
       >
@@ -176,7 +192,46 @@ const SystemManagement = () => {
       </Tabs>
 
       {tabValue === 0 && (
-        <Box sx={{ mt: "15px", height: "50vh" }}>
+        <Box
+        m="20px 0 0 0"
+        height="65vh"
+        sx={{
+          "& .MuiDataGrid-root": {
+            border: "outlined",
+          },
+          "& .MuiDataGrid-cell": {
+            borderBottom: "none"
+          },
+          "& .MuiDataGrid-columnHeader": {
+             backgroundColor: '#f5f5f5',
+            borderBottom: "none",
+            fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" },
+            fontFamily: "Poppins"
+          },
+          "& .MuiDataGrid-virtualScroller": {
+            // backgroundColor: colors.primary[400],
+            fontSize: { xs: ".5rem", sm: ".6rem", md: ".8rem" },
+            fontFamily: "Poppins"
+          },
+          "& .MuiDataGrid-footerContainer": {
+            backgroundColor: '#f5f5f5',
+            borderTop: "none",
+            fontSize: { xs: ".2rem", sm: ".7rem", md: ".9rem" },
+            fontFamily: "Poppins"
+          },
+          "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+              color: `${colors.grey[100]} !important`,
+              
+          },
+          "& .MuiDataGrid-columnHeader, & .MuiDataGrid-cell": {
+              '@media (max-width: 900px)': {
+                  '&.MuiDataGrid-columnHeader--hide, &.MuiDataGrid-cell--hide': {
+                      display: 'none !important',
+                  },
+              },
+          },
+        }}
+      >
        
             <DataGrid
               loading={loading}
@@ -185,30 +240,53 @@ const SystemManagement = () => {
               paginationModel={userPagination}
               onPaginationModelChange={setUserPagination}
               pageSizeOptions={[5, 10, 25]}
-              sx={{
-                borderRadius: "8px",
-                overflow: "hidden",
-                "& .MuiDataGrid-root": { border: "none" },
-                "& .MuiDataGrid-columnHeader": { backgroundColor: "black", color: "white" },
-                "& .MuiDataGrid-footerContainer": {
-                  backgroundColor: "black",
-                  color: "white",
-                },
-                "& .MuiTablePagination-root": {
-                  color: "white", 
-                },
-                "& .MuiSvgIcon-root": {
-                  color: "white",
-                },
-                "& .MuiDataGrid-columnSeparator": { display: "none" },
-              }}
+             
+              
             />
         
         </Box>
       )}
 
       {tabValue === 1 && (
-        <Box sx={{ mt: "20px", height: "50vh" }}>
+        <Box
+        m="20px 0 0 0"
+        height="65vh"
+        sx={{
+          "& .MuiDataGrid-root": {
+            border: "outlined",
+          },
+          "& .MuiDataGrid-cell": {
+            borderBottom: "none"
+          },
+          "& .MuiDataGrid-columnHeader": {
+            backgroundColor: '#f5f5f5',
+            borderBottom: "none",
+            fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" },
+            fontFamily: "Poppins"
+          },
+          "& .MuiDataGrid-virtualScroller": {
+            // backgroundColor: colors.primary[400],
+            fontSize: { xs: ".5rem", sm: ".6rem", md: ".8rem" },
+            fontFamily: "Poppins"
+          },
+          "& .MuiDataGrid-footerContainer": {
+             backgroundColor: '#f5f5f5',
+            borderTop: "none",
+            fontSize: { xs: ".2rem", sm: ".7rem", md: ".9rem" },
+            fontFamily: "Poppins"
+          },
+          "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+              color: `${colors.grey[100]} !important`,
+          },
+          "& .MuiDataGrid-columnHeader, & .MuiDataGrid-cell": {
+              '@media (max-width: 900px)': {
+                  '&.MuiDataGrid-columnHeader--hide, &.MuiDataGrid-cell--hide': {
+                      display: 'none !important',
+                  },
+              },
+          },
+        }}
+      >
         
             <DataGrid
               loading={loading}
@@ -217,25 +295,7 @@ const SystemManagement = () => {
               paginationModel={userLogPagination}
               onPaginationModelChange={setUserLogPagination}
               pageSizeOptions={[5, 10, 25]}
-              sx={{
-                borderRadius: "8px",
-                overflow: "hidden",
-                "& .MuiDataGrid-root": { border: "none" },
-                "& .MuiDataGrid-columnHeader": { backgroundColor:"black", color: "#fff" },
-                "& .MuiDataGrid-footerContainer": {
-                  backgroundColor: "black",
-                  color: "#fff",
-                },
-                "& .MuiTablePagination-root": {
-                  color: "#fff", 
-                },
-                "& .MuiSvgIcon-root": {
-                  color: "#fff",
-                },
-                "& .MuiDataGrid-columnSeparator": { display: "none" },
-            
-              }}
-             
+              
             />
          
         </Box>
@@ -246,3 +306,6 @@ const SystemManagement = () => {
 
 
 export default SystemManagement;
+
+
+

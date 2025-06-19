@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { message } from 'antd';
-import { Box, Button, Card, CardContent, CircularProgress, IconButton, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Button, Card, CardContent, CircularProgress, IconButton, Tab, Tabs, Typography, useTheme } from '@mui/material';
 import Header from '../../../components/Header';
 import { UploadCloud, XCircle } from 'lucide-react';
 import { DataGrid } from '@mui/x-data-grid';
+import { tokens } from '../../../theme';
 
 const UploadDocs = () => {
+   const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
   const [documents, setDocuments] = useState<any[]>([]);
   const [currentTab, setCurrentTab] = useState("Upload Documents/Files");
   const [uploading, setUploading] = useState(false);
@@ -14,7 +17,7 @@ const UploadDocs = () => {
   const [file, setFile] = useState<File | null>(null);
 
     // Handle tab change
-    const handleTabChange = (event: React.SyntheticEvent, newValue: string) => {
+    const handleTabChange = (_: React.SyntheticEvent, newValue: string) => {
       setCurrentTab(newValue);
       if (newValue === "View Uploaded Documents/File") {
         fetchDocuments();  // Fetch documents when switching to this tab
@@ -139,16 +142,19 @@ const UploadDocs = () => {
       field: 'original_name',
       headerName: 'Document Name',
       flex: 1,
+       minWidth: 180, 
     },
     {
       field: 'uploaded_at',
       headerName: 'Uploaded On',
       flex: 1,
+       minWidth: 180, 
     },
     {
       field: 'action',
       headerName: 'Action',
       flex: 1,
+       minWidth: 180, 
       renderCell: (params: any) => (
         <Box display="flex" gap={1} mt={1}>
          <Button
@@ -173,18 +179,21 @@ const UploadDocs = () => {
   return (
     <Box m="20px">
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="UPLOAD DOCUMENTS" subtitle="Manage Documents and Files" />
+        <Header title="Upload Documents" subtitle="Manage Documents and Files" />
       </Box>
 
       <Tabs
         value={currentTab}
         onChange={handleTabChange}
         sx={{
+          mt: '20px',
           fontWeight: 'bold',
+          fontFamily: "Poppins",
           backgroundColor: '#f5f5f5',
-          '& .MuiTab-root': { color: '#000' },
-          '& .Mui-selected': { color: 'black', fontWeight: 'bold', fontSize: "14px" },
-          '& .MuiTabs-indicator': { backgroundColor: '#1976d2', height: '3px', borderRadius: '2px' },
+           borderRadius: "5px",
+          '& .MuiTab-root': { color: '#000', fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" }, },
+          '& .Mui-selected': { color: 'black', fontWeight: 'bold', fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" }, },
+          '& .MuiTabs-indicator': { backgroundColor: '#1976d2', height: '3px', borderRadius: '10px' },
         }}
       >
         <Tab value="Upload Documents/Files" label="Upload Documents/Files" />
@@ -270,7 +279,47 @@ const UploadDocs = () => {
       )}
 
       {currentTab === "View Uploaded Documents/File" && (
-        <Box height="50vh" mt={2}>
+       <Box
+               m="20px 0 0 0"
+               height="65vh"
+               sx={{
+                 "& .MuiDataGrid-root": {
+                   border: "outlined",
+                 },
+                 "& .MuiDataGrid-cell": {
+                   borderBottom: "none"
+                 },
+                 "& .MuiDataGrid-columnHeader": {
+                   backgroundColor: '#f5f5f5',
+                   borderBottom: "none",
+                   fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" },
+                   fontFamily: "Poppins"
+                 },
+                 "& .MuiDataGrid-virtualScroller": {
+                   // backgroundColor: colors.primary[400],
+                   fontSize: { xs: ".5rem", sm: ".6rem", md: ".8rem" },
+                   fontFamily: "Poppins"
+                 },
+                 "& .MuiDataGrid-footerContainer": {
+                   backgroundColor: '#f5f5f5',
+                   borderTop: "none",
+                   fontSize: { xs: ".2rem", sm: ".7rem", md: ".9rem" },
+                   fontFamily: "Poppins"
+                 },
+                 "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+                     color: `${colors.grey[100]} !important`,
+                     
+                 },
+                 "& .MuiDataGrid-columnHeader, & .MuiDataGrid-cell": {
+                     '@media (max-width: 900px)': {
+                         '&.MuiDataGrid-columnHeader--hide, &.MuiDataGrid-cell--hide': {
+                             display: 'none !important',
+                         },
+                     },
+                 },
+               }}
+             >
+
           <DataGrid
           loading={loading}
             rows={documents}
@@ -279,26 +328,7 @@ const UploadDocs = () => {
             initialState={{
               pagination: { paginationModel: { pageSize: 5 } },
             }}
-            sx={{
-              borderRadius: "8px",
-              overflow: "hidden",
-              "& .MuiDataGrid-root": { border: "none" },
-              "& .MuiDataGrid-columnHeader": {
-                backgroundColor: "black",
-                color: "#fff",
-              },
-              "& .MuiDataGrid-footerContainer": {
-                backgroundColor: "black",
-                color: "#fff",
-              },
-              "& .MuiTablePagination-root": {
-                color: "#fff", 
-              },
-              "& .MuiSvgIcon-root": {
-                color: "#fff",
-              },
-              "& .MuiDataGrid-columnSeparator": { display: "none" },
-            }}
+     
           />
         </Box>
       )}

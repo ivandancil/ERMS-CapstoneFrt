@@ -1,4 +1,4 @@
-  import React, { useState, useEffect, useRef } from "react";
+  import { useState, useEffect, useRef } from "react";
   import { Box,
     Button,
     Typography,
@@ -6,6 +6,8 @@
     DialogTitle,
     DialogContent,
     DialogActions,
+    useTheme,
+    useMediaQuery,
   } from "@mui/material";
   import { DataGrid } from "@mui/x-data-grid";
   import Header from "../../../components/Header";
@@ -17,6 +19,7 @@
   import VisibilityIcon from "@mui/icons-material/Visibility";
   import { useSearch } from "../../../components/SearchContext";
   import ViewEmployee from "./ViewEmployee";
+import { tokens } from "../../../theme";
 
   interface Employee {
     id: number;
@@ -36,6 +39,8 @@
   }
 
   function EmployeeManagement() {
+      const theme = useTheme();
+      const colors = tokens(theme.palette.mode);
     const [employees, setEmployees] = useState<Employee[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
@@ -48,6 +53,8 @@
     const { searchTerm } = useSearch();
     const addDialogRef = useRef<HTMLButtonElement>(null);
     const editDialogRef = useRef<HTMLButtonElement>(null);
+
+          const isSmallScreen = useMediaQuery(theme.breakpoints.down('md')); 
 
     const handleView = (employee: Employee) => {
       setSelectedEmployee(employee);
@@ -140,10 +147,10 @@
     return (
       <Box m="20px">
         <Box display="flex" justifyContent="space-between" alignItems="center">
-          <Header title="EMPLOYEE MANAGEMENT LIST" subtitle="Manage Employee Details" />
+          <Header title="Employee Management List" subtitle="Manage Employee Details" />
 
       {/* Add Employee Button */}
-      <Button
+      {/* <Button
         variant="outlined"
           sx={{
             backgroundColor: "black",
@@ -162,7 +169,7 @@
         ref={addDialogRef}
       >
         Create New Employee
-      </Button>
+      </Button> */}
     </Box>
 
         {/* Show Error Message if API Fails */}
@@ -173,27 +180,68 @@
         )}
 
         {/* Employee Table */}
-        <Box mt={3} height="55vh">
+           <Box
+                m="20px 0 0 0"
+                height="75vh"
+                sx={{
+                  "& .MuiDataGrid-root": {
+                    border: "outlined",
+                  },
+                  "& .MuiDataGrid-cell": {
+                    borderBottom: "none"
+                  },
+                  "& .MuiDataGrid-columnHeader": {
+                   backgroundColor: '#f5f5f5',
+                    borderBottom: "none",
+                    fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" },
+                    fontFamily: "Poppins"
+                  },
+                  "& .MuiDataGrid-virtualScroller": {
+                    // backgroundColor: colors.primary[400],
+                    fontSize: { xs: ".5rem", sm: ".6rem", md: ".8rem" },
+                    fontFamily: "Poppins"
+                  },
+                  "& .MuiDataGrid-footerContainer": {
+                     backgroundColor: '#f5f5f5',
+                    borderTop: "none",
+                    fontSize: { xs: ".2rem", sm: ".7rem", md: ".9rem" },
+                    fontFamily: "Poppins"
+                  },
+                  "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+                      color: `${colors.grey[100]} !important`,
+                  },
+                  "& .MuiDataGrid-columnHeader, & .MuiDataGrid-cell": {
+                      '@media (max-width: 900px)': {
+                          '&.MuiDataGrid-columnHeader--hide, &.MuiDataGrid-cell--hide': {
+                              display: 'none !important',
+                          },
+                      },
+                  },
+                }}
+              >
+
           <DataGrid
             rows={filteredEmployees}
             columns={[
-              { field: "employeeID", headerName: "Employee ID", flex: 1 },
-              { field: "lastname", headerName: "Last Name", flex: 1 },
-              { field: "firstname", headerName: "First Name", flex: 1 },
-              { field: "email", headerName: "Email", flex: 1 },
+              { field: "employeeID", headerName: "Employee ID", flex: 1,  minWidth: 130,  },
+              { field: "lastname", headerName: "Last Name", flex: 1,  minWidth: 120,  },
+              { field: "firstname", headerName: "First Name", flex: 1,  minWidth: 120,  },
+              { field: "email", headerName: "Email", flex: 1,  minWidth: 180,  },
               {
                 field: "actions",
                 headerName: "Actions",
                 flex: 1.5,
+                minWidth: 230,
                 renderCell: (params) => (
                   <Box display="flex" gap={1} mt={1}>
 
                   {/* View Button */}
                     <Button
-                        variant="contained"
-                        color="primary"
-                        sx={{ textTransform: "none", fontSize: "12px", px: 2 }}
-                        startIcon={<VisibilityIcon />}
+                        sx={{ textTransform: "none",
+                          color: colors.grey[100],
+                             fontSize: { xs: ".5rem", sm: ".6rem", md: ".8rem" }
+                             }}
+                        startIcon={<VisibilityIcon sx={{ fontSize: isSmallScreen ? '1rem' : 'inherit' }} />}
                         onClick={() => handleView(params.row)}
                       >
                         View
@@ -201,10 +249,11 @@
 
                   {/* Edit Button */}
                     <Button
-                        variant="contained"
-                        color="primary"
-                        sx={{ textTransform: "none", fontSize: "12px", px: 2 }}
-                        startIcon={<EditIcon />}
+                        sx={{ textTransform: "none",
+                          color: colors.grey[100],
+                             fontSize: { xs: ".5rem", sm: ".6rem", md: ".8rem" }
+                             }}
+                        startIcon={<EditIcon sx={{ fontSize: isSmallScreen ? '1rem' : 'inherit' }} />}
                         onClick={() => {
                           setSelectedEmployeeId(params.row.id);
                           setOpenEditDialog(true);
@@ -219,13 +268,13 @@
                       variant="contained"
                       sx={{
                         textTransform: "none",
-                        fontSize: "12px",
-                        px: 2,
+                        fontSize: { xs: ".5rem", sm: ".6rem", md: ".8rem" },
+                       
                         backgroundColor: "primary",
                         color: "#fff",
                         "&:hover": { backgroundColor: "primary" },
                       }}
-                      startIcon={<DeleteIcon />}
+                      startIcon={<DeleteIcon sx={{ fontSize: isSmallScreen ? '1rem' : 'inherit' }} />}
                       onClick={() => deleteEmployee(params.row.id)}
                       disabled={deleteLoading}
                     >
@@ -239,16 +288,7 @@
             getRowId={(row) => row.id}
             pageSizeOptions={[5, 10, 20]}
             paginationModel={{ page: 0, pageSize: 10 }}
-            sx={{
-              borderRadius: "8px",
-              overflow: "hidden",
-              "& .MuiDataGrid-root": { border: "none" },
-              "& .MuiDataGrid-columnHeader": { backgroundColor: "black" , color: "#fff" },
-              "& .MuiDataGrid-footerContainer": { backgroundColor: "black", color: "#fff", },
-              "& .MuiTablePagination-root": { color: "#fff" },
-              "& .MuiSvgIcon-root": { color: "#fff"},
-              "& .MuiDataGrid-columnSeparator": { display: "none" },
-            }}
+          
           />
         </Box>
 

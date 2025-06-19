@@ -1,10 +1,9 @@
-import { Box, Grid, Paper, Typography } from "@mui/material";
+import { Box, colors, Grid, Paper, Typography } from "@mui/material";
 import Header from "../../components/Header";
 import GroupsIcon from "@mui/icons-material/Groups";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import { useEffect, useState } from "react";
-import { grey } from "@mui/material/colors";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 
 
@@ -95,31 +94,31 @@ const Dashboard = () => {
     {
       title: loading ? "Loading..." : employees.length.toString(),
       subtitle: "Total Number of Employees",
-      icon: <GroupsIcon sx={{ fontSize: 30, color: "#3498db" }} />,
+      icon: <GroupsIcon sx={{ fontSize: { xs: 36, sm: 38, md: 40 }, color: "#3498db" }} />,
     },
     {
       title: loading ? "Loading..." : users.length.toString(),
       subtitle: "Registered System Users",
-      icon: <PersonAddAltIcon sx={{ fontSize: 30, color: "#2ecc71" }} />,
+      icon: <PersonAddAltIcon sx={{ fontSize: { xs: 36, sm: 38, md: 40 }, color: "#2ecc71" }} />,
     },
     {
       title: loading ? "Loading..." : users.length.toString(),
       subtitle: "Number of Uploaded Documents",
-      icon: <InsertDriveFileIcon sx={{ fontSize: 30, color: "#f39c12" }} />,
+      icon: <InsertDriveFileIcon sx={{ fontSize: { xs: 36, sm: 38, md: 40 }, color: "#f39c12" }} />,
     },
     {
       title: loading ? "Loading..." : users.length.toString(),
       subtitle: "Notifications",
-      icon: <NotificationsActiveIcon sx={{ fontSize: 30, color: "red" }} />,
+      icon: <NotificationsActiveIcon sx={{ fontSize: { xs: 36, sm: 38, md: 40 }, color: "red" }} />,
     },
   ];
 
   return (
-    <Box m={3}>
+    <Box m="20px">
       {/* Header Section */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Header
-          title="DASHBOARD"
+          title="Admin Dashboard"
           subtitle={`Welcome, ${loading ? "Loading..." : user?.name || "Unknown User"}`}
         />
       </Box>
@@ -133,8 +132,8 @@ const Dashboard = () => {
               sx={{
                 p: 2,
                 textAlign: "center",
-                backgroundColor: grey,
-                height: "110px",
+                backgroundColor: colors.grey[100],
+                height: "120px",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
@@ -142,10 +141,22 @@ const Dashboard = () => {
               }}
             >
               {item.icon}
-              <Typography variant="h6" fontWeight="bold" mt={1} fontSize="16px">
+              <Typography 
+                variant="h6" 
+                fontWeight="bold" 
+                color={colors.grey[900]}
+                 sx={{ 
+                 
+                   fontSize: { xs: ".8rem", sm: ".9rem", md: "1rem" } }}
+                >
                 {item.title}
               </Typography>
-              <Typography variant="body2" fontSize="12px">
+              <Typography 
+                variant="body2" 
+                fontFamily="Poppins"
+                color={colors.grey[900]}
+                 sx={{  fontSize: { xs: ".8rem", sm: ".9rem", md: "1rem" } }}
+              >
                 {item.subtitle}
               </Typography>
             </Paper>

@@ -4,9 +4,11 @@ import {
   Button,
   Tabs,
   Tab,
+  useTheme,
 } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Header from "../../components/Header";
+import { tokens } from "../../theme";
 
 interface Document {
   id: number;
@@ -18,6 +20,8 @@ interface Document {
 }
 
 function DocumentManagement() {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const [documents, setDocuments] = useState<Document[]>([]);
   const [currentTab, setCurrentTab] = useState("Common");
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -128,14 +132,15 @@ function DocumentManagement() {
   };
 
   const columns: GridColDef[] = [
-    { field: "name", headerName: "Document Name", flex: 2 },
-    { field: "type", headerName: "Type", flex: 1 },
-    { field: "uploadedBy", headerName: "Uploaded By", flex: 1 },
-    { field: "date", headerName: "Upload Date", flex: 1 },
+    { field: "name", headerName: "Document Name", flex: 2, minWidth: 160, },
+    { field: "type", headerName: "Type", flex: 1, minWidth: 120, },
+    { field: "uploadedBy", headerName: "Uploaded By", flex: 1, minWidth: 160, },
+    { field: "date", headerName: "Upload Date", flex: 1, minWidth: 160, },
     {
       field: "actions",
       headerName: "Actions",
       flex: 1.5,
+      minWidth: 180,
       renderCell: (params) => (
         <Box display="flex" gap={1} mt={1}>
 
@@ -173,7 +178,7 @@ function DocumentManagement() {
     <Box m="20px">
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Header
-          title="DOCUMENT MANAGEMENT"
+          title="Document Management"
           subtitle="Organize and Access Your Files Efficiently"
         />
       
@@ -198,25 +203,59 @@ function DocumentManagement() {
         value={currentTab}
         onChange={handleTabChange}
           sx={{
+            mt: "20px",
             fontWeight: "bold",
-            backgroundColor: "white",
-            "& .MuiTab-root": { color: "#000" },
-            "& .Mui-selected": {
-              color: "black",
-              fontWeight: "bold",
-              fontSize: "14px",
-            },
-            "& .MuiTabs-indicator": {
-              backgroundColor: "#1976d2",
-              height: "3px",
-              borderRadius: "2px",
-            },
-          }}
+            backgroundColor: '#f5f5f5',
+            borderRadius: "5px",
+            fontFamily: "Poppins",
+             '& .MuiTab-root': { color: '#000',  fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" }, },
+            '& .Mui-selected': { color: 'black', fontWeight: 'bold', fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" }, },
+            '& .MuiTabs-indicator': { backgroundColor: '#1976d2', height: '3px', borderRadius: '10px' },
+             
+            }}
       >
         <Tab value="Common" label="Uploaded Files by HR" />
-      </Tabs>
 
-      <Box height="55vh" mt={2}>
+      </Tabs>
+      <Box
+        m="20px 0 0 0"
+        height="65vh"
+        sx={{
+          "& .MuiDataGrid-root": {
+            border: "outlined",
+          },
+          "& .MuiDataGrid-cell": {
+            borderBottom: "none"
+          },
+          "& .MuiDataGrid-columnHeader": {
+             backgroundColor: '#f5f5f5',
+            borderBottom: "none",
+            fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" },
+            fontFamily: "Poppins",
+          },
+          "& .MuiDataGrid-virtualScroller": {
+            // backgroundColor: colors.primary[400],
+            fontSize: { xs: ".5rem", sm: ".6rem", md: ".8rem" },
+             fontFamily: "Poppins",
+          },
+          "& .MuiDataGrid-footerContainer": {
+             backgroundColor: '#f5f5f5',
+            borderTop: "none",
+            fontSize: { xs: ".2rem", sm: ".7rem", md: ".9rem" },
+             fontFamily: "Poppins",
+          },
+          "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+              color: `${colors.grey[100]} !important`,
+          },
+          "& .MuiDataGrid-columnHeader, & .MuiDataGrid-cell": {
+              '@media (max-width: 900px)': {
+                  '&.MuiDataGrid-columnHeader--hide, &.MuiDataGrid-cell--hide': {
+                      display: 'none !important',
+                  },
+              },
+          },
+        }}
+      >
         <DataGrid
           rows={filteredDocuments}
           columns={columns}
@@ -224,26 +263,7 @@ function DocumentManagement() {
           initialState={{
             pagination: { paginationModel: { pageSize: 5 } },
           }}
-            sx={{
-              borderRadius: "8px",
-              overflow: "hidden",
-              "& .MuiDataGrid-root": { border: "none" },
-              "& .MuiDataGrid-columnHeader": {
-                backgroundColor: "black",
-                color: "#fff",
-              },
-              "& .MuiDataGrid-footerContainer": {
-                backgroundColor: "black",
-                color: "#fff",
-              },
-              "& .MuiTablePagination-root": {
-                color: "#fff",
-              },
-              "& .MuiSvgIcon-root": {
-                color: "#fff",
-              },
-              "& .MuiDataGrid-columnSeparator": { display: "none" },
-            }}
+        
         />
       </Box>
     </Box>

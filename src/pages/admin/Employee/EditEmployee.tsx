@@ -338,7 +338,7 @@ function EditEmployee({ employeeId, onEmployeeUpdated, onClose }: EditEmployeePr
 
 // 🔥 Styles: Placeholder turns white on hover!
 const inputStyles = {
-  "& .MuiInputLabel-root": { color: "black !important" }, // Default placeholder color
+  "& .MuiInputLabel-root": { color: "black !important" },  // Default placeholder color
   "& .MuiInputLabel-root.Mui-focused": { color: "black !important" }, // Focus color
   "& .MuiOutlinedInput-root": {
     "&:hover .MuiInputLabel-root": { color: "black !important" }, // White placeholder on hover
@@ -346,7 +346,7 @@ const inputStyles = {
     "&:hover fieldset": { borderColor: "black !important" }, // Border turns white on hover
     "&.Mui-focused fieldset": { borderColor: "black !important" }, // White border on focus
   },
-  "& .MuiInputBase-input": { color: "black" }, // Text color white
+  "& .MuiInputBase-input": { color: "black" },  // Text color white
   
 };
 

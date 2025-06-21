@@ -103,7 +103,7 @@ const Dashboard = () => {
     },
     {
       title: loading ? "Loading..." : users.length.toString(),
-      subtitle: "Number of Uploaded Documents",
+      subtitle: "Uploaded Documents",
       icon: <InsertDriveFileIcon sx={{ fontSize: { xs: 36, sm: 38, md: 40 }, color: "#f39c12" }} />,
     },
     {
@@ -146,7 +146,6 @@ const Dashboard = () => {
                 fontWeight="bold" 
                 color={colors.grey[900]}
                  sx={{ 
-                 
                    fontSize: { xs: ".8rem", sm: ".9rem", md: "1rem" } }}
                 >
                 {item.title}

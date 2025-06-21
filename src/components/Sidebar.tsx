@@ -256,8 +256,7 @@ function Sidebar({ role, isCollapsed, toggleSidebar }: SidebarProps) {
           <Item title="My Profile"  to="/user/employee_profile" icon={<FaCog />} selected={selected} setSelected={setSelected} />
           <Item title="Document Management" to="/user/document_management" icon={<FaFolderOpen />} selected={selected} setSelected={setSelected} />
           <Item title="Upload Image" to="/user/upload_pds" icon={<FaEye />} selected={selected} setSelected={setSelected} />
-          <Item title="Extract National ID" to="/user/extract_id" icon={<FaIdCard />} selected={selected} setSelected={setSelected} />
-
+          <Item title="Extract ID" to="/user/extractID" icon={<FaIdCard />} selected={selected} setSelected={setSelected} />
 
               </>
             )}

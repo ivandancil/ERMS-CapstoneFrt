@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Box, Button, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import Header from "../../../components/Header";
-import { tokens } from "../../../theme";
 import DownloadIcon from "@mui/icons-material/Download";
+import { tokens } from "../../theme";
+import Header from "../../components/Header";
 
 
 const Reports = () => {

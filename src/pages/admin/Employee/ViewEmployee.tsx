@@ -41,7 +41,15 @@ function ViewEmployee({ open, onClose, employee, documents }: ViewEmployeeDialog
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="md">
-      <DialogTitle sx={{ backgroundColor: "#1E1E1E", color: "#fff", fontWeight: "bold", textAlign: "center" }}>
+      <DialogTitle 
+        sx={{ 
+          backgroundColor: "#1E1E1E", 
+          color: "#fff", 
+          fontWeight: "bold", 
+          fontFamily: "Poppins",
+          textAlign: "center" 
+        }}
+      >
         Employee Profile
       </DialogTitle>
 

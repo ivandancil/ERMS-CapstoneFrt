@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { message } from 'antd';
 import { Box, Button, Card, CardContent, CircularProgress, IconButton, Tab, Tabs, Typography, useMediaQuery, useTheme } from '@mui/material';
-import Header from '../../../components/Header';
 import { UploadCloud, XCircle } from 'lucide-react';
 import { DataGrid } from '@mui/x-data-grid';
-import { tokens } from '../../../theme';
-  import VisibilityIcon from "@mui/icons-material/Visibility";
-    import DeleteIcon from "@mui/icons-material/Delete";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { tokens } from '../../theme';
+import Header from '../../components/Header';
 
 const UploadDocs = () => {
    const theme = useTheme();

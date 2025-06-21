@@ -148,26 +148,24 @@ import { tokens } from "../../../theme";
           <Header title="Employee Management List" subtitle="Manage Employee Details" />
 
       {/* Add Employee Button */}
-      {/* <Button
-        variant="outlined"
+      <Button
+        variant="contained"
           sx={{
-            backgroundColor: "black",
-            color: "#fff",
-            "&:hover": { backgroundColor: "black" },
+            background: `${colors.primary[400]}`,
+            color: "black",
+            "&:hover": { background: `${colors.grey[900]}`, },
             textTransform: "none",
-            fontSize: "13px",
-            fontWeight: "bold",
-            px: 3,
-            py: 1.5,
-            minWidth: "180px",
-          
+            fontSize: { xs: ".3rem", sm: ".7rem", md: ".9rem" },
+            fontFamily: "Poppins",
+            py: { xs: .8, sm: 1, md: 1.3 },
+            width: { xs: "5rem", sm: "9rem", md: "11rem" },
           }}
-        startIcon={<AddIcon />}
-        onClick={() => setOpenAddDialog(true)}
-        ref={addDialogRef}
+        // startIcon={<AddIcon />}
+        // onClick={() => setOpenAddDialog(true)}
+        // ref={addDialogRef}
       >
-        Create New Employee
-      </Button> */}
+        Create Employee
+      </Button>
     </Box>
 
         {/* Show Error Message if API Fails */}

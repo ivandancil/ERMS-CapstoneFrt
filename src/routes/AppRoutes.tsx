@@ -7,15 +7,15 @@ import Title from "../pages/Title";
 import Dashboard from "../pages/admin/Dashboard";
 import SystemManagement from "../pages/admin/SystemManagement";
 import EmployeeManagement from "../pages/admin/Employee/EmployeeManagement";
-import UploadDocs from "../pages/admin/Employee/UploadDocs";
-import Reports from "../pages/admin/Employee/Reports";
 import UserDashboard from "../pages/user/UserDashboard";
 import EmployeeProfile from "../pages/user/EmployeeProfile";
 import DocumentManagement from "../pages/user/DocumentManagement";
 import UploadPDS from "../pages/user/UploadPDS";
-import ExtractNationalId from "../pages/user/ExtractNationalId";
 import AdminRoute from "../components/protectedRoutes/AdminRoute";
 import UserRoute from "../components/protectedRoutes/UserRoute";
+import ExtractID from "../pages/user/ExtractID";
+import Reports from "../pages/admin/Reports";
+import UploadDocs from "../pages/admin/UploadDocs";
 
 
 const Approutes = () => {
@@ -56,7 +56,7 @@ const Approutes = () => {
         <Route path="employee_profile" element={<EmployeeProfile />} />
         <Route path="document_management" element={<DocumentManagement />} />
         <Route path="upload_pds" element={<UploadPDS />} />
-        <Route path="extract_id" element={<ExtractNationalId />} />
+        <Route path="extractID" element={<ExtractID />} />
 
       </Route>
 

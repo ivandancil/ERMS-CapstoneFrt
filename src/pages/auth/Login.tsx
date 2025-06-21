@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import { IconButton, InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-
+import BackgroundImage from "../../../public/image/enhance.png"
 
 
 function Login() {
@@ -17,7 +17,7 @@ function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [user, setUser] = useState(null);
+  const [_, setUser] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
 
   async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
@@ -100,7 +100,7 @@ function Login() {
 
       <Box
         component="img"
-        src="/image/enhance.png"
+        src={ BackgroundImage }
         alt="DepEd Logo Background"
         sx={{
           position: "absolute",

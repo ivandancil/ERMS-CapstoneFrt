@@ -1,5 +1,7 @@
 import { Box, Typography, useMediaQuery } from "@mui/material";
 import Navbar from "../components/Navbar";
+import BackgroundImage from "../../public/image/enhance.png"
+import DivisionLogo from "../../public/image/Logo3.png"
 
 const Title = () => {
   const isSmallScreen = useMediaQuery("(max-width:960px)");
@@ -20,7 +22,7 @@ const Title = () => {
       {/* Full Page Watermark */}
       <Box
         component="img"
-        src="/image/enhance.png"
+        src={ BackgroundImage }
         alt="DepEd Logo Background"
         sx={{
           position: "absolute",
@@ -38,7 +40,7 @@ const Title = () => {
       {/* Centered & Enlarged Logo */}
       <Box
         component="img"
-        src="/image/Logo3.png"
+        src={ DivisionLogo }
         alt="DepEd Logo"
         sx={{
           position: "absolute",

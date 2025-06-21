@@ -1,5 +1,5 @@
 import { useState, useEffect, ChangeEvent } from "react";
-import { TextField, Button, Box, CircularProgress, Grid, FormControl, InputLabel, Select, MenuItem, SelectChangeEvent } from "@mui/material";
+import { TextField, Button, Box, CircularProgress, Grid,  MenuItem } from "@mui/material";
 
 interface EditEmployeeProps {
   employeeId: number | null;

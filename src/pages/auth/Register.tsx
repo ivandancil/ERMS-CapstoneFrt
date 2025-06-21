@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import { IconButton, InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import BackgroundImage from "../../../public/image/enhance.png"
 
 
 const Register = () => {
@@ -96,7 +97,7 @@ const Register = () => {
         {/* Background Image */}
         <Box
           component="img"
-          src="/image/enhance.png"
+          src={ BackgroundImage }
           alt="DepEd Logo Background"
           sx={{
             position: "absolute",

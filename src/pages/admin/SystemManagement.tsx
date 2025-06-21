@@ -171,6 +171,7 @@ const SystemManagement = () => {
       </Grid>
       <Tabs 
         value={tabValue}
+        textColor="inherit"
         onChange={(_, newValue) => setTabValue(newValue)}
         sx={{
           mt: '20px',
@@ -179,8 +180,8 @@ const SystemManagement = () => {
           background: `${colors.primary[400]}`,
            borderRadius: "5px",
           '& .MuiTab-root': { color: '#000', fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" }, },
-          '& .Mui-selected': { color: 'black', fontWeight: 'bold', fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" }, },
-          '& .MuiTabs-indicator': { backgroundColor: '#1976d2', height: '3px', borderRadius: '10px' },
+          '& .Mui-selected': { color: 'black', fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" }, },
+          '& .MuiTabs-indicator': {  backgroundColor: 'black', height: '3px', borderRadius: '10px' },
         }}
       >
         <Tab label="Registered Users" />

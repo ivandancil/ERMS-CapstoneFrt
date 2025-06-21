@@ -6,6 +6,7 @@ import "react-pro-sidebar/dist/css/styles.css";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import { FaUserCircle, FaTachometerAlt, FaUsers, FaUpload, FaEye, FaCog, FaFolderOpen, FaIdCard } from "react-icons/fa";
 import { tokens } from "../theme";
+import DepedLogo from "../../public/image/Logo3.png"
 
 interface ItemProps {
   title: string;
@@ -112,7 +113,7 @@ function Sidebar({ role, isCollapsed, toggleSidebar }: SidebarProps) {
               // Dynamically set width based on the `isCollapsed` prop from App.js
               // When isCollapsed is true (initial mobile state, or after toggle to close), width is 0.
               // When isCollapsed is false (after toggle to open), width is 250px.
-              width: isCollapsed ? '0px' : '250px',
+              width: isCollapsed ? '0px' : '300px',
               zIndex: 110, // Higher than Topbar's zIndex (100) to ensure it appears on top
               transition: 'width 0.3s ease-in-out', // Smooth open/close animation
               boxShadow: theme.shadows[5], // Add a shadow for visual depth
@@ -143,7 +144,7 @@ function Sidebar({ role, isCollapsed, toggleSidebar }: SidebarProps) {
                     alignItems: "center" 
                   }}
                 >
-                  <img  src="/image/Logo3.png"alt="Logo" style={{ width: 30, height: 30, marginTop: "20px" }} />
+                  <img  src={ DepedLogo } alt="Logo" style={{ width: 30, height: 30, marginTop: "20px" }} />
                   <span style={{ fontSize: "12px", marginTop: "2px", color: colors.grey[100] }}>
                     DepEd
                   </span>
@@ -160,7 +161,7 @@ function Sidebar({ role, isCollapsed, toggleSidebar }: SidebarProps) {
               >
              
               <img
-                src="/image/Logo3.png"
+                src={ DepedLogo }
                 alt="DepEd Logo"
                 style={{
                   width: isCollapsed ? "20px" : "40px", 
@@ -189,7 +190,8 @@ function Sidebar({ role, isCollapsed, toggleSidebar }: SidebarProps) {
               </Box>
 
             <Box textAlign="center">
-                <Typography 
+                <Typography
+                  mt={2} 
                   variant="h2" 
                   color={colors.grey[100]}
                   fontWeight="bold"

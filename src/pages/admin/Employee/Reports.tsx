@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { Box, Button, Paper, Typography, useTheme } from "@mui/material";
+import { Box, Button, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import Header from "../../../components/Header";
 import { tokens } from "../../../theme";
 import DownloadIcon from "@mui/icons-material/Download";
-import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
-import TableViewIcon from "@mui/icons-material/TableView";
 
 
 const Reports = () => {
@@ -70,13 +68,13 @@ const Reports = () => {
     alert(`Downloading "${name}"... (placeholder functionality)`);
   };
 
-  const exportToPDF = () => {
-    alert("Exporting all reports to PDF... (placeholder)");
-  };
+  // const exportToPDF = () => {
+  //   alert("Exporting all reports to PDF... (placeholder)");
+  // };
 
-  const exportToCSV = () => {
-    alert("Exporting all reports to CSV... (placeholder)");
-  };
+  // const exportToCSV = () => {
+  //   alert("Exporting all reports to CSV... (placeholder)");
+  // };
 
   const columns = [
     { field: "name", headerName: "Report Name", flex: 2,  minWidth: 160, },
@@ -151,7 +149,7 @@ const Reports = () => {
 
              <Box
                      m="20px 0 0 0"
-                     height="65vh"
+                     height="70vh"
                      sx={{
                        "& .MuiDataGrid-root": {
                          border: "outlined",
@@ -160,7 +158,7 @@ const Reports = () => {
                          borderBottom: "none"
                        },
                        "& .MuiDataGrid-columnHeader": {
-                          backgroundColor: '#f5f5f5',
+                         background: `${colors.primary[400]}`,
                          borderBottom: "none",
                          fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" },
                          fontFamily: "Poppins"
@@ -171,7 +169,7 @@ const Reports = () => {
                          fontFamily: "Poppins"
                        },
                        "& .MuiDataGrid-footerContainer": {
-                         backgroundColor: '#f5f5f5',
+                         background: `${colors.primary[400]}`,
                          borderTop: "none",
                          fontSize: { xs: ".2rem", sm: ".7rem", md: ".9rem" },
                          fontFamily: "Poppins"

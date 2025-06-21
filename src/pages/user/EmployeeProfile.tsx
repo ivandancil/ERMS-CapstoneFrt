@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Avatar, Box, Button, Divider, Grid, IconButton, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableRow, Tabs, Typography, useTheme } from "@mui/material";
+import { Avatar, Box, Divider, Grid, IconButton, Tab, Table, TableBody, TableCell, TableContainer, TableRow, Tabs, Typography, useTheme } from "@mui/material";
 import Header from "../../components/Header";
 import { tokens } from "../../theme";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
@@ -25,7 +25,7 @@ function EmployeeProfile() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [employee, setEmployee] = useState<Employee | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [_, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [tabIndex, setTabIndex] = useState(0);
 
@@ -153,11 +153,11 @@ function EmployeeProfile() {
           variant="scrollable" // Add this prop
           scrollButtons="auto" // Add this prop
           sx={{ 
-            backgroundColor: '#f5f5f5',
+            background: `${colors.primary[400]}`,
             borderRadius: "5px",
             fontFamily: "Poppins",
             '& .MuiTab-root': { color: '#000',  fontSize: { xs: ".6rem", sm: ".5rem", md: ".8rem" }, },
-            '& .Mui-selected': { color: 'black', fontWeight: 'bold', fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" }, },
+            '& .Mui-selected': { color: 'black', fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" }, },
             '& .MuiTabs-indicator': { backgroundColor: 'black', height: '3px', borderRadius: '10px' },
           }}
           

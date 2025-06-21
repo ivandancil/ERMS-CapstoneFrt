@@ -14,6 +14,7 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import DepedLogo from "../../public/image/depedLogo.png"
 
 function Navbar() {
   const navigate = useNavigate();
@@ -189,7 +190,7 @@ function Navbar() {
           >
           <Box 
               component="img" 
-              src="/image/depedLogo.png"
+              src={ DepedLogo }
               alt="DepEd Logo" 
                 sx={{ 
                   height:  { 
@@ -223,6 +224,7 @@ function Navbar() {
                 </Button>
               )}
             </NavLink>
+            
 
             {isLoggedIn ? (
               <>

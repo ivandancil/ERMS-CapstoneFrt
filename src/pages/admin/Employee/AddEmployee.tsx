@@ -1,4 +1,4 @@
-import { Box, TextField, Button, Typography, useTheme, Snackbar, Alert, Autocomplete, MenuItem, Grid, FormControl, InputLabel, Select } from "@mui/material";
+import { Box, TextField, Button, Typography, Snackbar, Alert, MenuItem, Grid} from "@mui/material";
 import { useState, useCallback } from "react";
 
 interface AddEmployeeProps {
@@ -6,12 +6,7 @@ interface AddEmployeeProps {
   onClose: () => void;
 }
 
-const civilStatusOptions = ["Single", "Married", "Divorced", "Widowed"];
-const jobPositions = ["Teacher", "Admin Officer", "HR Manager", "Finance Officer"];
-
-
 function AddEmployee({ onEmployeeAdded, onClose }: AddEmployeeProps) {
-  const theme = useTheme();
   const [employeeID, setEmployeeID] = useState("");
   const [lastname, setLastname] = useState("");
   const [firstname, setFirstname] = useState("");

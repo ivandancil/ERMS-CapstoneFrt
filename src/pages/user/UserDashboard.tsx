@@ -1,8 +1,7 @@
-import { Box, Grid, Paper, Typography, useTheme } from "@mui/material";
+import { Box, Grid, Paper, Typography } from "@mui/material";
 import Header from "../../components/Header";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
-import { tokens } from "../../theme";
 import { useEffect, useState } from "react";
 import { blue, grey } from "@mui/material/colors";
 import AssignmentIcon from "@mui/icons-material/Assignment";
@@ -15,18 +14,13 @@ interface Employee {
   firstname: string;
 }
 
-interface User {
-  name: string;
-  email?: string;
-}
 
 function UserDashboard() {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
+
   const [employee, setEmployee] = useState<Employee | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [_, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [user, setUser] = useState<User | null>(null);
+
 
   // Fetch employee data from the API
   useEffect(() => {
@@ -54,7 +48,7 @@ function UserDashboard() {
       });
   }, []);
 
-
+if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
   return (
     <Box m="20px">

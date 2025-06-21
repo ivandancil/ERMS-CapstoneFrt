@@ -12,22 +12,26 @@ import Reports from "../pages/admin/Employee/Reports";
 import UserDashboard from "../pages/user/UserDashboard";
 import EmployeeProfile from "../pages/user/EmployeeProfile";
 import DocumentManagement from "../pages/user/DocumentManagement";
-import AdminRoute from "../components/protectedRoutes/AdminRoute";
-import UserRoute from "../components/protectedRoutes/UserRoute";
 import UploadPDS from "../pages/user/UploadPDS";
 import ExtractNationalId from "../pages/user/ExtractNationalId";
+import AdminRoute from "../components/protectedRoutes/AdminRoute";
+import UserRoute from "../components/protectedRoutes/UserRoute";
 
 
 const Approutes = () => {
   return (
     <Routes>
+
+       {/* Title Route */}
+        <Route path="/" element={<Title />} />
+        
       {/* Admin Routes */}
       <Route
         path="/admin"
         element={
           <AdminRoute>
             <AdminLayout />
-          </AdminRoute>
+         </AdminRoute>
         }
       >
         <Route index element={<Dashboard />} />
@@ -61,8 +65,7 @@ const Approutes = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-      {/* Title Route */}
-        <Route path="/" element={<Title />} />
+     
 
     </Routes>
   );

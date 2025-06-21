@@ -65,7 +65,7 @@ const UploadDocs = () => {
 
       if (response.ok) {
         const result = await response.json();
-        alert("File uploaded successfully!");
+        alert(result.message || "File uploaded successfully!");
 
         setFile(null); // Reset file input field after successful upload
         setCurrentTab("View Uploaded Documents/File"); // 👈 Redirect to the view tab
@@ -199,16 +199,17 @@ const UploadDocs = () => {
 
       <Tabs
         value={currentTab}
+        textColor="inherit"
         onChange={handleTabChange}
         sx={{
           mt: '20px',
           fontWeight: 'bold',
           fontFamily: "Poppins",
-          backgroundColor: '#f5f5f5',
+          background: `${colors.primary[400]}`,
            borderRadius: "5px",
           '& .MuiTab-root': { color: '#000', fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" }, },
-          '& .Mui-selected': { color: 'black', fontWeight: 'bold', fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" }, },
-          '& .MuiTabs-indicator': { backgroundColor: '#1976d2', height: '3px', borderRadius: '10px' },
+          '& .Mui-selected': { color: 'black', fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" }, },
+          '& .MuiTabs-indicator': { backgroundColor: 'black', height: '3px', borderRadius: '10px' },
         }}
       >
         <Tab value="Upload Documents/Files" label="Upload Documents/Files" />
@@ -305,7 +306,7 @@ const UploadDocs = () => {
                    borderBottom: "none"
                  },
                  "& .MuiDataGrid-columnHeader": {
-                   backgroundColor: '#f5f5f5',
+                   background: `${colors.primary[400]}`,
                    borderBottom: "none",
                    fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" },
                    fontFamily: "Poppins"
@@ -316,7 +317,7 @@ const UploadDocs = () => {
                    fontFamily: "Poppins"
                  },
                  "& .MuiDataGrid-footerContainer": {
-                   backgroundColor: '#f5f5f5',
+                   background: `${colors.primary[400]}`,
                    borderTop: "none",
                    fontSize: { xs: ".2rem", sm: ".7rem", md: ".9rem" },
                    fontFamily: "Poppins"

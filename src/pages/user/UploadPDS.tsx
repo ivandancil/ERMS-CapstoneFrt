@@ -4,7 +4,7 @@ import Tesseract from "tesseract.js";
 import Header from "../../components/Header";
 
 function UploadPDS() {
-  const [image, setImage] = useState<File | null>(null);
+  const [_, setImage] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);

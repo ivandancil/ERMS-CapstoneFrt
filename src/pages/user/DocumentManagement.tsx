@@ -33,13 +33,13 @@ function DocumentManagement() {
     setCurrentTab(newValue);
   };
 
-  const deleteDocument = (id: number) => {
-    setDocuments((prevDocs) => prevDocs.filter((doc) => doc.id !== id));
-  };
+  // const deleteDocument = (id: number) => {
+  //   setDocuments((prevDocs) => prevDocs.filter((doc) => doc.id !== id));
+  // };
 
-  const handleUploadClick = () => {
-    fileInputRef.current?.click();
-  };
+  // const handleUploadClick = () => {
+  //   fileInputRef.current?.click();
+  // };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -205,11 +205,11 @@ function DocumentManagement() {
           sx={{
             mt: "20px",
             fontWeight: "bold",
-            backgroundColor: '#f5f5f5',
+            background: `${colors.primary[400]}`,
             borderRadius: "5px",
             fontFamily: "Poppins",
              '& .MuiTab-root': { color: '#000',  fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" }, },
-            '& .Mui-selected': { color: 'black', fontWeight: 'bold', fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" }, },
+            '& .Mui-selected': { color: 'black', fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" }, },
             '& .MuiTabs-indicator': { backgroundColor: '#1976d2', height: '3px', borderRadius: '10px' },
              
             }}
@@ -228,7 +228,7 @@ function DocumentManagement() {
             borderBottom: "none"
           },
           "& .MuiDataGrid-columnHeader": {
-             backgroundColor: '#f5f5f5',
+            background: `${colors.primary[400]}`,
             borderBottom: "none",
             fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" },
             fontFamily: "Poppins",
@@ -239,7 +239,7 @@ function DocumentManagement() {
              fontFamily: "Poppins",
           },
           "& .MuiDataGrid-footerContainer": {
-             backgroundColor: '#f5f5f5',
+            background: `${colors.primary[400]}`,
             borderTop: "none",
             fontSize: { xs: ".2rem", sm: ".7rem", md: ".9rem" },
              fontFamily: "Poppins",

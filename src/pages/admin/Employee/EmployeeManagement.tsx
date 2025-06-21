@@ -146,27 +146,35 @@ import { tokens } from "../../../theme";
       <Box m="20px">
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Header title="Employee Management List" subtitle="Manage Employee Details" />
+        </Box>
 
-      {/* Add Employee Button */}
-      <Button
-        variant="contained"
-          sx={{
-            background: `${colors.primary[400]}`,
-            color: "black",
-            "&:hover": { background: `${colors.grey[900]}`, },
-            textTransform: "none",
-            fontSize: { xs: ".3rem", sm: ".7rem", md: ".9rem" },
-            fontFamily: "Poppins",
-            py: { xs: .8, sm: 1, md: 1.3 },
-            width: { xs: "5rem", sm: "9rem", md: "11rem" },
-          }}
-        // startIcon={<AddIcon />}
-        // onClick={() => setOpenAddDialog(true)}
-        // ref={addDialogRef}
-      >
-        Create Employee
-      </Button>
-    </Box>
+        <Box 
+          display="flex" // Enable flexbox
+          justifyContent="flex-end" 
+          sx={{ m:  { xs: "10px", sm: "13px", md: "15px" },}}
+        >
+          {/* Add Employee Button */}
+          <Button
+            variant="contained"
+              sx={{
+                background: `${colors.primary[400]}`,
+                color: "black",
+                "&:hover": { background: `${colors.grey[900]}`, },
+                textTransform: "none",
+                fontSize: { xs: ".5rem", sm: ".7rem", md: ".9rem" },
+                fontFamily: "Poppins",
+                py: { xs: .8, sm: 1, md: 1.3 },
+                width: { xs: "7rem", sm: "9rem", md: "11rem" },
+              }}
+            // startIcon={<AddIcon />}
+            // onClick={() => setOpenAddDialog(true)}
+            // ref={addDialogRef}
+          >
+            Create Employee
+          </Button>
+        </Box>
+      
+   
 
         {/* Show Error Message if API Fails */}
         {error && (
@@ -177,7 +185,7 @@ import { tokens } from "../../../theme";
 
         {/* Employee Table */}
            <Box
-                m="20px 0 0 0"
+                m="10px 0 0 0"
                 height="75vh"
                 sx={{
                   "& .MuiDataGrid-root": {

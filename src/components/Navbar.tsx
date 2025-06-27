@@ -117,15 +117,16 @@ function Navbar() {
            variant="h6" 
            fontWeight="bold" 
               sx={{ 
-                fontSize: { xs: ".8rem", sm: "1rem", md: "1.1rem" } 
+                fontSize: { xs: ".8rem", sm: "1rem", md: "1.1rem" },
+                fontFamily: "Poppins"
               }}
             >
           {userName || "ERMS"}
         </Typography>
       </Box>
       <Box sx={{ display: "flex", flexDirection: "column", p: 2 }}>
-        <NavLink to="/" style={{ textDecoration: "none" }}>
-          <Button fullWidth sx={{ justifyContent: "flex-start" }}>
+        <NavLink to="/" style={{ textDecoration: "none",  }}>
+          <Button fullWidth sx={{ justifyContent: "flex-start",  fontFamily: "Poppins" }}>
             Home
           </Button>
         </NavLink>
@@ -134,24 +135,24 @@ function Navbar() {
           <>
             <Button
               fullWidth
-              sx={{ justifyContent: "flex-start" }}
+              sx={{ justifyContent: "flex-start",  fontFamily: "Poppins" }}
               onClick={() => navigate(role === "admin" ? "/admin" : "/user")}
             >
               Dashboard
             </Button>
-            <Button fullWidth sx={{ justifyContent: "flex-start" }} onClick={handleLogout}>
+            <Button fullWidth sx={{ justifyContent: "flex-start",  fontFamily: "Poppins" }} onClick={handleLogout}>
               Logout
             </Button>
           </>
         ) : (
           <>
             <NavLink to="/login" style={{ textDecoration: "none" }}>
-              <Button fullWidth sx={{ justifyContent: "flex-start" }}>
+              <Button fullWidth sx={{ justifyContent: "flex-start",  fontFamily: "Poppins" }}>
                 Login
               </Button>
             </NavLink>
             <NavLink to="/register" style={{ textDecoration: "none" }}>
-              <Button fullWidth sx={{ justifyContent: "flex-start" }}>
+              <Button fullWidth sx={{ justifyContent: "flex-start",  fontFamily: "Poppins" }}>
                 Register
               </Button>
             </NavLink>
@@ -210,13 +211,14 @@ function Navbar() {
                 <Button
                   sx={{
                     mx: 1,
-                    color: isActive ? "#1976d2" : "black",
+                    color: isActive ? "black" : "grey",
                     fontSize: "1.1rem",
-                    fontWeight: 600,
-                    borderBottom: isActive ? "2px solid #1976d2" : "none",
+                    fontFamily: "Poppins",
+                    fontWeight: 400,
+                    borderBottom: isActive ? "2px solid black" : "none",
                     "&:hover": {
                       bgcolor: "#f0f0f0",
-                      color: "#1976d2",
+                      color: "",
                     },
                   }}
                 >
@@ -235,14 +237,14 @@ function Navbar() {
                 </Tooltip>
                 <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose} sx={{ mt: 1 }}>
                   <MenuItem>
-                    <Typography variant="body1" fontWeight="bold">
+                    <Typography variant="body1" fontWeight="bold" sx={{ fontFamily: "Poppins" }}>
                       {userName}
                     </Typography>
                   </MenuItem>
-                  <MenuItem sx={{ my: 1, px: 3 }} onClick={() => navigate(role === "admin" ? "/admin" : "/user")}>
+                  <MenuItem sx={{ my: 1, px: 3, fontFamily: "Poppins" }} onClick={() => navigate(role === "admin" ? "/admin" : "/user")}>
                     Dashboard
                   </MenuItem>
-                  <MenuItem sx={{ my: 1, px: 3 }} onClick={handleLogout}>
+                  <MenuItem sx={{ my: 1, px: 3, fontFamily: "Poppins" }} onClick={handleLogout}>
                     Logout
                   </MenuItem>
                 </Menu>
@@ -254,9 +256,11 @@ function Navbar() {
                     <Button
                       sx={{
                         mx: 1,
-                        color: isActive ? "#1976d2" : "black",
+                        color: isActive ? "black" : "grey",
                         fontSize: "1.1rem",
-                        fontWeight: 600,
+                        fontFamily: "Poppins",
+                        fontWeight: 400,
+                        // borderBottom: isActive ? "2px solid black" : "none",
                       }}
                     >
                       {text}

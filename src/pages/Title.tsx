@@ -73,6 +73,7 @@ const Title = () => {
                component="p" 
                  sx={{ 
                    fontStyle: 'italic', 
+                   fontFamily: "Poppins",
                    color: 'white', 
                    lineHeight: 1.2,  
                    textShadow: "3px 2px 6px rgba(0, 0, 0, 0.8), 0px 0px 12px rgba(0, 0, 0, 0.2)", 
@@ -92,7 +93,8 @@ const Title = () => {
         variant="h3"
         component="p" 
           sx={{ 
-            fontStyle: 'italic', 
+            fontStyle: 'italic',
+            fontFamily: "Poppins", 
             color: 'white',
             lineHeight: 1.2,  
             textShadow: "3px 2px 6px rgba(0, 0, 0, 0.8), 0px 0px 12px rgba(0, 0, 0, 0.2)", 
@@ -112,7 +114,8 @@ const Title = () => {
         variant="h3"
         component="p" 
           sx={{ 
-            fontStyle: 'italic', 
+            fontStyle: 'italic',
+            fontFamily: "Poppins", 
             color: 'white',
             lineHeight: 1.2,  
             textShadow: "3px 2px 6px rgba(0, 0, 0, 0.8), 0px 0px 12px rgba(0, 0, 0, 0.2)", 
@@ -132,7 +135,8 @@ const Title = () => {
         variant="h3"
         component="p" 
           sx={{ 
-            fontStyle: 'italic', 
+            fontStyle: 'italic',
+            fontFamily: "Poppins", 
             color: 'white',
             lineHeight: 1.2,  
             textShadow: "3px 2px 6px rgba(0, 0, 0, 0.8), 0px 0px 12px rgba(0, 0, 0, 0.2)", 

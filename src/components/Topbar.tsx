@@ -244,12 +244,12 @@ const Topbar = ({ toggleSidebar }: TopbarProps) => {
 
         {/* Profile Menu */}
         <Menu anchorEl={anchorElProfile} open={Boolean(anchorElProfile)} onClose={handleProfileClose}>
-          <MenuItem onClick={handleProfileNavigate}>
+          <MenuItem onClick={handleProfileNavigate} sx={{ fontFamily: "Poppins" }}>
             <strong>{name}</strong>
           </MenuItem>
           <Divider />
-          <MenuItem onClick={handleProfileClose}>Settings</MenuItem>
-          <MenuItem onClick={handleLogout}>Logout</MenuItem>
+          <MenuItem onClick={handleProfileClose} sx={{ fontFamily: "Poppins" }}>Settings</MenuItem>
+          <MenuItem onClick={handleLogout} sx={{ fontFamily: "Poppins" }}>Logout</MenuItem>
         </Menu>
       </Box>
     </Box>

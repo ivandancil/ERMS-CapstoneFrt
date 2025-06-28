@@ -11,6 +11,7 @@
   } from "@mui/material";
   import { DataGrid } from "@mui/x-data-grid";
   import Header from "../../../components/Header";
+  import AddIcon from "@mui/icons-material/Add";
   import EditIcon from "@mui/icons-material/Edit";
   import DeleteIcon from "@mui/icons-material/Delete";
   import AddEmployee from "./AddEmployee";
@@ -51,6 +52,7 @@ import { tokens } from "../../../theme";
     const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
     const { searchTerm } = useSearch();
     const editDialogRef = useRef<HTMLButtonElement>(null);
+     const addDialogRef = useRef<HTMLButtonElement>(null);
 
           const isSmallScreen = useMediaQuery(theme.breakpoints.down('md')); 
 
@@ -164,11 +166,11 @@ import { tokens } from "../../../theme";
                 fontSize: { xs: ".5rem", sm: ".7rem", md: ".9rem" },
                 fontFamily: "Poppins",
                 py: { xs: .8, sm: 1, md: 1.3 },
-                width: { xs: "7rem", sm: "9rem", md: "11rem" },
+                width: { xs: "9rem", sm: "10rem", md: "12rem" },
               }}
-            // startIcon={<AddIcon />}
-            // onClick={() => setOpenAddDialog(true)}
-            // ref={addDialogRef}
+            startIcon={<AddIcon />}
+            onClick={() => setOpenAddDialog(true)}
+            ref={addDialogRef}
           >
             Create Employee
           </Button>
@@ -295,13 +297,19 @@ import { tokens } from "../../../theme";
         </Box>
 
         {/* Add Employee Dialog */}
-        <Dialog open={openAddDialog} onClose={() => setOpenAddDialog(false)} fullWidth maxWidth="sm">
-          <DialogTitle>Please Input Employee Information</DialogTitle>
+        <Dialog open={openAddDialog} onClose={() => setOpenAddDialog(false)} fullWidth maxWidth="md">
+          <DialogTitle 
+            sx={{ 
+              fontFamily: "Poppins", 
+              fontSize: { xs: ".7rem", sm: ".9rem", md: "1rem" }, }}>
+            Please Input Employee Information
+          </DialogTitle>
           <DialogContent>
             <AddEmployee onEmployeeAdded={fetchEmployees} onClose={() => setOpenAddDialog(false)} />
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => setOpenAddDialog(false)} color="primary" variant="contained" autoFocus>
+            <Button onClick={() => setOpenAddDialog(false)} color="primary" variant="contained" autoFocus
+                  sx={{ fontFamily:"Poppins",  fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" }, }}>
               Close
             </Button>
           </DialogActions>

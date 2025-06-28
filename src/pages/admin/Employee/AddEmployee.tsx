@@ -1,5 +1,6 @@
-import { Box, TextField, Button, Typography, Snackbar, Alert, MenuItem, Grid} from "@mui/material";
+import { Box, TextField, Button, Typography, Snackbar, Alert, MenuItem, Grid, useTheme} from "@mui/material";
 import { useState, useCallback } from "react";
+import { tokens } from "../../../theme";
 
 interface AddEmployeeProps {
   onEmployeeAdded: () => void;
@@ -7,6 +8,50 @@ interface AddEmployeeProps {
 }
 
 function AddEmployee({ onEmployeeAdded, onClose }: AddEmployeeProps) {
+  const theme = useTheme();
+        const colors = tokens(theme.palette.mode);
+
+  // Styles: Placeholder turns white on hover!
+const inputStyles = {
+         
+              "& .MuiInputLabel-root": {
+                color: "black !important",
+                  fontSize: { xs: ".7rem", sm: ".8rem", md: "1rem" },
+                  fontFamily: "Poppins",
+                // Adjust label position for smaller height on xs screens
+                [theme.breakpoints.down('sm')]: {
+                  transform: 'translate(14px, 8px) scale(1) !important', // Default position on xs
+                  '&.MuiInputLabel-shrink': {
+                    transform: 'translate(14px, -9px) scale(0.75) !important', // Shrunk position on xs
+                  },
+                },
+              },
+              "& .MuiOutlinedInput-root fieldset": { borderColor: "black !important", borderWidth: 1 },
+              "& .MuiInputBase-input": {
+                color: "black",
+                  fontSize: { xs: ".9rem", sm: "1rem", md: "1.1rem" },
+                   fontFamily: "Poppins",
+                // Reduce padding/height only on extra-small screens
+                [theme.breakpoints.down('sm')]: {
+                  paddingTop: '8px', // Smaller top padding for xs
+                  paddingBottom: '8px', // Smaller bottom padding for xs
+                  // If you use start/end adornments, adjust their padding too
+                  '&.MuiInputBase-inputAdornedStart': {
+                    paddingLeft: '8px',
+                  },
+                  '&.MuiInputBase-inputAdornedEnd': {
+                    paddingRight: '8px',
+                  },
+                },
+                // Default padding/height for sm and up (Material-UI default)
+                [theme.breakpoints.up('sm')]: {
+                  paddingTop: '16.5px', // Standard Material-UI padding-top
+                  paddingBottom: '16.5px', // Standard Material-UI padding-bottom
+                  height: 'auto', // Ensure height is flexible
+                }
+              },
+            }
+
   const [employeeID, setEmployeeID] = useState("");
   const [lastname, setLastname] = useState("");
   const [firstname, setFirstname] = useState("");
@@ -73,7 +118,7 @@ function AddEmployee({ onEmployeeAdded, onClose }: AddEmployeeProps) {
 
   return (
     <form onSubmit={handleAddEmployee}>
-      <Grid container spacing={2} marginTop={1}>
+      <Grid container spacing={2} marginTop={.8}>
         <Grid item xs={12} md={6}>
           <TextField label="Employee ID" fullWidth value={employeeID} onChange={(e) => setEmployeeID(e.target.value)} autoComplete="off" sx={inputStyles} />
         </Grid>
@@ -114,8 +159,8 @@ function AddEmployee({ onEmployeeAdded, onClose }: AddEmployeeProps) {
               fullWidth
               variant="outlined"
             >
-               <MenuItem value="Male">Male</MenuItem>
-               <MenuItem value="Female">Female</MenuItem>
+               <MenuItem value="Male"  sx={{  fontSize: { xs: ".7rem", sm: ".8rem", md: "1rem" }, }}>Male</MenuItem>
+               <MenuItem value="Female"  sx={{  fontSize: { xs: ".7rem", sm: ".8rem", md: "1rem" }, }}>Female</MenuItem>
             </TextField>
         </Grid>
         <Grid item xs={12} md={6}>
@@ -130,10 +175,10 @@ function AddEmployee({ onEmployeeAdded, onClose }: AddEmployeeProps) {
               fullWidth
               variant="outlined"
             >
-              <MenuItem value="Single">Single</MenuItem>
-              <MenuItem value="Married">Married</MenuItem>
-              <MenuItem value="Divorced">Divorced</MenuItem>
-              <MenuItem value="Widowed">Widowed</MenuItem>
+              <MenuItem value="Single" sx={{  fontSize: { xs: ".7rem", sm: ".8rem", md: "1rem" }, }}>Single</MenuItem>
+              <MenuItem value="Married"  sx={{  fontSize: { xs: ".7rem", sm: ".8rem", md: "1rem" }, }}>Married</MenuItem>
+              <MenuItem value="Divorced"  sx={{  fontSize: { xs: ".7rem", sm: ".8rem", md: "1rem" }, }}>Divorced</MenuItem>
+              <MenuItem value="Widowed"  sx={{  fontSize: { xs: ".7rem", sm: ".8rem", md: "1rem" }, }}>Widowed</MenuItem>
             </TextField>
         </Grid>
         <Grid item xs={12} md={6}>
@@ -150,7 +195,7 @@ function AddEmployee({ onEmployeeAdded, onClose }: AddEmployeeProps) {
       {error && <Typography color="error" mt={1}>{error}</Typography>}
 
       <Box display="flex" justifyContent="space-between" mt={2}>
-        <Button type="submit" variant="contained" color="primary" fullWidth disabled={loading}>
+        <Button type="submit" variant="contained"  fullWidth disabled={loading}  sx={{  fontSize: { xs: ".7rem", sm: ".8rem", md: "1rem" }, fontFamily: "Poppins",  background: `${colors.primary[400]}`, color: "black",   "&:hover": { background: `${colors.grey[900]}`, }, }}>
           {loading ? "Adding..." : "Add Employee"}
         </Button>
       </Box>
@@ -165,17 +210,5 @@ function AddEmployee({ onEmployeeAdded, onClose }: AddEmployeeProps) {
   );
 }
 
-// Styles: Placeholder turns white on hover!
-const inputStyles = {
-  "& .MuiInputLabel-root": { color: "black !important" },
-  "& .MuiInputLabel-root.Mui-focused": { color: "black !important" },
-  "& .MuiOutlinedInput-root": {
-    "&:hover .MuiInputLabel-root": { color: "black !important" },
-    "& fieldset": { borderColor: "black !important" },
-    "&:hover fieldset": { borderColor: "black !important" },
-    "&.Mui-focused fieldset": { borderColor: "black !important" },
-  },
-  "& .MuiInputBase-input": { color: "black" },
-};
 
 export default AddEmployee;

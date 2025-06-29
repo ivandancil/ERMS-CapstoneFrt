@@ -245,7 +245,7 @@ const UploadDocs = () => {
                 onClick={() => document.getElementById("fileInput")?.click()}
               >
                 <UploadCloud size={40} color="#1e88e5" />
-                <Typography variant="body1" color="primary" sx={{ fontWeight: 600 }}>
+                <Typography variant="body1" color="primary" sx={{ fontWeight: 400, fontFamily: "Poppins" }}>
                   Click to select a file
                 </Typography>
                 <input
@@ -276,8 +276,8 @@ const UploadDocs = () => {
                   }}
                 >
                   <Box>
-                    <Typography variant="body2" color="black">{file.name}</Typography>
-                    <Typography variant="caption" color="black">
+                    <Typography variant="body2" color="black"  sx={{ fontFamily: "Poppins" }}>{file.name}</Typography>
+                    <Typography variant="caption" color="black" sx={{ fontFamily: "Poppins" }}>
                       {(file.size / 1024).toFixed(2)} KB
                     </Typography>
                   </Box>
@@ -290,7 +290,16 @@ const UploadDocs = () => {
               <Button
                 variant="contained"
                 fullWidth
-                sx={{ mt: 3, height: 45, fontWeight: 600 }}
+                sx={{ 
+                  mt: 3, 
+                  height: 45, 
+                  fontWeight: 500,
+                  background: `${colors.primary[400]}`,
+                  color: "black",
+                 "&:hover": { background: `${colors.grey[900]}`, },
+                 fontSize: { xs: ".5rem", sm: ".7rem", md: ".9rem" },
+                  fontFamily: "Poppins"
+                 }}
                 onClick={handleUpload}
                 disabled={!file || uploading}
               >

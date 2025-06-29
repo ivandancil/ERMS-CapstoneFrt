@@ -84,9 +84,7 @@ import { tokens } from "../../../theme";
             },
           });
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch employees.");
-        }
+      
 
         const data = await response.json();
         const employeesArray = Array.isArray(data) ? data : data.data || [];

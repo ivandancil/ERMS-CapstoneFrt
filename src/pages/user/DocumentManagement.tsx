@@ -6,7 +6,9 @@ import {
   Tab,
   useTheme,
 } from "@mui/material";
+import DocumentScannerIcon from '@mui/icons-material/DocumentScanner'; 
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import DownloadIcon from "@mui/icons-material/Download";
 import Header from "../../components/Header";
 import { tokens } from "../../theme";
 
@@ -31,6 +33,10 @@ function DocumentManagement() {
 
   const handleTabChange = (_event: React.SyntheticEvent, newValue: string) => {
     setCurrentTab(newValue);
+  };
+
+   const handleDownload = (name: string) => {
+    alert(`Downloading "${name}"... (placeholder functionality)`);
   };
 
   // const deleteDocument = (id: number) => {
@@ -113,7 +119,29 @@ function DocumentManagement() {
       if (response.ok) {
         const data = await response.json();
 
-        const mappedData: Document[] = data.map((doc: any) => ({
+         // --- CRITICAL FIX FOR "data.map is not a function" ---
+      let documentsToProcess: any[] = [];
+
+      // Check if the API returns an object with a 'files' array (common backend pattern)
+      if (data && Array.isArray(data.files)) {
+        documentsToProcess = data.files;
+      }
+      // Check if the API returns an array directly (also common)
+      else if (Array.isArray(data)) {
+        documentsToProcess = data;
+      }
+      // Handle cases where the data might be a single object but not an array (less common for lists)
+      else if (data && typeof data === 'object' && Object.keys(data).length > 0) {
+          console.warn("API returned a single object instead of an array. Wrapping in an array for processing.");
+          documentsToProcess = [data];
+      }
+      // If none of the above, it's an unexpected format
+      else {
+        console.error("API response for documents is not a recognized array format or is empty:", data);
+        throw new TypeError("Unexpected data format from server. Expected an array of documents or an object containing a 'files' array.");
+      }
+
+         const mappedData: Document[] = documentsToProcess.map((doc: any) => ({
           id: doc.id,
           name: doc.original_name,
           type: doc.type?.toUpperCase() || "FILE",
@@ -140,24 +168,30 @@ function DocumentManagement() {
       field: "actions",
       headerName: "Actions",
       flex: 1.5,
-      minWidth: 180,
+      minWidth: 280,
       renderCell: (params) => (
         <Box display="flex" gap={1} mt={1}>
 
           <Button
-            variant="outlined"
-            color="primary"
-            onClick={() => {
-              setScanTargetDocId(params.row.id);
-              cameraInputRef.current?.click();
-            }}
-                      >
+             variant="outlined"
+                  sx={{
+                      color: colors.grey[100],
+                      fontSize: { xs: ".5rem", sm: ".6rem", md: ".7rem" }
+                  }}
+                  startIcon={<DownloadIcon sx={{ color: 'primary' }} />} // You can use any color name or hex code
+                  onClick={() => handleDownload(params.row.file_name)}
+                >
             Download
           </Button>
-         
+
           <Button
             variant="outlined"
-            color="primary"
+             sx={{
+                      color: colors.grey[100],
+                      fontSize: { xs: ".5rem", sm: ".6rem", md: ".7rem" }
+                  }}
+                  
+            startIcon={<DocumentScannerIcon sx={{ color: 'primary' }} />}
             onClick={() => {
               setScanTargetDocId(params.row.id);
               cameraInputRef.current?.click(); 

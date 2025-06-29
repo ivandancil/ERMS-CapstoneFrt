@@ -133,7 +133,7 @@ const SystemManagement = () => {
               alignItems="center"
               
             >
-                {row.access === "admin" && <AdminPanelSettingsOutlinedIcon  sx={{ fontSize: isSmallScreen ? '1rem' : 'inherit' }} />}
+                {row.access === "admin" && <AdminPanelSettingsOutlinedIcon  sx={{ fontSize: isSmallScreen ? '1rem' : 'inherit',  }} />}
                 {row.access === "user" && <LockOpenOutlinedIcon  sx={{ fontSize: isSmallScreen ? '1rem' : 'inherit' }} />}
                 <Typography 
                   color={colors.grey[100]} 
@@ -142,6 +142,7 @@ const SystemManagement = () => {
                     display: isSmallScreen ? 'flex' : 'block',
                     fontSize: { xs: ".5rem", sm: ".6rem", md: ".8rem" },
                     fontFamily: "Poppins",
+                    fontWeight: "bold"
                   }}
                 >
                   {row.access === "admin" ? "Admin" : "User"} 

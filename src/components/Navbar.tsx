@@ -156,6 +156,16 @@ function Navbar() {
                 Register
               </Button>
             </NavLink>
+              <NavLink to="/admin" style={{ textDecoration: "none" }}>
+              <Button fullWidth sx={{ justifyContent: "flex-start",  fontFamily: "Poppins" }}>
+                Admin
+              </Button>
+            </NavLink>
+              <NavLink to="/user" style={{ textDecoration: "none" }}>
+              <Button fullWidth sx={{ justifyContent: "flex-start",  fontFamily: "Poppins" }}>
+                User
+              </Button>
+            </NavLink>
           </>
         )}
       </Box>

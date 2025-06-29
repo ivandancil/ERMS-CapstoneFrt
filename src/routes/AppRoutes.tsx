@@ -11,8 +11,8 @@ import UserDashboard from "../pages/user/UserDashboard";
 import EmployeeProfile from "../pages/user/EmployeeProfile";
 import DocumentManagement from "../pages/user/DocumentManagement";
 import UploadPDS from "../pages/user/UploadPDS";
-import AdminRoute from "../components/protectedRoutes/AdminRoute";
-import UserRoute from "../components/protectedRoutes/UserRoute";
+// import AdminRoute from "../components/protectedRoutes/AdminRoute";
+// import UserRoute from "../components/protectedRoutes/UserRoute";
 import ExtractID from "../pages/user/ExtractID";
 import Reports from "../pages/admin/Reports";
 import UploadDocs from "../pages/admin/UploadDocs";
@@ -29,9 +29,9 @@ const Approutes = () => {
       <Route
         path="/admin"
         element={
-          <AdminRoute>
+          // <AdminRoute>
             <AdminLayout />
-         </AdminRoute>
+        //  </AdminRoute>
         }
       >
         <Route index element={<Dashboard />} />
@@ -47,9 +47,9 @@ const Approutes = () => {
       <Route
         path="/user"
         element={
-          <UserRoute>
+          // <UserRoute>
             <UserLayout />
-          </UserRoute>
+          // </UserRoute>
         }
       >
         <Route index element={<UserDashboard />} />

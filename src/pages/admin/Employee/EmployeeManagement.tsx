@@ -54,6 +54,13 @@ import { tokens } from "../../../theme";
     const editDialogRef = useRef<HTMLButtonElement>(null);
      const addDialogRef = useRef<HTMLButtonElement>(null);
 
+
+             // NEW: Reusable style for Dialog
+  const dialogStyle = {
+    fontSize: { xs: ".7rem", sm: ".9rem", md: "1rem" },
+    fontFamily: "Poppins", // Assuming Poppins for MenuItem text too
+  };
+
           const isSmallScreen = useMediaQuery(theme.breakpoints.down('md')); 
 
     const handleView = (employee: Employee) => {
@@ -299,9 +306,7 @@ import { tokens } from "../../../theme";
         {/* Add Employee Dialog */}
         <Dialog open={openAddDialog} onClose={() => setOpenAddDialog(false)} fullWidth maxWidth="md">
           <DialogTitle 
-            sx={{ 
-              fontFamily: "Poppins", 
-              fontSize: { xs: ".7rem", sm: ".9rem", md: "1rem" }, }}>
+            sx={dialogStyle}>
             Please Input Employee Information
           </DialogTitle>
           <DialogContent>
@@ -317,24 +322,24 @@ import { tokens } from "../../../theme";
 
         {/* View Employee Dialog */}
         <Dialog open={openViewDialog} onClose={() => setOpenViewDialog(false)} fullWidth maxWidth="md">
-          <DialogTitle>View Employee Information</DialogTitle>
           <DialogContent>
             <ViewEmployee open={openViewDialog} onClose={() => setOpenViewDialog(false)} employee={selectedEmployee} documents={mockDocuments} />
             </DialogContent>
-            <DialogActions>
-              <Button onClick={() => setOpenViewDialog(false)} color="primary" variant="contained" autoFocus >
-                Close
-              </Button>
-            </DialogActions>
           </Dialog>
 
 
         {/* Edit Employee Dialog */}
-        <Dialog open={openEditDialog} onClose={() => setOpenEditDialog(false)} fullWidth maxWidth="sm" >
-          <DialogTitle>Edit Employee</DialogTitle>
+        <Dialog open={openEditDialog} onClose={() => setOpenEditDialog(false)} fullWidth maxWidth="md" >
+          <DialogTitle sx={dialogStyle}>Edit Employee</DialogTitle>
           <DialogContent>
             <EditEmployee employeeId={selectedEmployeeId} onEmployeeUpdated={fetchEmployees} onClose={() => setOpenEditDialog(false)} />
           </DialogContent>
+            <DialogActions>
+            <Button onClick={() => setOpenEditDialog(false)} color="primary" variant="contained" autoFocus
+                  sx={{ fontFamily:"Poppins",  fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" }, }}>
+              Close
+            </Button>
+          </DialogActions>
         </Dialog>
       </Box>
     );

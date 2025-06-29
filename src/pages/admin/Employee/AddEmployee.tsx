@@ -11,8 +11,8 @@ function AddEmployee({ onEmployeeAdded, onClose }: AddEmployeeProps) {
   const theme = useTheme();
         const colors = tokens(theme.palette.mode);
 
-  // Styles: Placeholder turns white on hover!
-const inputStyles = {
+         // Styles: Placeholder turns white on hover!
+          const inputStyles = {
          
               "& .MuiInputLabel-root": {
                 color: "black !important",
@@ -29,7 +29,7 @@ const inputStyles = {
               "& .MuiOutlinedInput-root fieldset": { borderColor: "black !important", borderWidth: 1 },
               "& .MuiInputBase-input": {
                 color: "black",
-                  fontSize: { xs: ".9rem", sm: "1rem", md: "1.1rem" },
+                  fontSize: { xs: ".7rem", sm: ".9rem", md: "1.1rem" },
                    fontFamily: "Poppins",
                 // Reduce padding/height only on extra-small screens
                 [theme.breakpoints.down('sm')]: {
@@ -51,6 +51,12 @@ const inputStyles = {
                 }
               },
             }
+
+          // NEW: Reusable style for MenuItems
+  const menuItemTextStyles = {
+    fontSize: { xs: ".7rem", sm: ".8rem", md: "1rem" },
+    fontFamily: "Poppins", // Assuming Poppins for MenuItem text too
+  };
 
   const [employeeID, setEmployeeID] = useState("");
   const [lastname, setLastname] = useState("");
@@ -134,10 +140,10 @@ const inputStyles = {
               fullWidth
               variant="outlined"
             >
-              <MenuItem value="Teacher">Teacher</MenuItem>
-              <MenuItem value="Teacher I">Teacher I</MenuItem>
-              <MenuItem value="Teacher II">Teacher II</MenuItem>
-              <MenuItem value="Supervisor">Supervisor</MenuItem>
+              <MenuItem value="Teacher" sx={menuItemTextStyles}>Teacher</MenuItem>
+              <MenuItem value="Teacher I" sx={menuItemTextStyles}>Teacher I</MenuItem>
+              <MenuItem value="Teacher II" sx={menuItemTextStyles}>Teacher II</MenuItem>
+              <MenuItem value="Supervisor" sx={menuItemTextStyles}>Supervisor</MenuItem>
             </TextField>
 
         </Grid>
@@ -159,8 +165,8 @@ const inputStyles = {
               fullWidth
               variant="outlined"
             >
-               <MenuItem value="Male"  sx={{  fontSize: { xs: ".7rem", sm: ".8rem", md: "1rem" }, }}>Male</MenuItem>
-               <MenuItem value="Female"  sx={{  fontSize: { xs: ".7rem", sm: ".8rem", md: "1rem" }, }}>Female</MenuItem>
+               <MenuItem value="Male"  sx={menuItemTextStyles}>Male</MenuItem>
+               <MenuItem value="Female"  sx={menuItemTextStyles}>Female</MenuItem>
             </TextField>
         </Grid>
         <Grid item xs={12} md={6}>
@@ -175,10 +181,10 @@ const inputStyles = {
               fullWidth
               variant="outlined"
             >
-              <MenuItem value="Single" sx={{  fontSize: { xs: ".7rem", sm: ".8rem", md: "1rem" }, }}>Single</MenuItem>
-              <MenuItem value="Married"  sx={{  fontSize: { xs: ".7rem", sm: ".8rem", md: "1rem" }, }}>Married</MenuItem>
-              <MenuItem value="Divorced"  sx={{  fontSize: { xs: ".7rem", sm: ".8rem", md: "1rem" }, }}>Divorced</MenuItem>
-              <MenuItem value="Widowed"  sx={{  fontSize: { xs: ".7rem", sm: ".8rem", md: "1rem" }, }}>Widowed</MenuItem>
+              <MenuItem value="Single" sx={menuItemTextStyles}>Single</MenuItem>
+              <MenuItem value="Married"  sx={menuItemTextStyles}>Married</MenuItem>
+              <MenuItem value="Divorced"  sx={menuItemTextStyles}>Divorced</MenuItem>
+              <MenuItem value="Widowed"  sx={menuItemTextStyles}>Widowed</MenuItem>
             </TextField>
         </Grid>
         <Grid item xs={12} md={6}>
@@ -195,7 +201,19 @@ const inputStyles = {
       {error && <Typography color="error" mt={1}>{error}</Typography>}
 
       <Box display="flex" justifyContent="space-between" mt={2}>
-        <Button type="submit" variant="contained"  fullWidth disabled={loading}  sx={{  fontSize: { xs: ".7rem", sm: ".8rem", md: "1rem" }, fontFamily: "Poppins",  background: `${colors.primary[400]}`, color: "black",   "&:hover": { background: `${colors.grey[900]}`, }, }}>
+        <Button 
+          type="submit" 
+          variant="contained" 
+          fullWidth 
+          disabled={loading}  
+            sx={{
+              fontSize: { xs: ".7rem", sm: ".8rem", md: "1rem" }, 
+              fontFamily: "Poppins",  background: `${colors.primary[400]}`, 
+              color: "black",   
+              "&:hover": 
+                { background: `${colors.grey[900]}`, }, 
+              }}
+            >
           {loading ? "Adding..." : "Add Employee"}
         </Button>
       </Box>

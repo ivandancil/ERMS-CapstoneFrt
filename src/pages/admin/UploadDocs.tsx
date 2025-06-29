@@ -219,9 +219,16 @@ const UploadDocs = () => {
 
       {currentTab === "Upload Documents/Files" && (
         <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
-          <Card sx={{ width: 400, padding: 2, boxShadow: 6 }}>
+          <Card sx={{ width: { xs: 300, sm: 350, md: 400 }, padding: 2, boxShadow: 6 }}>
             <CardContent>
-              <Typography variant="h5" textAlign="center" gutterBottom mb={3}>
+              <Typography 
+                  variant="h5" 
+                  textAlign="center"
+                  fontFamily="Poppins"
+                  gutterBottom 
+                  mb={3}
+                  sx={{ fontSize: { xs: "1rem", sm: "1.2rem", md: "1.3rem" } }}
+                >
                 UPLOAD FILE
               </Typography>
 

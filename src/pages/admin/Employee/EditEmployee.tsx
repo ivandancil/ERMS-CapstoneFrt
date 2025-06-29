@@ -1,5 +1,6 @@
 import { useState, useEffect, ChangeEvent } from "react";
-import { TextField, Button, Box, CircularProgress, Grid,  MenuItem } from "@mui/material";
+import { TextField, Button, Box, CircularProgress, Grid,  MenuItem, useTheme } from "@mui/material";
+import { tokens } from "../../../theme";
 
 interface EditEmployeeProps {
   employeeId: number | null;
@@ -8,6 +9,56 @@ interface EditEmployeeProps {
 }
 
 function EditEmployee({ employeeId, onEmployeeUpdated, onClose }: EditEmployeeProps) {
+       const theme = useTheme();
+              const colors = tokens(theme.palette.mode);
+
+    // Styles: Placeholder turns white on hover!
+          const inputStyles = {
+         
+              "& .MuiInputLabel-root": {
+                color: "black !important",
+                  fontSize: { xs: ".7rem", sm: ".8rem", md: "1rem" },
+                  fontFamily: "Poppins",
+                // Adjust label position for smaller height on xs screens
+                [theme.breakpoints.down('sm')]: {
+                  transform: 'translate(14px, 8px) scale(1) !important', // Default position on xs
+                  '&.MuiInputLabel-shrink': {
+                    transform: 'translate(14px, -9px) scale(0.75) !important', // Shrunk position on xs
+                  },
+                },
+              },
+              "& .MuiOutlinedInput-root fieldset": { borderColor: "black !important", borderWidth: 1 },
+              "& .MuiInputBase-input": {
+                color: "black",
+                  fontSize: { xs: ".7rem", sm: ".9rem", md: "1.1rem" },
+                   fontFamily: "Poppins",
+                // Reduce padding/height only on extra-small screens
+                [theme.breakpoints.down('sm')]: {
+                  paddingTop: '8px', // Smaller top padding for xs
+                  paddingBottom: '8px', // Smaller bottom padding for xs
+                  // If you use start/end adornments, adjust their padding too
+                  '&.MuiInputBase-inputAdornedStart': {
+                    paddingLeft: '8px',
+                  },
+                  '&.MuiInputBase-inputAdornedEnd': {
+                    paddingRight: '8px',
+                  },
+                },
+                // Default padding/height for sm and up (Material-UI default)
+                [theme.breakpoints.up('sm')]: {
+                  paddingTop: '16.5px', // Standard Material-UI padding-top
+                  paddingBottom: '16.5px', // Standard Material-UI padding-bottom
+                  height: 'auto', // Ensure height is flexible
+                }
+              },
+            }
+
+                      // NEW: Reusable style for MenuItems
+  const menuItemTextStyles = {
+    fontSize: { xs: ".7rem", sm: ".8rem", md: "1rem" },
+    fontFamily: "Poppins", // Assuming Poppins for MenuItem text too
+  };
+
   const [employeeData, setEmployeeData] = useState({
     employeeID: "",
     jobPosition: "",
@@ -152,7 +203,7 @@ function EditEmployee({ employeeId, onEmployeeUpdated, onClose }: EditEmployeePr
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit} display="flex" flexDirection="column" gap={2}>
+    <form onSubmit={handleSubmit} >
       {loading ? (
         <CircularProgress />
       ) : error ? (
@@ -184,10 +235,10 @@ function EditEmployee({ employeeId, onEmployeeUpdated, onClose }: EditEmployeePr
           fullWidth
           variant="outlined"
         >
-              <MenuItem value="Teacher">Teacher</MenuItem>
-              <MenuItem value="Teacher I">Teacher I</MenuItem>
-              <MenuItem value="Teacher II">Teacher II</MenuItem>
-              <MenuItem value="Supervisor">Supervisor</MenuItem>
+              <MenuItem value="Teacher" sx={menuItemTextStyles}>Teacher</MenuItem>
+              <MenuItem value="Teacher I" sx={menuItemTextStyles}>Teacher I</MenuItem>
+              <MenuItem value="Teacher II" sx={menuItemTextStyles}>Teacher II</MenuItem>
+              <MenuItem value="Supervisor" sx={menuItemTextStyles}>Supervisor</MenuItem>
         </TextField>
       </Grid>
 
@@ -238,8 +289,8 @@ function EditEmployee({ employeeId, onEmployeeUpdated, onClose }: EditEmployeePr
           fullWidth
           variant="outlined"
         >
-          <MenuItem value="Male">Male</MenuItem>
-          <MenuItem value="Female">Female</MenuItem>
+          <MenuItem value="Male" sx={menuItemTextStyles}>Male</MenuItem>
+          <MenuItem value="Female" sx={menuItemTextStyles}>Female</MenuItem>
         </TextField>
       </Grid>
 
@@ -272,10 +323,10 @@ function EditEmployee({ employeeId, onEmployeeUpdated, onClose }: EditEmployeePr
     variant="outlined"
    
   >
-    <MenuItem value="Single">Single</MenuItem>
-    <MenuItem value="Married">Married</MenuItem>
-    <MenuItem value="Divorced">Divorced</MenuItem>
-    <MenuItem value="Widowed">Widowed</MenuItem>
+    <MenuItem value="Single" sx={menuItemTextStyles}>Single</MenuItem>
+    <MenuItem value="Married" sx={menuItemTextStyles}>Married</MenuItem>
+    <MenuItem value="Divorced" sx={menuItemTextStyles}>Divorced</MenuItem>
+    <MenuItem value="Widowed" sx={menuItemTextStyles}>Widowed</MenuItem>
   </TextField>
       </Grid>
 
@@ -323,31 +374,27 @@ function EditEmployee({ employeeId, onEmployeeUpdated, onClose }: EditEmployeePr
     </Grid>
 
           <Box display="flex" justifyContent="space-between" mt={2}>
-            <Button variant="contained" color="primary" onClick={onClose}>
-              Cancel
-            </Button>
-            <Button type="submit" variant="contained" color="primary" disabled={loading}>
+             <Button  
+              type="submit" 
+              variant="contained" 
+              fullWidth 
+              disabled={loading}  
+                sx={{
+                  fontSize: { xs: ".7rem", sm: ".8rem", md: "1rem" }, 
+                  fontFamily: "Poppins",  background: `${colors.primary[400]}`, 
+                  color: "black",   
+                  "&:hover": 
+                    { background: `${colors.grey[900]}`, }, 
+                  }}
+                >
               {loading ? "Saving..." : "Update Employee"}
             </Button>
           </Box>
         </>
       )}
-    </Box>
+    </form>
   );
 }
 
-// 🔥 Styles: Placeholder turns white on hover!
-const inputStyles = {
-  "& .MuiInputLabel-root": { color: "black !important" },  // Default placeholder color
-  "& .MuiInputLabel-root.Mui-focused": { color: "black !important" }, // Focus color
-  "& .MuiOutlinedInput-root": {
-    "&:hover .MuiInputLabel-root": { color: "black !important" }, // White placeholder on hover
-    "& fieldset": { borderColor: "black !important" }, // Default border color
-    "&:hover fieldset": { borderColor: "black !important" }, // Border turns white on hover
-    "&.Mui-focused fieldset": { borderColor: "black !important" }, // White border on focus
-  },
-  "& .MuiInputBase-input": { color: "black" },  // Text color white
-  
-};
 
 export default EditEmployee;

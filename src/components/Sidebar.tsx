@@ -239,6 +239,8 @@ function Sidebar({ role, isCollapsed, toggleSidebar }: SidebarProps) {
           <Item title="Employee List" to="/admin/employee_management" icon={<FaUsers />} selected={selected} setSelected={setSelected} />
           <Item title="Uploaded Documents" to="/admin/upload_docs" icon={<FaUpload />} selected={selected} setSelected={setSelected} />
           <Item title="Reports" to="/admin/reports" icon={<FaEye />} selected={selected} setSelected={setSelected} />
+
+           <Item title="Home" to="/" icon={<FaEye />} selected={selected} setSelected={setSelected} />
            
         </>
             )}
@@ -258,6 +260,7 @@ function Sidebar({ role, isCollapsed, toggleSidebar }: SidebarProps) {
           <Item title="Upload Image" to="/user/upload_pds" icon={<FaEye />} selected={selected} setSelected={setSelected} />
           <Item title="Extract ID" to="/user/extractID" icon={<FaIdCard />} selected={selected} setSelected={setSelected} />
 
+           <Item title="Home" to="/" icon={<FaEye />} selected={selected} setSelected={setSelected} />
               </>
             )}
           </Box>

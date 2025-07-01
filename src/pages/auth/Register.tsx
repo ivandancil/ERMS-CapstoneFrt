@@ -125,7 +125,7 @@ const Register = () => {
         >
         <Box
           sx={{
-            maxWidth: 400,
+            maxWidth: 430,
             width: { xs: "70%", sm: "80%", md: "90%" } ,
             paddingLeft: 3,
             paddingRight: 3,

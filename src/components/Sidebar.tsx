@@ -3,7 +3,6 @@ import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
-import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import { FaUserCircle, FaTachometerAlt, FaUsers, FaUpload, FaEye, FaCog, FaFolderOpen, FaIdCard } from "react-icons/fa";
 import { tokens } from "../theme";
 import DepedLogo from "../../public/image/Logo3.png"
@@ -80,7 +79,7 @@ function Sidebar({ role, isCollapsed, toggleSidebar }: SidebarProps) {
     <Box
       sx={{
         height: "100vh",
-        "& .pro-sidebar-inner": { background: `${colors.primary[400]} !important` },
+        "& .pro-sidebar-inner": { background: `${colors.primary[400]} !important`, boxShadow: "5" },
         
         "& .pro-icon-wrapper": { backgroundColor: "transparent !important" },
 
@@ -156,7 +155,7 @@ function Sidebar({ role, isCollapsed, toggleSidebar }: SidebarProps) {
               {!isCollapsed && (
               <Box 
                 display="flex" 
-                justifyContent="space-between" 
+                justifyContent="flex-end" 
                 alignItems="center" 
               >
              
@@ -171,14 +170,14 @@ function Sidebar({ role, isCollapsed, toggleSidebar }: SidebarProps) {
                 }}
               />
               
-            <MenuOutlinedIcon
+            {/* <MenuOutlinedIcon
               style={{
                 transition: "transform 0.3s ease-in-out",
                 transform: isCollapsed ? "rotate(180deg)" : "rotate(0deg)",
                 opacity: isCollapsed ? 0 : 1,
                 color: "black",
               }}
-            />
+            /> */}
             </Box>
           )}
             </MenuItem>

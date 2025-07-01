@@ -149,11 +149,12 @@ const Topbar = ({ toggleSidebar }: TopbarProps) => {
           display: "flex",
             backgroundColor: colors.primary[400],
             borderRadius: "3px",
+             boxShadow: 3,
        }}
       >
 
        <InputBase
-        sx={{ ml: 2, flex: 1 }}
+        sx={{ ml: 2, flex: 1, fontFamily: "Poppins",  }}
         placeholder="Search..."
         value={searchTerm} 
         onChange={handleInputChange} 

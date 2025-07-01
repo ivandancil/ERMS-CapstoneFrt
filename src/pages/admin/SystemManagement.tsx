@@ -178,7 +178,8 @@ const SystemManagement = () => {
           mt: '20px',
           fontWeight: 'bold',
           fontFamily: "Poppins",
-          background: `${colors.primary[400]}`,
+          background: `${colors.grey[900]}`,
+           boxShadow: "1",
            borderRadius: "5px",
           '& .MuiTab-root': { color: '#000', fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" }, },
           '& .Mui-selected': { color: 'black', fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" }, },
@@ -192,10 +193,11 @@ const SystemManagement = () => {
       {tabValue === 0 && (
         <Box
         m="20px 0 0 0"
-        height="65vh"
+        height="69vh"
         sx={{
           "& .MuiDataGrid-root": {
             border: "outlined",
+            boxShadow: "2"
           },
           "& .MuiDataGrid-cell": {
             borderBottom: "none"
@@ -209,7 +211,8 @@ const SystemManagement = () => {
           "& .MuiDataGrid-virtualScroller": {
             // backgroundColor: colors.primary[400],
             fontSize: { xs: ".5rem", sm: ".6rem", md: ".8rem" },
-            fontFamily: "Poppins"
+            fontFamily: "Poppins",
+            
           },
           "& .MuiDataGrid-footerContainer": {
             background: `${colors.primary[400]}`,
@@ -248,10 +251,11 @@ const SystemManagement = () => {
       {tabValue === 1 && (
         <Box
         m="20px 0 0 0"
-        height="65vh"
+        height="69vh"
         sx={{
           "& .MuiDataGrid-root": {
             border: "outlined",
+            boxShadow: "2"
           },
           "& .MuiDataGrid-cell": {
             borderBottom: "none"

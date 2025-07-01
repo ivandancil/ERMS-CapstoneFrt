@@ -149,10 +149,11 @@ const Reports = () => {
 
              <Box
                      m="20px 0 0 0"
-                     height="70vh"
+                     height="78vh"
                      sx={{
                        "& .MuiDataGrid-root": {
                          border: "outlined",
+                         boxShadow: "2",
                        },
                        "& .MuiDataGrid-cell": {
                          borderBottom: "none"

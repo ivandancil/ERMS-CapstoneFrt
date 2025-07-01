@@ -193,10 +193,11 @@ import { tokens } from "../../../theme";
         {/* Employee Table */}
            <Box
                 m="10px 0 0 0"
-                height="75vh"
+                height="71vh"
                 sx={{
                   "& .MuiDataGrid-root": {
                     border: "outlined",
+                    boxShadow: "2",
                   },
                   "& .MuiDataGrid-cell": {
                     borderBottom: "none"

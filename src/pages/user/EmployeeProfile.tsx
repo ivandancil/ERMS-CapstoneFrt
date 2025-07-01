@@ -153,7 +153,8 @@ function EmployeeProfile() {
           variant="scrollable" // Add this prop
           scrollButtons="auto" // Add this prop
           sx={{ 
-            background: `${colors.primary[400]}`,
+            background: `${colors.grey[900]}`,
+            boxShadow: "2",
             borderRadius: "5px",
             fontFamily: "Poppins",
             '& .MuiTab-root': { color: '#000',  fontSize: { xs: ".6rem", sm: ".5rem", md: ".8rem" }, },

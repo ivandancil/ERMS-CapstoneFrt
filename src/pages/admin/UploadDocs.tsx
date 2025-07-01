@@ -205,7 +205,8 @@ const UploadDocs = () => {
           mt: '20px',
           fontWeight: 'bold',
           fontFamily: "Poppins",
-          background: `${colors.primary[400]}`,
+          background: `${colors.grey[900]}`,
+          boxShadow: "1",
            borderRadius: "5px",
           '& .MuiTab-root': { color: '#000', fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" }, },
           '& .Mui-selected': { color: 'black', fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" }, },
@@ -313,10 +314,11 @@ const UploadDocs = () => {
       {currentTab === "View Uploaded Documents/File" && (
        <Box
                m="20px 0 0 0"
-               height="65vh"
+               height="70vh"
                sx={{
                  "& .MuiDataGrid-root": {
                    border: "outlined",
+                   boxShadow: "2",
                  },
                  "& .MuiDataGrid-cell": {
                    borderBottom: "none"

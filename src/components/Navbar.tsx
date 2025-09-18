@@ -121,7 +121,7 @@ function Navbar() {
                 fontFamily: "Poppins"
               }}
             >
-          {userName || "ERMS"}
+          {userName || "ERMS-DepedTac"}
         </Typography>
       </Box>
       <Box sx={{ display: "flex", flexDirection: "column", p: 2 }}>
@@ -156,7 +156,7 @@ function Navbar() {
                 Register
               </Button>
             </NavLink>
-              <NavLink to="/admin" style={{ textDecoration: "none" }}>
+              {/* <NavLink to="/admin" style={{ textDecoration: "none" }}>
               <Button fullWidth sx={{ justifyContent: "flex-start",  fontFamily: "Poppins" }}>
                 Admin
               </Button>
@@ -165,7 +165,7 @@ function Navbar() {
               <Button fullWidth sx={{ justifyContent: "flex-start",  fontFamily: "Poppins" }}>
                 User
               </Button>
-            </NavLink>
+            </NavLink> */}
           </>
         )}
       </Box>

@@ -14,7 +14,7 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import DepedLogo from "../../public/image/depedLogo.png"
+import DepedLogo from "../assets/depedLogo.png"
 
 function Navbar() {
   const navigate = useNavigate();

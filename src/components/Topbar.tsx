@@ -140,7 +140,7 @@ const Topbar = ({ toggleSidebar }: TopbarProps) => {
         }}
       >
          {/* Hamburger Icon - now always visible */}
-        <IconButton onClick={toggleSidebar} sx={{ mr: 1 }}> {/* Add right margin */}
+        <IconButton onClick={toggleSidebar} sx={{ mr: 1, color: colors.grey[900]}}> {/* Add right margin */}
           <MenuOutlinedIcon />
         </IconButton>
 
@@ -149,7 +149,7 @@ const Topbar = ({ toggleSidebar }: TopbarProps) => {
           display: "flex",
             backgroundColor: colors.primary[400],
             borderRadius: "3px",
-             boxShadow: 3,
+            
        }}
       >
 
@@ -170,12 +170,13 @@ const Topbar = ({ toggleSidebar }: TopbarProps) => {
           sx={{ 
             display: "flex", 
             alignItems: "center"
+            
            }}
         >
       
         {/* PersonOutlinedIcon - Visible only on small screens */}
         {!isAboveMediumScreens && (
-          <IconButton onClick={() => setOpenMobileMenu(!openMobileMenu)}>
+          <IconButton onClick={() => setOpenMobileMenu(!openMobileMenu)} sx={{color: colors.grey[900]}}>
             <PersonOutlinedIcon  /> {/* Always show PersonOutlinedIcon */}
           </IconButton>
         )}
@@ -198,7 +199,7 @@ const Topbar = ({ toggleSidebar }: TopbarProps) => {
                 padding: theme.spacing(2),
                 borderRadius: '8px',
                 boxShadow: theme.shadows[3],
-                backgroundColor: colors.primary[400],
+                backgroundColor: colors.grey[200],
                 zIndex: 50,
                 gap: theme.spacing(1), // Use theme.spacing for gap consistency
             }),
@@ -206,7 +207,7 @@ const Topbar = ({ toggleSidebar }: TopbarProps) => {
 
       {/* Icons */}
    
-         <IconButton onClick={colorMode.toggleColorMode}>
+         <IconButton onClick={colorMode.toggleColorMode} sx={{ color: colors.grey[900]}}>
             {theme.palette.mode === "dark" ? (
               <DarkModeOutlinedIcon  sx={{ fontSize: { xs: ".8rem", sm: "1rem", md: "1.2rem" } }} />
             ) : (
@@ -214,18 +215,18 @@ const Topbar = ({ toggleSidebar }: TopbarProps) => {
             )}
           </IconButton>
         {/* Notifications */}
-        <IconButton onClick={handleNotificationsClick}>
+        <IconButton onClick={handleNotificationsClick} >
           <Badge color="error" badgeContent={userNotifications.length}>
-            <NotificationsOutlinedIcon sx={{ fontSize: { xs: ".8rem", sm: "1rem", md: "1.2rem" } }}  />
+            <NotificationsOutlinedIcon sx={{ fontSize: { xs: ".8rem", sm: "1rem", md: "1.2rem" }, color: colors.grey[900], }}  />
           </Badge>
         </IconButton>
 
         <IconButton>  
-          <SettingsOutlinedIcon sx={{ fontSize: { xs: ".8rem", sm: "1rem", md: "1.2rem" } }} />
+          <SettingsOutlinedIcon sx={{ fontSize: { xs: ".8rem", sm: "1rem", md: "1.2rem" }, color: colors.grey[900] }} />
         </IconButton>
 
         <IconButton onClick={handleProfileClick}>
-          <PersonOutlinedIcon sx={{ fontSize: { xs: ".8rem", sm: "1rem", md: "1.2rem" } }} />
+          <PersonOutlinedIcon sx={{ fontSize: { xs: ".8rem", sm: "1rem", md: "1.2rem" }, color: colors.grey[900] }} />
         </IconButton>
 
         {/* Notifications Menu */}
@@ -237,10 +238,10 @@ const Topbar = ({ toggleSidebar }: TopbarProps) => {
               </MenuItem>
             ))
           ) : (
-            <MenuItem onClick={handleNotificationsClose}>No new notifications</MenuItem>
+            <MenuItem onClick={handleNotificationsClose} sx={{ fontFamily: "Poppins" }}>No new notifications</MenuItem>
           )}
           <Divider />
-          <MenuItem onClick={handleClearAllNotifications}>Clear All</MenuItem>
+          <MenuItem onClick={handleClearAllNotifications} sx={{ fontFamily: "Poppins" }} >Clear All</MenuItem>
         </Menu>
 
         {/* Profile Menu */}

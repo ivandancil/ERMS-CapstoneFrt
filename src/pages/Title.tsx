@@ -1,7 +1,7 @@
 import { Box, Typography, useMediaQuery } from "@mui/material";
 import Navbar from "../components/Navbar";
-import BackgroundImage from "../../public/image/enhance.png"
-import DivisionLogo from "../../public/image/Logo3.png"
+import BackgroundImage from "../assets/enhance.png"
+import DivisionLogo from "../assets/Logo3.png"
 
 const Title = () => {
   const isSmallScreen = useMediaQuery("(max-width:960px)");

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { FaUserCircle, FaTachometerAlt, FaUsers, FaUpload, FaEye, FaCog, FaFolderOpen, FaIdCard } from "react-icons/fa";
 import { tokens } from "../theme";
-import DepedLogo from "../../public/image/Logo3.png"
+import DepedLogo from "../assets/Logo3.png"
 
 interface ItemProps {
   title: string;
@@ -155,10 +155,16 @@ function Sidebar({ role, isCollapsed, toggleSidebar }: SidebarProps) {
               {!isCollapsed && (
               <Box 
                 display="flex" 
-                justifyContent="flex-end" 
+                justifyContent="space-between"
                 alignItems="center" 
               >
-             
+              <Typography
+                  variant="h3"
+                  color={colors.grey[100]}
+                  sx={{ fontSize: { xs: ".8rem", sm: "1rem",md: "1.1rem" },fontWeight: "600" }}
+                >
+                  DepedTac
+                </Typography>
               <img
                 src={ DepedLogo }
                 alt="DepEd Logo"
@@ -228,10 +234,10 @@ function Sidebar({ role, isCollapsed, toggleSidebar }: SidebarProps) {
                     sx={{  
                       fontSize: { xs: ".6rem", sm: ".7rem", 
                       md: ".9rem" }, 
-                      m: "5px 0 5px 20px" 
+                      m: "5px 0 5px 20px", fontFamily: "Poppins" 
                   }}
                   >
-                    DATA
+                    Pages
               </Typography>
 
           <Item title="System Management" to="/admin/system_management" icon={<FaUsers />} selected={selected} setSelected={setSelected} />
@@ -246,15 +252,17 @@ function Sidebar({ role, isCollapsed, toggleSidebar }: SidebarProps) {
 
             {role === "user" && (
               <>
-                <Typography 
-                    variant="h6" 
-                    color={colors.grey[200]} 
-                    sx={{ m: "15px 0 5px 20px", fontFamily: "Poppins",  
-                      fontSize: { xs: ".6rem", sm: ".7rem", md: ".9rem" }, 
-                    }}
-                >
-                    DATA
-                </Typography>
+                <Typography
+                    variant="h6"
+                    color={colors.grey[300]}
+                    sx={{  
+                      fontSize: { xs: ".6rem", sm: ".7rem", 
+                      md: ".9rem" }, 
+                      m: "5px 0 5px 20px", fontFamily: "Poppins" 
+                  }}
+                  >
+                    PAGES
+              </Typography>   
 
           <Item title="My Profile"  to="/user/employee_profile" icon={<FaCog />} selected={selected} setSelected={setSelected} />
           <Item title="Document Management" to="/user/document_management" icon={<FaFolderOpen />} selected={selected} setSelected={setSelected} />

@@ -196,20 +196,20 @@ import { tokens } from "../../../theme";
                 height="71vh"
                 sx={{
                   "& .MuiDataGrid-root": {
-                    border: "outlined",
+                    border: "none",
                     boxShadow: "2",
                   },
                   "& .MuiDataGrid-cell": {
                     borderBottom: "none"
                   },
                   "& .MuiDataGrid-columnHeader": {
-                   background: `${colors.primary[400]}`,
+                   color: colors.primary[100],
                     borderBottom: "none",
                     fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" },
                     fontFamily: "Poppins"
                   },
                   "& .MuiDataGrid-virtualScroller": {
-                    // backgroundColor: colors.primary[400],
+                    color: colors.grey[900],
                     fontSize: { xs: ".5rem", sm: ".6rem", md: ".8rem" },
                     fontFamily: "Poppins"
                   },
@@ -250,7 +250,7 @@ import { tokens } from "../../../theme";
                   {/* View Button */}
                     <Button
                         sx={{ textTransform: "none",
-                          color: colors.grey[100],
+                          color: colors.grey[900],
                              fontSize: { xs: ".5rem", sm: ".6rem", md: ".8rem" }
                              }}
                         startIcon={<VisibilityIcon sx={{ fontSize: isSmallScreen ? '1rem' : 'inherit' }} />}
@@ -262,7 +262,7 @@ import { tokens } from "../../../theme";
                   {/* Edit Button */}
                     <Button
                         sx={{ textTransform: "none",
-                          color: colors.grey[100],
+                          color: colors.grey[900],
                              fontSize: { xs: ".5rem", sm: ".6rem", md: ".8rem" }
                              }}
                         startIcon={<EditIcon sx={{ fontSize: isSmallScreen ? '1rem' : 'inherit' }} />}

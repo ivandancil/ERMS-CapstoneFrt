@@ -8,8 +8,7 @@ import Header from "../../components/Header";
 
 const Reports = () => {
   const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
- 
+  const colors = tokens(theme.palette.mode); 
 
   // Mock report data based on your suggestions
   const [reports] = useState([
@@ -80,25 +79,26 @@ const Reports = () => {
     { field: "name", headerName: "Report Name", flex: 2,  minWidth: 160, },
     { field: "date", headerName: "Date Generated", flex: 1,  minWidth: 120, },
     { field: "type", headerName: "Report Type", flex: 1,  minWidth: 150, },
-    { field: "description", headerName: "Description", flex: 3,  minWidth: 180, },
+   
     {
       field: "action",
       headerName: "Action",
       flex: 1.5,
       minWidth: 120,
       renderCell: (params: any) => (
+           <Box display="flex" gap={1} mt={1}>
         <Button
-        variant="outlined"
-        sx={{ textTransform: "none",
-                          color: colors.grey[100],
-                             fontSize: { xs: ".5rem", sm: ".6rem", md: ".8rem" }
-                             }}
-        startIcon={<DownloadIcon sx={{ color: 'green' }} />} // You can use any color name or hex code
-        onClick={() => handleDownload(params.row.file_name)}
-      >
-        Download
-      </Button>
-      
+             variant="outlined"
+                  sx={{
+                      color: colors.grey[900],
+                      fontSize: { xs: ".5rem", sm: ".6rem", md: ".7rem" }
+                  }}
+                  startIcon={<DownloadIcon sx={{ color: 'primary' }} />} // You can use any color name or hex code
+                  onClick={() => handleDownload(params.row.file_name)}
+                >
+            Download
+          </Button>
+      </Box>
       ),
     },
   ];
@@ -152,7 +152,7 @@ const Reports = () => {
                      height="78vh"
                      sx={{
                        "& .MuiDataGrid-root": {
-                         border: "outlined",
+                         border: "none",
                          boxShadow: "2",
                        },
                        "& .MuiDataGrid-cell": {
@@ -160,12 +160,14 @@ const Reports = () => {
                        },
                        "& .MuiDataGrid-columnHeader": {
                          background: `${colors.primary[400]}`,
+                          color: colors.primary[100],
                          borderBottom: "none",
                          fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" },
                          fontFamily: "Poppins"
                        },
                        "& .MuiDataGrid-virtualScroller": {
-                         // backgroundColor: colors.primary[400],
+                         
+                          color: colors.grey[900],
                          fontSize: { xs: ".5rem", sm: ".6rem", md: ".8rem" },
                          fontFamily: "Poppins"
                        },

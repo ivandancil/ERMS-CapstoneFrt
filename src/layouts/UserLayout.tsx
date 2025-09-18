@@ -3,11 +3,13 @@ import { Outlet, useLocation } from "react-router-dom"
 import Sidebar from "../components/Sidebar"
 import Topbar from "../components/Topbar"
 import { useEffect, useState } from "react"
+import BackgroundImage from "../assets/enhance.png"; 
 
 
 const UserLayout = () => {
   const location = useLocation();
   const hideLayout = location.pathname === "/login" || location.pathname === "/register";
+   const NAVBAR_HEIGHT = 0;
 
     // Access the theme and media query hook
     const theme = useTheme();
@@ -29,7 +31,40 @@ const UserLayout = () => {
   
 
   return (
-    <Box display="flex"  height="100vh">
+     <Box
+      sx={{
+        display: 'flex',
+        height: '100vh',
+        width: '100vw', // Ensure it covers the full viewport width
+        position: 'relative', // Necessary for positioning the absolute background overlay
+        overflow: 'hidden', // Hides any overflow if the background image scales beyond boundaries
+        bgcolor: "black"
+      }}
+    >
+  <Box
+        component="img"
+        src={ BackgroundImage }
+        alt="DepEd Logo Background"
+        sx={{
+          position: "absolute",
+          top: `${NAVBAR_HEIGHT}px`,
+          left: 0,
+          width: "100%",
+          height: `calc(100vh - ${NAVBAR_HEIGHT}px)`,
+          objectFit: "fill",
+          opacity: 0.1,
+          zIndex: 0,
+          pointerEvents: "none",
+        }}
+      />
+
+    <Box
+        display="flex" // Enables flexbox for arranging sidebar and main content
+        flexDirection="row" // Arranges children (Sidebar and main content) in a row
+        height="100%" // Takes full height of the parent (which is 100vh)
+        width="100%" // Takes full width to correctly layer on top of the background
+        sx={{ zIndex: 0 }} // Ensures this content layer is above the background (-1 zIndex)
+      >
         {!hideLayout && (
               <Sidebar
                 role="user"
@@ -50,6 +85,7 @@ const UserLayout = () => {
         </Box>
    
     </Box>
+  </Box>
   </Box>
   )
 }

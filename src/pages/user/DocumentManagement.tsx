@@ -175,7 +175,7 @@ function DocumentManagement() {
           <Button
              variant="outlined"
                   sx={{
-                      color: colors.grey[100],
+                      color: colors.grey[900],
                       fontSize: { xs: ".5rem", sm: ".6rem", md: ".7rem" }
                   }}
                   startIcon={<DownloadIcon sx={{ color: 'primary' }} />} // You can use any color name or hex code
@@ -187,7 +187,7 @@ function DocumentManagement() {
           <Button
             variant="outlined"
              sx={{
-                      color: colors.grey[100],
+                      color: colors.grey[900],
                       fontSize: { xs: ".5rem", sm: ".6rem", md: ".7rem" }
                   }}
                   
@@ -257,20 +257,21 @@ function DocumentManagement() {
         height="70vh"
         sx={{
           "& .MuiDataGrid-root": {
-            border: "outlined",
+            border: "none",
             boxShadow: "2",
           },
           "& .MuiDataGrid-cell": {
             borderBottom: "none"
           },
           "& .MuiDataGrid-columnHeader": {
-            background: `${colors.primary[400]}`,
+         background: `${colors.primary[400]}`,
+            color: colors.primary[100],
             borderBottom: "none",
             fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" },
             fontFamily: "Poppins",
           },
           "& .MuiDataGrid-virtualScroller": {
-            // backgroundColor: colors.primary[400],
+            color: colors.grey[900],
             fontSize: { xs: ".5rem", sm: ".6rem", md: ".8rem" },
              fontFamily: "Poppins",
           },

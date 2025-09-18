@@ -82,10 +82,17 @@ function EmployeeProfile() {
         </Button> */}
       </Box>
 
-        <Grid container spacing={3} mt={2}>
-          <Grid item xs={12} sm={4} display="flex" flexDirection="column" alignItems="center">
-            <Box position="relative">
-              <Avatar 
+    <Box display="flex" justifyContent="center" sx={{ width: '100%' }}> {/* Ensure this Box takes full width */}
+        <Grid container spacing={3} mt={2} sx={{ width: { xs: '100%', sm: '600px', md: '700px' } }}> {/* Adjust width as needed for smaller screens for better alignment, or remove to let grid determine */}
+            {/* The individual Grid items will still take up 12 columns on xs, but on sm and up, they'll
+                take 4 and 8 within this *newly right-aligned* Grid container.
+                You might need to adjust sm column sizes if you want a smaller total width.
+                For example, if you want it to be about half the screen on large, make the container xs=12, sm=6
+                and remove the fixed width above.
+            */}
+            <Grid item xs={12} sm={4} display="flex" flexDirection="column" alignItems="center">
+                <Box position="relative">
+      <Avatar
                   sx={{ width: 100, height: 100, mx: "auto" }} 
                 />
                 <IconButton
@@ -114,6 +121,7 @@ function EmployeeProfile() {
                fontWeight: "bold",
                fontSize: { xs: "1.7rem", sm: "1.8rem", md: "2rem" },
                fontFamily: "Poppins",
+               color: colors.grey[900]
               }}
             >
               {employee?.firstname} {employee?.lastname}
@@ -123,7 +131,7 @@ function EmployeeProfile() {
               sx={{ 
                   fontSize: { xs: ".8rem", sm: ".9rem", md: "1.1rem" },
                   fontFamily: "Poppins",
-                  color: "gray" 
+                  color: colors.grey[800]
                 }}
               >
               Employee ID: <strong>{employee?.employeeID || "N/A"}</strong>
@@ -133,7 +141,7 @@ function EmployeeProfile() {
                 sx={{ 
                    fontSize: { xs: ".8rem", sm: ".9rem", md: "1.1rem" },
                   fontFamily: "Poppins",
-                  color: "gray" 
+                   color: colors.grey[800]
                 }}
               >
               Job Position: <strong>{employee?.jobPosition || "Not Assigned"}</strong>
@@ -141,6 +149,7 @@ function EmployeeProfile() {
 
           </Grid>
         </Grid>
+        </Box>
 
         <Divider sx={{ my: 2 }} />
 
@@ -157,8 +166,8 @@ function EmployeeProfile() {
             boxShadow: "2",
             borderRadius: "5px",
             fontFamily: "Poppins",
-            '& .MuiTab-root': { color: '#000',  fontSize: { xs: ".6rem", sm: ".5rem", md: ".8rem" }, },
-            '& .Mui-selected': { color: 'black', fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" }, },
+            '& .MuiTab-root': { color: '#000',  fontSize: { xs: ".5rem", sm: ".6rem", md: ".8rem" }, },
+            '& .Mui-selected': { color: 'black', fontSize: { xs: ".5rem", sm: ".6rem", md: ".8rem" }, },
             '& .MuiTabs-indicator': { backgroundColor: 'black', height: '3px', borderRadius: '10px' },
           }}
           
@@ -194,11 +203,12 @@ function EmployeeProfile() {
                         ["Address :", employee?.address],
                       
                       ].map(([label, value]) => (
-                        <TableRow key={label} sx={{ "&:hover": { backgroundColor: colors.grey[900] } }}>
+                        <TableRow key={label} sx={{ "&:hover": { backgroundColor: colors.grey[400] } }} >
                           <TableCell 
                             sx={{ 
                               fontFamily: "Poppins" ,
                               fontSize: { xs: ".7rem", sm: ".8rem", md: ".9rem" },
+                              color: colors.grey[900]
                             }}
                           >
                             {label}
@@ -207,6 +217,7 @@ function EmployeeProfile() {
                              sx={{ 
                               fontFamily: "Poppins" ,
                               fontSize: { xs: ".7rem", sm: ".8rem", md: ".9rem" },
+                              color: colors.grey[900]
                             }}
                           >
                             {value}
@@ -223,11 +234,12 @@ function EmployeeProfile() {
             <TableContainer sx={{ boxShadow: 3 }}>
               <Table>
                 <TableBody>
-                  <TableRow sx={{ "&:hover": { backgroundColor: colors.grey[700] } }}>
+                  <TableRow sx={{ "&:hover": { backgroundColor: colors.grey[400] } }}>
                     <TableCell 
                       sx={{ 
                         fontFamily: "Poppins" ,
                         fontSize: { xs: ".7rem", sm: ".8rem", md: ".9rem" },
+                         color: colors.grey[900]
                     }}
                   >
                     Contact Name :
@@ -238,6 +250,7 @@ function EmployeeProfile() {
                       sx={{ 
                         fontFamily: "Poppins" ,
                         fontSize: { xs: ".7rem", sm: ".8rem", md: ".9rem" },
+                         color: colors.grey[900]
                     }}
                   >
                     Contact Number :

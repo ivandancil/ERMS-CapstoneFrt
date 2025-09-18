@@ -136,7 +136,7 @@ const SystemManagement = () => {
                 {row.access === "admin" && <AdminPanelSettingsOutlinedIcon  sx={{ fontSize: isSmallScreen ? '1rem' : 'inherit',  }} />}
                 {row.access === "user" && <LockOpenOutlinedIcon  sx={{ fontSize: isSmallScreen ? '1rem' : 'inherit' }} />}
                 <Typography 
-                  color={colors.grey[100]} 
+                  color={colors.grey[900]} 
                   sx={{ 
                     ml: "5px",
                     display: isSmallScreen ? 'flex' : 'block',
@@ -196,22 +196,24 @@ const SystemManagement = () => {
         height="69vh"
         sx={{
           "& .MuiDataGrid-root": {
-            border: "outlined",
-            boxShadow: "2"
+            border: "none",
+            boxShadow: "2",
           },
           "& .MuiDataGrid-cell": {
             borderBottom: "none"
           },
           "& .MuiDataGrid-columnHeader": {
-            background: `${colors.primary[400]}`,
+           
+            color: colors.primary[100],
             borderBottom: "none",
             fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" },
             fontFamily: "Poppins"
           },
           "& .MuiDataGrid-virtualScroller": {
-            // backgroundColor: colors.primary[400],
+              color: colors.grey[900],
             fontSize: { xs: ".5rem", sm: ".6rem", md: ".8rem" },
             fontFamily: "Poppins",
+            
             
           },
           "& .MuiDataGrid-footerContainer": {
@@ -254,22 +256,23 @@ const SystemManagement = () => {
         height="69vh"
         sx={{
           "& .MuiDataGrid-root": {
-            border: "outlined",
+            border: "none",
             boxShadow: "2"
           },
           "& .MuiDataGrid-cell": {
             borderBottom: "none"
           },
           "& .MuiDataGrid-columnHeader": {
-            background: `${colors.primary[400]}`,
+            color: colors.primary[100],
             borderBottom: "none",
             fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" },
             fontFamily: "Poppins"
           },
           "& .MuiDataGrid-virtualScroller": {
-            // backgroundColor: colors.primary[400],
+            color: colors.grey[900],
             fontSize: { xs: ".5rem", sm: ".6rem", md: ".8rem" },
-            fontFamily: "Poppins"
+            fontFamily: "Poppins",
+           
           },
           "& .MuiDataGrid-footerContainer": {
             background: `${colors.primary[400]}`,

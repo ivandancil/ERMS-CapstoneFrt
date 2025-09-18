@@ -164,7 +164,7 @@ const UploadDocs = () => {
          <Button
            sx={{ 
               textTransform: "none",
-              color: colors.grey[100],
+              color: colors.grey[900],
               fontSize: { xs: ".5rem", sm: ".6rem", md: ".8rem" }
             }}
           startIcon={<VisibilityIcon sx={{ fontSize: isSmallScreen ? '1rem' : 'inherit' }} />}
@@ -317,7 +317,7 @@ const UploadDocs = () => {
                height="70vh"
                sx={{
                  "& .MuiDataGrid-root": {
-                   border: "outlined",
+                   border: "none",
                    boxShadow: "2",
                  },
                  "& .MuiDataGrid-cell": {
@@ -325,14 +325,17 @@ const UploadDocs = () => {
                  },
                  "& .MuiDataGrid-columnHeader": {
                    background: `${colors.primary[400]}`,
+                          color: colors.primary[100],
                    borderBottom: "none",
                    fontSize: { xs: ".6rem", sm: ".7rem", md: ".8rem" },
                    fontFamily: "Poppins"
                  },
                  "& .MuiDataGrid-virtualScroller": {
                    // backgroundColor: colors.primary[400],
+                   color: colors.grey[900],
                    fontSize: { xs: ".5rem", sm: ".6rem", md: ".8rem" },
                    fontFamily: "Poppins"
+                   
                  },
                  "& .MuiDataGrid-footerContainer": {
                    background: `${colors.primary[400]}`,

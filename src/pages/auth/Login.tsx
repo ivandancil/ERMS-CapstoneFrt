@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import { IconButton, InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import BackgroundImage from "../../../public/image/enhance.png"
+import BackgroundImage from "../../assets/enhance.png"
 
 
 function Login() {
